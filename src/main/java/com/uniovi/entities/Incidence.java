@@ -1,10 +1,10 @@
-package main.model;
+package com.uniovi.entities;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import main.model.location.LatLng;
+import com.uniovi.entities.location.LatLng;
 
 public class Incidence {
 
