@@ -1,6 +1,6 @@
-package main.model.location;
+package com.uniovi.entities.location;
 
-import main.util.Checker;
+import com.uniovi.util.Checker;
 
 /**
  * 

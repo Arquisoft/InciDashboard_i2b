@@ -1,4 +1,4 @@
-package main.model;
+package com.uniovi.entities;
 
 public class Operator {
 	//properties
