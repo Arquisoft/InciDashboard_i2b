@@ -4,14 +4,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import main.model.location.LatLng;
+
 public class Incidence {
 
 	String username;
 	String incidenceName;
 	String description;
-	String location;
+	LatLng location;
 	List<String> labels; // LABELS FOR THE INCIDENCE
-	HashMap<String, String> campos; // PROPERTY VALUE
+	HashMap<String, String> fields; // PROPERTY VALUE
 	Status status;
 	Date expiration; // PARA LOS SENSORES
 
@@ -28,14 +30,14 @@ public class Incidence {
 	 * @param expiration
 	 */
 	public Incidence(String username, String incidenceName, String description,
-			String location, List<String> labels,
-			HashMap<String, String> campos, Status status, Date expiration) {
+			LatLng location, List<String> labels,
+			HashMap<String, String> fields, Status status, Date expiration) {
 		this.username = username;
 		this.incidenceName = incidenceName;
 		this.description = description;
 		this.location = location;
 		this.labels = labels;
-		this.campos = campos;
+		this.fields = fields;
 		this.status = status;
 		this.expiration = expiration;
 	}
@@ -50,7 +52,7 @@ public class Incidence {
 	 * @param labels
 	 */
 	public Incidence(String username, String incidenceName, String description,
-			String location, List<String> labels) {
+			LatLng location, List<String> labels) {
 		this.username = username;
 		this.incidenceName = incidenceName;
 		this.description = description;
@@ -82,11 +84,11 @@ public class Incidence {
 		this.description = description;
 	}
 
-	public String getLocation() {
+	public LatLng getLocation() {
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation(LatLng location) {
 		this.location = location;
 	}
 
@@ -98,12 +100,12 @@ public class Incidence {
 		this.labels = labels;
 	}
 
-	public HashMap<String, String> getCampos() {
-		return campos;
+	public HashMap<String, String> getFields() {
+		return fields;
 	}
 
-	public void setCampos(HashMap<String, String> campos) {
-		this.campos = campos;
+	public void setCampos(HashMap<String, String> fields) {
+		this.fields = fields;
 	}
 
 	public Status getStatus() {
