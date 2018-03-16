@@ -1,23 +1,30 @@
-package com.uniovi.services;
+package com.uniovi.listeners;
+
+import javax.annotation.ManagedBean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 /**
  * This class is responsible of obtaining the incidents
  * sent through the IncidentManager, and doing the suitable
  * operation depending on the topic of the incident received.
  */
-@Service
-public class KafkaService {
+@ManagedBean
+public class IncidentListener {
 	
-    private static final Logger logger = LoggerFactory.getLogger(KafkaService.class);
+    private static final Logger logger = LoggerFactory.getLogger(IncidentListener.class);
+    
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @KafkaListener(topics="standard")
     public void onStandardIncident(String data) {
     		logger.info("Standard incident received: " + data);
+    		messagingTemplate.convertAndSend("/incident/standard", data);
     }
     
     @KafkaListener(topics="geolocated")

@@ -13,6 +13,7 @@ import com.uniovi.main.InciDashboardI2bApplication;
 	"com.uniovi.repositories",
 	"com.uniovi.controllers",
 	"com.uniovi.entities",
+	"com.uniovi.listeners",
 	"com.uniovi.services",
 	"com.uniovi.util"
 })
