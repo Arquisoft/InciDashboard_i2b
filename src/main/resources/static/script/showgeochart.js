@@ -11,6 +11,7 @@ $(document).ready(function () {
         var data = google.visualization.arrayToDataTable([
             ['Country', 'Popularity'],
             ['Germany', 200],
+            ['Spain', 5],
             ['United States', 300],
             ['Brazil', 400],
             ['Canada', 500],
