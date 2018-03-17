@@ -1,5 +1,6 @@
 var stompClient = null;
-var stackedBarChart = null;
+
+var graphics;
 
 function connect() {
     var socket = new SockJS('/dashboard');
@@ -18,5 +19,10 @@ function connect() {
 }
 
 $(document).ready(function() {
+	graphics = {
+	    "map": new Map("map_div"),
+	    "geochart": new GeoChart("regions_div"),
+	}
+
     connect();
 });
