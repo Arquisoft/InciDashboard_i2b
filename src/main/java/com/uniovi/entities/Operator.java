@@ -1,5 +1,6 @@
 package com.uniovi.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 //@Entity
