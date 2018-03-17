@@ -1,17 +1,17 @@
 var stompClient = null;
+var stackedBarChart = null;
 
 function connect() {
     var socket = new SockJS('/dashboard');
     stompClient = Stomp.over(socket);
-    console.log("Calling connect.");
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/incident/test-data', function (data) {
+        stompClient.subscribe('/incident/test-data', function (str) {
+            var data = JSON.parse(str['body']);
             console.log(data);
         });
 
         stompClient.subscribe('/incident/standard', function (data) {
-            $("#chart").append("<p>Hi!</p>");
             console.log(data);
         });
     });

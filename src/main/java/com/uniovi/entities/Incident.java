@@ -1,8 +1,10 @@
 package com.uniovi.entities;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Convert;
@@ -10,14 +12,21 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.uniovi.entities.location.LatLng;
+import com.uniovi.json.IncidentDeserializer;
+import com.uniovi.json.IncidentSerializer;
 import com.uniovi.util.IncidentPropertiesConverter;
 
+@JsonDeserialize(using = IncidentDeserializer.class)
+@JsonSerialize(using = IncidentSerializer.class)
 @Entity
 public class Incident {
 	
@@ -31,10 +40,10 @@ public class Incident {
 	@JoinColumn(name="agent_id")
 	private AgentInfo agent;
 	
-	@ElementCollection(targetClass=String.class)
-	private List<String> tags = new ArrayList<String>();
+	@ElementCollection(targetClass=String.class, fetch=FetchType.EAGER)
+	private Set<String> tags = new HashSet<String>();
 	
-	@ElementCollection(targetClass=String.class)
+	@ElementCollection(targetClass=String.class, fetch=FetchType.EAGER)
 	private List<String> moreInfo = new ArrayList<String>();
 	
 	@Convert(converter=IncidentPropertiesConverter.class)
@@ -102,7 +111,7 @@ public class Incident {
 		return location;
 	}
 
-	public List<String> getTags() {
+	public Set<String> getTags() {
 		return tags;
 	}
 	
