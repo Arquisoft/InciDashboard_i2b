@@ -30,16 +30,19 @@ public class IncidentListener {
     @KafkaListener(topics="geolocated")
     public void onGeolocatedIncident(String data) {
     		logger.info("Geolocated incident received: " + data);
+    		messagingTemplate.convertAndSend("/incident/geolocated", data);
     }
     
     @KafkaListener(topics="withOperator")
     public void onOperatorIncident(String data) {
 		logger.info("Incident with an assigned operator received: " + data);
+		messagingTemplate.convertAndSend("/incident/withOperator", data);
     }
     
     @KafkaListener(topics="sensor")
     public void onSensorIncident(String data) {
 		logger.info("Incident coming from a sensor received: " + data);
+		messagingTemplate.convertAndSend("/incident/sensor", data);
     }
 
 }
