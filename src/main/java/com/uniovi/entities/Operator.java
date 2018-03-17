@@ -2,17 +2,28 @@ package com.uniovi.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class Operator {
 	//properties
 	//has to have permissions
 	//tostring with the available permissions 
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	
+	@Column(unique=true)
+	private String email;
+	
 	private String operatorname;
 	private int canRead;
 	private int canWrite;
 	private int canGrant;
+	
+	public Operator() {}
 	
 	/**
 	 * 
@@ -25,13 +36,22 @@ public class Operator {
 	 * @param canWrite
 	 * @param canGrant
 	 */
-	public Operator(String operatorname, int canRead, int canWrite,
+	public Operator(String email, String operatorname, int canRead, int canWrite,
 			int canGrant) {
 		super();
+		this.email = email;
 		this.operatorname = operatorname;
 		this.canRead = canRead;
 		this.canWrite = canWrite;
 		this.canGrant = canGrant;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getOperatorname() {
