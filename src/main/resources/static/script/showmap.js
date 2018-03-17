@@ -1,13 +1,10 @@
-
-window.onload = function () {
-
-//more param
+$(document).ready(function () {
 
     google.charts.load("current", {
         "packages": ["map"],
         // Note: you will need to get a mapsApiKey for your project.
         // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-        "mapsApiKey": "AIzaSyAeN23rfAUlKlCk4xjiFV7waULxBJ1j370"
+        'mapsApiKey': 'AIzaSyAeN23rfAUlKlCk4xjiFV7waULxBJ1j370'
     });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -25,5 +22,5 @@ window.onload = function () {
             showInfoWindow: true
         });
     }
-}
+});
 

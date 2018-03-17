@@ -6,9 +6,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.uniovi.main.InciDashboardI2bApplication;
-
 @SpringBootApplication
+
 @ComponentScan({
 	"com.uniovi.repositories",
 	"com.uniovi.controllers",
@@ -18,6 +17,7 @@ import com.uniovi.main.InciDashboardI2bApplication;
 })
 @EnableJpaRepositories("com.uniovi.repositories")
 @EntityScan("com.uniovi.entities")
+
 public class InciDashboardI2bApplication {
 
 	public static void main(String[] args) {

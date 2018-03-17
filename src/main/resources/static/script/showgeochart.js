@@ -1,12 +1,4 @@
-window.onload = function () {
-
-    //gets the params of the class file(intend to use is receiving arrays of locations)
-    var params = document.body.getElementsByTagName('script');
-    query = params[0].classList;
-    var param_a = query[0];
-    var param_b = query[1];
-    var param_c = query[2];
-
+$(document).ready(function () {
     google.charts.load('current', {
         'packages': ['geochart'],
         // Note: you will need to get a mapsApiKey for your project.
@@ -32,4 +24,4 @@ window.onload = function () {
 
         chart.draw(data, options);
     }
-}
+});
