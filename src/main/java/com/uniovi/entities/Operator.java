@@ -1,5 +1,9 @@
 package com.uniovi.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+//@Entity
 public class Operator {
 	//properties
 	//has to have permissions
