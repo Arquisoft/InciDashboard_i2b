@@ -33,8 +33,18 @@ public class Operator {
     @JoinColumn(name="operator_id")
 	private Set<Notification> notifications = new HashSet<>();
 	
+	/**
+	 * Default constructor for the operator class
+	 */
 	public Operator() {}
 	
+	/**
+	 * Constructor with all the parameters for the operator class
+	 * @param id
+	 * @param email
+	 * @param operatorname
+	 * @param isAdmin
+	 */
 	public Operator(Long id, String email, String operatorname, int isAdmin) {
 		super();
 		this.id = id;
