@@ -15,6 +15,8 @@ public class LatLng {
 	public double latitude;
 	public double longitude;
 	
+	public LatLng() {}
+	
 	public LatLng(double latitude, double longitude) {
 		Checker.isNull(latitude);
 		Checker.isNull(longitude);
