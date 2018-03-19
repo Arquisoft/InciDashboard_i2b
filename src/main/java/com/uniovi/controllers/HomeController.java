@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HomeController {
 	
-	@RequestMapping("/")
+	@RequestMapping("/home")
 	@ResponseBody
 	public String getHome(Model model) {
 		
-		return "<p>ESTAMOS EN DESARROLLO</p>";
+		return "<p>ESTAMOS EN DESARROLLOoooo</p>";
 	}
 }

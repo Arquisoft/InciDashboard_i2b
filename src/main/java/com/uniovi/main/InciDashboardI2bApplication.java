@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @ComponentScan({
 	"com.uniovi.repositories",
+	"com.uniovi.main" ,
 	"com.uniovi.controllers",
 	"com.uniovi.entities",
 	"com.uniovi.listeners",
