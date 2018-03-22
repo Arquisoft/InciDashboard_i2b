@@ -20,6 +20,11 @@ public class DashboardController {
 		return "dashboard";
 	}
 	
+	@RequestMapping(value="/d3", method=RequestMethod.GET)
+	public String getDashboardSpain() {
+		return "d3sketch";
+	}
+	
 	 @SubscribeMapping("/test-data")
 	 public String getTestData() throws JsonProcessingException {
 		 return testDataService.getTestDataAsJSON();

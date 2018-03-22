@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 	"com.uniovi.listeners",
 	"com.uniovi.services",
 	"com.uniovi.util"
-})
+	})
 @EnableJpaRepositories("com.uniovi.repositories")
 @EntityScan("com.uniovi.entities")
 

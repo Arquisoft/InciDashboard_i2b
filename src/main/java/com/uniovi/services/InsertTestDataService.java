@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uniovi.entities.AgentInfo;
 import com.uniovi.entities.Incident;
+import com.uniovi.entities.Operator;
 import com.uniovi.util.RandomIncidentGenerator;
 
 @Service
@@ -25,6 +26,8 @@ public class InsertTestDataService {
 	
 	@Autowired
 	private IncidentsService incidentsService;
+	@Autowired
+	private OperatorService opService;
 	
 	private List<AgentInfo> agents;
 	private List<Incident> incidents;
@@ -35,6 +38,14 @@ public class InsertTestDataService {
 	
 	@PostConstruct
 	public void init() throws JsonProcessingException {
+		
+		Operator op1 = new Operator( "pedro@gmail.com", "PEDRO", false);
+		op1.setPassword("123456");
+		opService.addOperator(op1);
+		
+		Operator op2 = opService.isUser("pedro@gmail.com","123456");
+		op2.equals(op1);
+		
 		agents = new ArrayList<AgentInfo>();
 		incidents = new ArrayList<Incident>();
 		
@@ -57,6 +68,8 @@ public class InsertTestDataService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		this.incidentsJson = mapper.writeValueAsString(incidents);
+		
+		
 	}
 
 	public String getTestDataAsJSON() {
