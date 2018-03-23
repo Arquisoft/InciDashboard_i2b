@@ -28,6 +28,9 @@ function connect() {
         stompClient.subscribe('/incident/sensor', function (data) {
         		// here goes the code when we receive an incident from a sensor
         });
+        stompClient.subscribe('/incidents', function (data) {
+        		// here goes the code when we receive an incident from a sensor
+        });
     });
 }
 

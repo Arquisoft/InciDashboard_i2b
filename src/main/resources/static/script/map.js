@@ -1,6 +1,16 @@
 class Map {
+
     constructor(id) {
-    		this.id = id;
+        this.id = id;
+        this.data = [
+            ['Lat', 'Long', 'Label']
+        ];
+        //data
+        this.data.push([37.4232, -122.0853, '']);
+        this.data.push([37.4289, -122.1697, '']);
+        this.data.push([37.6153, -122.3900, '']);
+        this.data.push([37.4422, -122.1731, '']);
+       
         google.charts.load("current", {
             "packages": ["map"],
             // Note: you will need to get a mapsApiKey for your project.
@@ -14,23 +24,17 @@ class Map {
     }
 
     display() {
-        var data = google.visualization.arrayToDataTable([
-            ['Lat', 'Long', 'Labels'],
-            [37.4232, -122.0853, ''],
-            [37.4289, -122.1697, ''],
-            [37.6153, -122.3900, ''],
-            [37.4422, -122.1731, '']
-        ]);
-        
+        var dataTable = google.visualization.arrayToDataTable(this.data);
+              
         this.map = new google.visualization.Map(document.getElementById(this.id));
-        this.map.draw(data, {
+        this.map.draw(dataTable, {
             showTooltip: true,
             showInfoWindow: true
         });
     }
 
-    onNewData(data) {
-        // code to handle new data from kafka
+    onNewData(newData) {
+        this.data.push([newData.lat,newData.long,newData.label]);
     }
 
 }
