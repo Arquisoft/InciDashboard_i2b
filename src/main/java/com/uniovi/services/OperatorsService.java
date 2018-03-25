@@ -17,10 +17,6 @@ public class OperatorsService {
 	@Autowired
 	private OperatorRepository repo;
 	
-	public void getAll() {
-		repo.findAll();
-	}
-	
 	public void addOperator(Operator operator) {
 		operator.setPassword(bCryptPasswordEncoder.encode(operator.getPassword()));
 		repo.save(operator);

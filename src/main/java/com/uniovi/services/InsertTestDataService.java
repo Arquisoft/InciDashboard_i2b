@@ -83,6 +83,10 @@ public class InsertTestDataService {
 	
 	@PreDestroy
 	public void finalize() {
+		this.deleteAll();
+	}
+	
+	public void deleteAll() {
 		incidentsService.deleteAll();
 		agentsService.deleteAll();
 		operatorsService.deleteAll();
