@@ -1,5 +1,7 @@
 package com.uniovi.entities.location;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import com.uniovi.util.Checker;
 
 /**
@@ -9,7 +11,10 @@ import com.uniovi.util.Checker;
  */
 public class LatLng {
 
+	@Field("lat")
 	public double latitude;
+
+	@Field("lon")
 	public double longitude;
 	
 	public LatLng() {}

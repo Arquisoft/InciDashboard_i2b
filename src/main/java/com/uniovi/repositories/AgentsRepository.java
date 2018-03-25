@@ -1,9 +1,10 @@
 package com.uniovi.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.uniovi.entities.AgentInfo;
 
-public interface AgentsRepository extends CrudRepository<AgentInfo, Long> {
+public interface AgentsRepository extends MongoRepository<AgentInfo, ObjectId> {
 
 }

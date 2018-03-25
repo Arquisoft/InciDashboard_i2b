@@ -30,6 +30,7 @@ public class OperatorController {
 	@RequestMapping(value = "/login/post", method = RequestMethod.POST)
 	public String login(@RequestParam String email, @RequestParam String password) {
 		Operator op = service.isUser(email,password);
+		
 		if(op !=null) {
 			httpSession.setAttribute("email", email);
 			return "dashboard";

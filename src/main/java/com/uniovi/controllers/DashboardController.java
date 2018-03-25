@@ -15,16 +15,12 @@ import com.uniovi.entities.Incident;
 import com.uniovi.entities.location.LatLng;
 import com.uniovi.services.IncidentsService;
 import com.uniovi.services.InsertTestDataService;
-import com.uniovi.services.NotificationService;
 
 @Controller
 public class DashboardController {
 
 	@Autowired
 	private InsertTestDataService testDataService;
-	
-	@Autowired
-	private NotificationService notificationService;
 	
 	@Autowired
 	private IncidentsService inciService;
@@ -64,11 +60,6 @@ public class DashboardController {
 		model.addAttribute("sensors", incidentsSensors);
 		model.addAttribute("people", incidentsPeople);
 		model.addAttribute("entities", incidentsEntities);
-		return "incidentsView";
-	}
-	
-	@RequestMapping(value = "/dashboard/notifications", method = RequestMethod.GET)
-	public String getDashboardNotifications() {
 		return "incidentsView";
 	}
 
