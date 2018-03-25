@@ -18,7 +18,7 @@ public class NotificationService {
 		return notificationsRepository.findAll();
 	}
 
-	public void addIncident(Notification n) {
+	public void addNotification(Notification n) {
 		notificationsRepository.save(n);
 	}
 

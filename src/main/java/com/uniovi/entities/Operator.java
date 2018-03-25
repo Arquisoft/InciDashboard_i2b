@@ -24,7 +24,6 @@ public class Operator {
 	private String password;
 	private String operatorname;
 	private boolean isAdmin;
-	private String role;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "operator_id")
@@ -35,7 +34,6 @@ public class Operator {
 	 */
 	public Operator() {
 		super();
-		this.role = "OPERATOR";
 	}
 
 	public Operator(String email, String operatorname, boolean isAdmin) {
@@ -139,20 +137,12 @@ public class Operator {
 		this.isAdmin = isAdmin;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 }

@@ -20,6 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.uniovi.repositories")
 @EntityScan("com.uniovi.entities")
 
+
 public class InciDashboardI2bApplication {
 
 	public static void main(String[] args) {

@@ -1,4 +1,5 @@
 package com.uniovi.entities;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,47 +30,54 @@ import com.uniovi.util.IncidentPropertiesConverter;
 @JsonSerialize(using = IncidentSerializer.class)
 @Entity
 public class Incident {
-	
-	@Id @GeneratedValue
+
+	@Id
+	@GeneratedValue
 	private Long id;
-	
+
 	private String inciName;
 	private LatLng location;
-	
+
 	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name="agent_id")
+	@JoinColumn(name = "agent_id")
 	private AgentInfo agent;
-	
-	@ElementCollection(targetClass=String.class, fetch=FetchType.EAGER)
+
+	@ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
 	private Set<String> tags = new HashSet<String>();
-	
-	@ElementCollection(targetClass=String.class, fetch=FetchType.EAGER)
+
+	@ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
 	private List<String> moreInfo = new ArrayList<String>();
-	
-	@Convert(converter=IncidentPropertiesConverter.class)
+
+	@Convert(converter = IncidentPropertiesConverter.class)
 	private Map<String, Object> properties = new HashMap<String, Object>();
-	
+
 	@Enumerated(EnumType.STRING)
 	private IncidentState state;
 
-	public Incident() {}
-	
+	public Incident() {
+	}
+
 	/**
-	 * Minimum initialization of Incident object. None of the parameters can be empty or null
+	 * Minimum initialization of Incident object. None of the parameters can be
+	 * empty or null
 	 * 
-	 * @param username - of the user that submitted the incident
-	 * @param passw - of the user that submitted the incident
-	 * @param name - of the incident, either descriptive or a code
-	 * @param location - of the incident 
+	 * @param username
+	 *            - of the user that submitted the incident
+	 * @param passw
+	 *            - of the user that submitted the incident
+	 * @param name
+	 *            - of the incident, either descriptive or a code
+	 * @param location
+	 *            - of the incident
 	 */
 	public Incident(String name, LatLng location) {
 		if (name.equals("") || location == null)
 			throw new IllegalArgumentException("Incident fields cannot be empty");
-		
+
 		this.inciName = name;
 		this.location = location;
 	}
-	
+
 	public Incident(String name, LatLng latLng, AgentInfo agent) {
 		this(name, latLng);
 		this.setAgent(agent);
@@ -114,7 +122,7 @@ public class Incident {
 	public Set<String> getTags() {
 		return tags;
 	}
-	
+
 	public List<String> getMoreInfo() {
 		return moreInfo;
 	}
@@ -153,7 +161,7 @@ public class Incident {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		
+
 		Incident other = (Incident) obj;
 		if (id == null) {
 			if (other.id != null)
@@ -166,12 +174,22 @@ public class Incident {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Incident [id=").append(id).append(", inciName=").append(inciName)
-				.append(", location=").append(location).append(", tags=").append(tags)
-				.append(", moreInfo=").append(moreInfo).append(", properties=")
-				.append(properties).append("]");
+		builder.append("Incident [id=").append(id).append(", inciName=").append(inciName).append(", location=")
+				.append(location).append(", tags=").append(tags).append(", moreInfo=").append(moreInfo)
+				.append(", properties=").append(properties).append("]");
 		return builder.toString();
 	}
-	
-	
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setTags(Set<String> tags) {
+		this.tags = tags;
+	}
+
+	public void setMoreInfo(List<String> moreInfo) {
+		this.moreInfo = moreInfo;
+	}
+
 }
