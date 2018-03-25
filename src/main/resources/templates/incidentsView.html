@@ -4,12 +4,21 @@
 <head th:replace="/fragments/head"></head>
 
 <body>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    var currentOperator = [[${opEmail}]];
+    /*]]>*/
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="/script/incidents_update.js"></script>
 
     <nav th:replace="/fragments/nav"></nav>
     <div class="uk-container">
-        <h1 class="uk-heading-primary">Your incidents</h1>
-        <div th:each="incident : ${incidents}">
+        <h1 class="uk-heading-primary uk-text-center uk-margin-bottom uk-margin-top">Your incidents</h1>
+        <div id="inciList" th:each="incident : ${incidents}">
 			<div class="uk-card uk-card-default uk-width-1-2@m uk-align-center uk-margin-bottom">
                 <div class="uk-card-header">
                     <h3 class="uk-card-title uk-text-center" th:text="${incident.getInciName()}"></h3>
@@ -46,7 +55,7 @@
                     </div>
                 </div>
                 <div class="uk-card-footer">
-                    <a th:href="${'/incident/' + incident.getId() + '/details'}"
+                    <a th:href="${'/incident/' + incident.getInciName() + '/details'}"
                        class="uk-button uk-button-text uk-align-center">Modify</a>
                 </div>
             </div>

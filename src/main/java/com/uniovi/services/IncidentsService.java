@@ -20,10 +20,6 @@ public class IncidentsService {
 		return incidentsRepository.findAll();
 	}
 	
-	public Incident getIncidentById(ObjectId id) {
-		return incidentsRepository.findById(id).get();
-	}
-	
 	public List<Incident> getGeolocatedIncidents() {
 		return incidentsRepository.findGeolocated();
 	}

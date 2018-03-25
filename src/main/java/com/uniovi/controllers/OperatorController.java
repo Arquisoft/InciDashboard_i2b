@@ -39,16 +39,17 @@ public class OperatorController {
 		
 		List<Incident> incidents = incidentsService.getIncidentsOf(operator);
 		model.addAttribute("incidents", incidents);
+		model.addAttribute("opEmail", email);
 		
 		return "incidentsView";
 	}
 	
-	@RequestMapping("/incidents/{id}/details")
-	public String getIncidentDetails(Model model, @PathVariable ObjectId id) {
+	@RequestMapping("/incident/{inciName}/details")
+	public String getIncidentDetails(Model model, @PathVariable String inciName) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getName();
 		Operator operator = operatorsService.getOperatorByEmail(email);
-		Incident incident = incidentsService.getIncidentById(id);
+		Incident incident = incidentsService.getIncidentByName(inciName);
 		
 		model.addAttribute("incident", incident);
 		return "incidentDetails";
