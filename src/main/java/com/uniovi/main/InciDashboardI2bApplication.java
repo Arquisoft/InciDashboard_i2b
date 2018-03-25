@@ -9,10 +9,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @ComponentScan({
 	"com.uniovi.repositories",
-	"com.uniovi.main" ,
 	"com.uniovi.controllers",
 	"com.uniovi.entities",
-	"com.uniovi.listeners",
+	"com.uniovi.config",
 	"com.uniovi.services",
 	"com.uniovi.util"
 	})

@@ -25,4 +25,7 @@ public interface IncidentsRepository extends MongoRepository<Incident, ObjectId>
 	@Query("{ 'agent.kind': ?0 }")
 	public List<Incident> findByKind(String kind);
 
+	@Query("{ 'properties.operator': ?0 }'")
+	public List<Incident> findByOperatorEmail(String email);
+
 }

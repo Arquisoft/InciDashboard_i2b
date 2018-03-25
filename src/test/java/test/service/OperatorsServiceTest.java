@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.uniovi.entities.Operator;
 import com.uniovi.main.InciDashboardI2bApplication;
-import com.uniovi.services.OperatorService;
+import com.uniovi.services.OperatorsService;
 
 @SpringBootTest(classes = { InciDashboardI2bApplication.class })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,7 +25,7 @@ public class OperatorsServiceTest {
 	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "incidents");
 	
 	@Autowired
-	private OperatorService operatorService;
+	private OperatorsService operatorService;
 
 	private Operator testOp1;
 	private Operator testOp2;

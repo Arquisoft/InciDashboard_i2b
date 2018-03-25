@@ -8,7 +8,7 @@ import com.uniovi.entities.Operator;
 import com.uniovi.repositories.OperatorRepository;
 
 @Service
-public class OperatorService {
+public class OperatorsService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;

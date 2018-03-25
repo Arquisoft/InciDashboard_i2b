@@ -1,4 +1,4 @@
-package com.uniovi.listeners;
+package com.uniovi.kafka;
 
 import java.util.HashMap;
 import java.util.Map;

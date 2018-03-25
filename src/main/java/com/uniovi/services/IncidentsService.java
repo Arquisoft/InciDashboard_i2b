@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Incident;
+import com.uniovi.entities.Operator;
 import com.uniovi.repositories.IncidentsRepository;
 
 @Service
@@ -17,6 +18,10 @@ public class IncidentsService {
 
 	public List<Incident> getAllIncidents() {
 		return incidentsRepository.findAll();
+	}
+	
+	public Incident getIncidentById(ObjectId id) {
+		return incidentsRepository.findById(id).get();
 	}
 	
 	public List<Incident> getGeolocatedIncidents() {
@@ -33,6 +38,10 @@ public class IncidentsService {
 
 	public void addIncident(Incident incident) {
 		incidentsRepository.save(incident);
+	}
+	
+	public List<Incident> getIncidentsOf(Operator operator) {
+		return incidentsRepository.findByOperatorEmail(operator.getEmail());
 	}
 	
 	public Incident getIncidentByName(String inciName) {

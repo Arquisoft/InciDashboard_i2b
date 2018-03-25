@@ -1,4 +1,4 @@
-package com.uniovi.listeners;
+package com.uniovi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.anyRequest().authenticated()
 		.and()
 			.formLogin().loginPage("/login").permitAll()
+			.defaultSuccessUrl("/incidents")
 		.and()
 			.logout().permitAll();
 	}
