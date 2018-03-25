@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,13 @@ public class InsertTestDataService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		this.incidentsJson = mapper.writeValueAsString(incidents);
+	}
+	
+	@PreDestroy
+	public void finalize() {
+		incidentsService.deleteAll();
+		agentsService.deleteAll();
+		operatorsService.deleteAll();
 	}
 
 	public String getTestDataAsJSON() {

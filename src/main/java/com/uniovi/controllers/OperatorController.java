@@ -25,18 +25,5 @@ public class OperatorController {
 	public String getLogin() {
 		return "/login";
 	}
-	
-	//Lo pongo con otra url porque no tira sino
-	@RequestMapping(value = "/login/post", method = RequestMethod.POST)
-	public String login(@RequestParam String email, @RequestParam String password) {
-		Operator op = service.isUser(email,password);
-		
-		if(op !=null) {
-			httpSession.setAttribute("email", email);
-			return "dashboard";
-		} else {
-			return "redirect:/login?error";
-		}
-	}
 
 }

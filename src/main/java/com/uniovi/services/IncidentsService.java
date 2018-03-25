@@ -47,4 +47,8 @@ public class IncidentsService {
 		incidentsRepository.deleteById(id);
 	}
 
+	public void deleteAll() {
+		incidentsRepository.deleteAll();
+	}
+
 }

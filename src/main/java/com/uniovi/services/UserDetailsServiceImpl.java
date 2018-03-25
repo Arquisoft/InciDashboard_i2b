@@ -18,11 +18,11 @@ import com.uniovi.repositories.OperatorRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private OperatorRepository operatorRepository;
+	private OperatorService operatorService;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Operator operator = operatorRepository.findByEmail(email);
+		Operator operator = operatorService.getOperatorByEmail(email);
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_OPERATOR"));
