@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="/fragments/head"></head>
+
+<body>
+    <link rel="stylesheet" href="/css/incidetails.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <nav th:replace="/fragments/nav"></nav>
+    <div class="uk-container">
+			<div class="uk-card-large uk-card-default uk-width-1-2@m uk-align-center uk-margin-bottom uk-margin-top">
+                <div class="uk-card-header">
+                    <h3 class="uk-card-title uk-text-center" th:text="${incident.getInciName()}"></h3>
+                </div>
+                <div class="uk-card-body">
+
+                    <p class="uk-text-center" th:text="${'Incident sent from agent named ' + incident.getAgent().getUsername()
+                    + ' of kind ' + incident.getAgent().getKind() + '.'}"></p>
+
+                    <!-- Location -->
+                    <div class="location uk-margin-small-bottom">
+                        <h4 class="uk-heading-bullet">Location</h4>
+                        <ul class="uk-list uk-list-bullet">
+                            <li th:text="'Latitude: ' + ${incident.getLocation().latitude}">Latitude</li>
+                            <li th:text="'Longitude: ' + ${incident.getLocation().longitude}">Longitude</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="tags uk-margin-small-bottom" th:unless="${#lists.isEmpty(incident.getTags())}">
+                        <h4 class="uk-heading-bullet">Tags:</h4>
+                        <ul class="uk-list uk-list-striped">
+                            <li th:each="tag : ${incident.getTags()}" th:text="${tag}"></li>
+                        </ul>
+                    </div>
+
+                    <!-- Properties -->
+                    <div class="properties" th:unless="${#lists.isEmpty(incident.getProperties().keySet())}">
+                        <h4 class="uk-heading-bullet">Properties:</h4>
+                        <ul class="uk-list uk-list-divider">
+                            <li th:each="key : ${incident.getProperties().keySet()}"
+                                th:text="${key + ': ' + incident.getProperties().get(key)}"></li>
+                        </ul>
+                    </div>
+
+                    <!-- Comments -->
+                    <div class="comments uk-margin-small-bottom">
+                        <h4 class="uk-heading-bullet">Comments:</h4>
+                        <ul class="uk-comment-list">
+                            <li id="commentList">
+                                <article th:each="comment : ${incident.getComments()}"
+                                         class="uk-comment uk-comment-primary">
+                                    <div class="uk-comment-body">
+                                        <p th:text="${comment}"></p>
+                                    </div>
+                                </article>
+                            </li>
+                        </ul>
+
+                        <h5 class="uk-heading">Add comment: </h5>
+                        <textarea class="uk-textarea" id="commentArea"></textarea>
+                        <a href="#"
+                           class="uk-button uk-button-default uk-align-center"
+                           th:id="${'addComment' + incident.getInciName()}">Send</a>
+                           <script th:inline="javascript">
+                                   /*<![CDATA[*/
+                                   var inciName = [[${incident.getInciName()}]];
+                                   inciName = inciName.replace(/['"]+/g, '');
+
+                                   $("#addComment" + inciName).click(function() {
+                                       var commentData = $("#commentArea").val();
+                                       if (commentData === "") {
+                                           return;
+                                       }
+
+                                       $.ajax({
+                                           type: "POST",
+                                           url: "/incident/addComment",
+                                           data: {
+                                               name: inciName,
+                                               comment: commentData
+                                           }, success: function(data) {
+                                               console.log("hi");
+                                               $("#commentArea").val("");
+                                               $("#commentList").append("<article class='uk-comment uk-comment-primary uk-margin-small-bottom'>"
+                                                                        + "<div class='uk-comment uk-comment-primary'>"
+                                                                        + "<p>" + commentData + "</p></div></article>");
+                                            }
+                                        });
+                                   });
+                                   /*]]>*/
+                           </script>
+                    </div>
+
+                    <div class="state">
+                        <h4 class="uk-heading-bullet">State</h4>
+                        <p th:text="${incident.getState()}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

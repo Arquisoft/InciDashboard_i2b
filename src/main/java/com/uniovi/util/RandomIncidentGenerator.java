@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.uniovi.entities.AgentInfo;
 import com.uniovi.entities.Incident;
+import com.uniovi.entities.IncidentState;
 import com.uniovi.entities.location.LatLng;
 
 /**
@@ -52,6 +53,7 @@ public class RandomIncidentGenerator {
 		incident.setInciName(this.createRandomString(this.nameLength));
 		incident.setAgent(this.pickRandomAgent());
 		incident.setLocation(this.createRandomLocation());
+		incident.setState(IncidentState.OPEN);
 		this.createRandomTagsFor(incident);
 		this.createRandomPropertiesFor(incident);
 		return incident;

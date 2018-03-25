@@ -32,6 +32,7 @@ public class Incident {
 
 	private List<String> tags = new ArrayList<String>();
 	private List<String> moreInfo = new ArrayList<String>();
+	private List<String> comments = new ArrayList<String>();
 	private Map<String, Object> properties = new HashMap<String, Object>();
 	private IncidentState state;
 
@@ -107,13 +108,25 @@ public class Incident {
 		return tags;
 	}
 
-
 	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
 	
 	public Incident addTag(String tag) {
 		this.tags.add(tag);
+		return this;
+	}
+
+	public List<String> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<String> comments) {
+		this.comments = comments;
+	}
+	
+	public Incident addComment(String comment) {
+		this.comments.add(comment);
 		return this;
 	}
 	

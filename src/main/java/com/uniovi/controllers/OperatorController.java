@@ -2,7 +2,6 @@ package com.uniovi.controllers;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uniovi.entities.Incident;
 import com.uniovi.entities.Operator;
@@ -53,6 +55,19 @@ public class OperatorController {
 		
 		model.addAttribute("incident", incident);
 		return "incidentDetails";
+	}
+	
+	@RequestMapping(value="/incident/addComment", method=RequestMethod.POST)
+	@ResponseBody
+	public String addComment(@RequestParam("name") String name, @RequestParam("comment") String comment) {
+		Incident incident = incidentsService.getIncidentByName(name);
+		if (incident == null) {
+			return "Error adding comment!";
+		}
+		
+		incident.addComment(comment);
+		incidentsService.addIncident(incident);
+		return "Comment added";
 	}
 
 }
