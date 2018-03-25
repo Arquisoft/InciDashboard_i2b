@@ -14,6 +14,7 @@ public class Operator {
 	private String password;
 	private String operatorname;
 	private boolean isAdmin;
+	private int numNotifications;
 
 	/**
 	 * Default constructor for the operator class
@@ -126,6 +127,14 @@ public class Operator {
 
 	public void setId(ObjectId id) {
 		this.id = id;
+	}
+	
+	public int getNumNotifications() {
+		return this.numNotifications;
+	}
+	
+	public void setNumNotifications(int numNotifications) {
+		this.numNotifications = numNotifications;
 	}
 
 }

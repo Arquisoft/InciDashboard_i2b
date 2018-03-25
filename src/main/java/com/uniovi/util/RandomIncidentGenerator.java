@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.uniovi.entities.AgentInfo;
 import com.uniovi.entities.Incident;
+import com.uniovi.entities.IncidentState;
 import com.uniovi.entities.location.LatLng;
 
 /**
@@ -22,6 +23,7 @@ import com.uniovi.entities.location.LatLng;
 public class RandomIncidentGenerator {
 	
 	private List<AgentInfo> possibleAgents;
+	private List<String> possibleTags;
 	
 	private Random generator;
 	
@@ -32,6 +34,12 @@ public class RandomIncidentGenerator {
 
 	public RandomIncidentGenerator() {
 		this.possibleAgents = new ArrayList<AgentInfo>();
+		this.possibleTags = new ArrayList<String>();
+		this.possibleTags.add("Fire");
+		this.possibleTags.add("Earthquake");
+		this.possibleTags.add("Important");
+		this.possibleTags.add("Pollution");
+		this.possibleTags.add("Test");
 		this.generator = new Random();
 		this.nameLength = 10;
 	}
@@ -45,10 +53,22 @@ public class RandomIncidentGenerator {
 		incident.setInciName(this.createRandomString(this.nameLength));
 		incident.setAgent(this.pickRandomAgent());
 		incident.setLocation(this.createRandomLocation());
+		incident.setState(IncidentState.OPEN);
+		this.createRandomTagsFor(incident);
 		this.createRandomPropertiesFor(incident);
 		return incident;
 	}
 	
+	private void createRandomTagsFor(Incident incident) {
+		int tagIndex = generator.nextInt(this.possibleTags.size());
+		incident.addTag(this.possibleTags.get(tagIndex));
+		
+		if (generator.nextDouble() > 0.5) {
+			int nextIndex = tagIndex == this.possibleTags.size() - 1 ? 0 : tagIndex + 1;
+			incident.addTag(this.possibleTags.get(nextIndex));
+		}
+	}
+
 	private void createRandomPropertiesFor(Incident incident) {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		

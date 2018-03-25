@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class InsertTestDataService {
 	private IncidentsService incidentsService;
 	
 	@Autowired
-	private OperatorService operatorsService;
+	private OperatorsService operatorsService;
 	
 	private List<AgentInfo> agents;
 	private List<Incident> incidents;
@@ -64,11 +65,27 @@ public class InsertTestDataService {
 		for (int i = 0; i < NUM_INCIDENTS; i++) {
 			Incident incident = incidentGenerator.generateRandomIncident();
 			incidents.add(incident);
+			
+			if (i <= 3) {
+				incidents.get(i).assignOperator(op1);
+			} else if (i <= 6) {
+				incidents.get(i).assignOperator(op2);
+			} else if (i <= 9) {
+				incidents.get(i).assignOperator(op3);
+			}
+			
 			incidentsService.addIncident(incident);
 		}
 		
 		ObjectMapper mapper = new ObjectMapper();
 		this.incidentsJson = mapper.writeValueAsString(incidents);
+	}
+	
+	@PreDestroy
+	public void finalize() {
+		incidentsService.deleteAll();
+		agentsService.deleteAll();
+		operatorsService.deleteAll();
 	}
 
 	public String getTestDataAsJSON() {

@@ -1,7 +1,6 @@
 package test.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -15,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.uniovi.entities.Operator;
 import com.uniovi.main.InciDashboardI2bApplication;
-import com.uniovi.services.OperatorService;
+import com.uniovi.services.OperatorsService;
 
 @SpringBootTest(classes = { InciDashboardI2bApplication.class })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,7 +24,7 @@ public class OperatorsServiceTest {
 	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "incidents");
 	
 	@Autowired
-	private OperatorService operatorService;
+	private OperatorsService operatorService;
 
 	private Operator testOp1;
 	private Operator testOp2;
@@ -55,10 +54,6 @@ public class OperatorsServiceTest {
 		assertEquals(operatorService.getOperatorByEmail("pacoo@dashboard.com"), testOp1);
 		assertEquals(operatorService.getOperatorByEmail("david_son@dashboard.com"), testOp2);
 		assertEquals(operatorService.getOperatorByEmail("miEmail@dashboard.com"), testOp3);
-		
-		// isUser
-		assertEquals(operatorService.isUser("pacoo@dashboard.com", "123456"), testOp1);
-		assertNotEquals(operatorService.isUser("pacoo@dashboard.com", "otherPass"), testOp1);
 
 		// create
 		Operator testOp4 = new Operator("new@dashboard.com", "Lucia", "123456", false);

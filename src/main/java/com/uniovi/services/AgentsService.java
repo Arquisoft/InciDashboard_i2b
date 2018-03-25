@@ -20,4 +20,8 @@ public class AgentsService {
 		this.agentsRepository.delete(agent);
 	}
 
+	public void deleteAll() {
+		this.agentsRepository.deleteAll();
+	}
+
 }

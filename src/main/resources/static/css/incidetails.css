@@ -1,0 +1,13 @@
+article {
+    margin-bottom: 0.5vh;
+}
+
+textarea {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+textarea[id="commentArea"] + a[id^=addComment] {
+    margin-top: 0;
+    padding-top: 0;
+}
