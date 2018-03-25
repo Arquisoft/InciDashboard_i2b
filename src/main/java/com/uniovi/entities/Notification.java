@@ -1,20 +1,15 @@
 package com.uniovi.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-@Entity
+@Document(collection="notifications")
 public class Notification {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	
+	@ObjectId
 	private Long id;
 	
 	private String description;
-	
-	@ManyToOne
 	private Operator operator;
 
 	/**

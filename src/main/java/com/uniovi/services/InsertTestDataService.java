@@ -26,8 +26,9 @@ public class InsertTestDataService {
 	
 	@Autowired
 	private IncidentsService incidentsService;
+	
 	@Autowired
-	private OperatorService opService;
+	private OperatorService operatorsService;
 	
 	private List<AgentInfo> agents;
 	private List<Incident> incidents;
@@ -38,13 +39,13 @@ public class InsertTestDataService {
 	
 	@PostConstruct
 	public void init() throws JsonProcessingException {
+		Operator op1 = new Operator("operator1@dashboard.com", "op1", "123456", false);
+		Operator op2 = new Operator("operator2@dashboard.com", "op2", "123456", false);
+		Operator op3 = new Operator("operator3@dashboard.com", "op3", "123456", false);
 		
-		Operator op1 = new Operator( "pedro@gmail.com", "PEDRO", false);
-		op1.setPassword("123456");
-		opService.addOperator(op1);
-		
-		Operator op2 = opService.isUser("pedro@gmail.com","123456");
-		op2.equals(op1);
+		operatorsService.addOperator(op1);
+		operatorsService.addOperator(op2);
+		operatorsService.addOperator(op3);
 		
 		agents = new ArrayList<AgentInfo>();
 		incidents = new ArrayList<Incident>();
@@ -68,8 +69,6 @@ public class InsertTestDataService {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		this.incidentsJson = mapper.writeValueAsString(incidents);
-		
-		
 	}
 
 	public String getTestDataAsJSON() {

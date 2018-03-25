@@ -1,7 +1,5 @@
 package com.uniovi.entities.location;
 
-import javax.persistence.Embeddable;
-
 import com.uniovi.util.Checker;
 
 /**
@@ -9,7 +7,6 @@ import com.uniovi.util.Checker;
  * @author Sergio Faya Fernández
  *
  */
-@Embeddable
 public class LatLng {
 
 	public double latitude;

@@ -1,16 +1,14 @@
 package com.uniovi.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection="agents")
 public class AgentInfo {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private ObjectId id;
 	
 	private String username;
 	private String password;
@@ -48,11 +46,11 @@ public class AgentInfo {
 		this.kind = kind;
 	}
 
-	public Long getId() {
+	public Object getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

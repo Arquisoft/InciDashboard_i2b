@@ -1,33 +1,19 @@
 package com.uniovi.entities;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-
-@Entity
+@Document(collection="operators")
 public class Operator {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@Column(unique = true)
+	private ObjectId id;
+	
 	private String email;
 	private String password;
 	private String operatorname;
 	private boolean isAdmin;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "operator_id")
-	private Set<Notification> notifications = new HashSet<>();
 
 	/**
 	 * Default constructor for the operator class
@@ -43,6 +29,11 @@ public class Operator {
 		this.isAdmin = isAdmin;
 	}
 
+	public Operator(String email, String operatorname, String password, boolean isAdmin) {
+		this(email, operatorname, isAdmin);
+		this.password = password;
+	}
+
 	/**
 	 * Constructor with all the parameters for the operator class
 	 * 
@@ -51,12 +42,12 @@ public class Operator {
 	 * @param operatorname
 	 * @param isAdmin
 	 */
-	public Operator(Long id, String email, String operatorname, boolean isAdmin) {
+	public Operator(ObjectId id, String email, String operatorname, boolean isAdmin) {
 		this(email, operatorname, isAdmin);
 		this.id = id;
 
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -117,14 +108,6 @@ public class Operator {
 		this.isAdmin = isAdmin;
 	}
 
-	public Set<Notification> getNotifications() {
-		return notifications;
-	}
-
-	public void setNotifications(Set<Notification> notifications) {
-		this.notifications = notifications;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -137,11 +120,11 @@ public class Operator {
 		this.isAdmin = isAdmin;
 	}
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

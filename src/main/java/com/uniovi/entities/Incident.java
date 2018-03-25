@@ -2,60 +2,40 @@ package com.uniovi.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.uniovi.entities.location.LatLng;
 import com.uniovi.json.IncidentDeserializer;
 import com.uniovi.json.IncidentSerializer;
-import com.uniovi.util.IncidentPropertiesConverter;
 
 @JsonDeserialize(using = IncidentDeserializer.class)
 @JsonSerialize(using = IncidentSerializer.class)
-@Entity
+@Document(collection="incidents")
 public class Incident {
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    private ObjectId id;
 
 	private String inciName;
 	private LatLng location;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "agent_id")
+	@Field("agent")
 	private AgentInfo agent;
 
-	@ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
-	private Set<String> tags = new HashSet<String>();
-
-	@ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+	private List<String> tags = new ArrayList<String>();
 	private List<String> moreInfo = new ArrayList<String>();
-
-	@Convert(converter = IncidentPropertiesConverter.class)
 	private Map<String, Object> properties = new HashMap<String, Object>();
-
-	@Enumerated(EnumType.STRING)
 	private IncidentState state;
 
-	public Incident() {
-	}
+	public Incident() {}
 
 	/**
 	 * Minimum initialization of Incident object. None of the parameters can be
@@ -107,8 +87,12 @@ public class Incident {
 		this.location = location;
 	}
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
 	}
 
 	public String getInciName() {
@@ -119,8 +103,26 @@ public class Incident {
 		return location;
 	}
 
-	public Set<String> getTags() {
+	public List<String> getTags() {
 		return tags;
+	}
+
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+	
+	public Incident addTag(String tag) {
+		this.tags.add(tag);
+		return this;
+	}
+	
+	public void assignOperator(Operator randomOperator) {
+		this.properties.put("operator", randomOperator.getEmail());
+	}
+	
+	public String getOperator() {
+		return (String) this.properties.get("operator");
 	}
 
 	public List<String> getMoreInfo() {
@@ -178,14 +180,6 @@ public class Incident {
 				.append(location).append(", tags=").append(tags).append(", moreInfo=").append(moreInfo)
 				.append(", properties=").append(properties).append("]");
 		return builder.toString();
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setTags(Set<String> tags) {
-		this.tags = tags;
 	}
 
 	public void setMoreInfo(List<String> moreInfo) {
