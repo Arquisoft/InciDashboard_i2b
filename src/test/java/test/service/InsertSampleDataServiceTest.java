@@ -1,6 +1,9 @@
 package test.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.uniovi.entities.Incident;
 import com.uniovi.main.InciDashboardI2bApplication;
 import com.uniovi.services.IncidentsService;
 import com.uniovi.services.InsertTestDataService;
@@ -32,15 +36,12 @@ public class InsertSampleDataServiceTest {
 		sampleDataService.init();
 		
 		//Start data inserted
-		assertNotNull(incidentsService.getIncidentByName("inci1"));
-		assertNotNull(incidentsService.getIncidentByName("inci2"));
-		assertNotNull(incidentsService.getIncidentByName("inci3"));
-		assertNotNull(incidentsService.getIncidentByName("inci4"));
-		assertNotNull(incidentsService.getIncidentByName("inci5"));
+		List<Incident> incidents = incidentsService.getAllIncidents();
+		assertEquals(InsertTestDataService.NUM_INCIDENTS, incidents.size());
 		
-		assertNotNull(operatorsService.getOperatorByEmail("pacoo"));
-		assertNotNull(operatorsService.getOperatorByEmail("pacoo"));
-		assertNotNull(operatorsService.getOperatorByEmail("pacoo"));
+		assertNotNull(operatorsService.getOperatorByEmail("operator1@dashboard.com"));
+		assertNotNull(operatorsService.getOperatorByEmail("operator2@dashboard.com"));
+		assertNotNull(operatorsService.getOperatorByEmail("operator3@dashboard.com"));
 	}
 
 }
