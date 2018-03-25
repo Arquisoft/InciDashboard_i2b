@@ -4,93 +4,21 @@
 <head>
     <title>Hello WebSocket</title>
     <link href="/css/custom.css" rel="stylesheet">
-    <link href="/css/c3.css" rel="stylesheet"> 
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="/script/c3.min.js"></script>
-    <!-- Boostrap
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    -->
+
+    
     <!-- my scripts-->
     <script src="/script/geochart.js"></script>
-    <script src="/script/map.js"></script>
     <script src="/script/visualizer.js"></script>
-    <script src="/script/chart.js"></script>
-    <!-- UIkit CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/css/uikit.min.css" />
-    <!-- UIkit JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/js/uikit-icons.min.js"></script>
+    
 </head>
 
 <body>
-    <ul uk-tab>
-        <li class="uk-active">
-            <a href="#">Charts</a>
-        </li>
-        <li>
-            <a href="#">Maps
-            </a>
-        </li>
-        <li>
-            <a href="#">Notifications
-                <span class="uk-badge">5</span>
-            </a>
-        </li>
-    </ul>
-
-    <ul class="uk-switcher uk-margin">
-        <li class="uk-container">
-            <h2>charts</h2>
-            <div class="uk-column-1-2">
-                <div class="col-6" id="stacked-bar-chart">
-                    <p>stacked-bar-chart</p>
-                </div>
-                <div class="col-6" id="donut-chart">
-                </div>
-            </div>
-            <div class="row">
-                <div id="line-chart"></div>
-            </div>
-        </li>
-        <li class="uk-container">
-            <div class="uk-column-1-2">
-                <div id="regions_div" style="width: 900px; height: 500px;">
-                    <p>regions div</p>
-                </div>
-                <div id="map_div" style="width: 400px; height: 300px">
-                    <p>map div</p>
-                </div>
-            </div>
-        </li>
-        <li class="uk-container">
-            <table class="uk-table uk-table-striped">
-                <thead>
-                    <tr>
-                        <th>Table Heading</th>
-                        <th>Table Heading</th>
-                        <th>Table Heading</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Table Data</td>
-                        <td>Table Data</td>
-                        <td>Table Data</td>
-                    </tr>
-                    <tr>
-                        <td>Table Data</td>
-                        <td>Table Data</td>
-                        <td>Table Data</td>
-                    </tr>
-                </tbody>
-            </table>
-        </li>
-    </ul>
+    <nav th:replace="/fragments/nav"></nav>
     </div>
 </body>
 

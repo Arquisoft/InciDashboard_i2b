@@ -1,35 +1,69 @@
 $(document).ready(function () {
+    /*<![CDATA[*/
 
-    var chart = c3.generate({
+    // 5 or 6 most used tags
+    // dictionary of tagname, repetitions
+    var tags = /*[[mostUsedTags]]*/;
+
+    var barChart = c3.generate({
         bindto: '#stacked-bar-chart',
         data: {
+            x: 'x',
             columns: [
-                ['data1', 30, 200, 100, 400, 150, 250]
+                ['x', 'Fire', 'Pollution', 'Tag3', 'Tag4', 'Tag5'],
+                ['Most Used Tags', 50, 150, 140, 200, 10],
             ],
             type: 'bar'
         },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    multiline: true
+                },
+            }
+        },
         bar: {
             width: {
-                ratio: 0.7 // this makes bar width 50% of length between ticks
+                ratio: 0.5
             }
-        }
+        },
     });
-
-    var chart = c3.generate({
+    // dictionary containing the number of incidences of each type
+    var typeofIncidenceCount = /*[[mostUsedTags]]*/;
+    var donutChart = c3.generate({
         bindto: '#donut-chart',
         data: {
             columns: [
-                ['data1', 30],
-                ['data2', 120],
+                ['Geolocated', 30],
+                ['Sensor', 120],
+                ['Entity', 30],
+                ['Person', 120]
             ],
             type: 'donut',
-            onclick: function (d, i) { console.log("onclick", d, i); },
-            onmouseover: function (d, i) { console.log("onmouseover", d, i); },
-            onmouseout: function (d, i) { console.log("onmouseout", d, i); }
         },
         donut: {
-            title: 'incidence ratio'
+            title: 'Incidencen ratio'
         }
     });
 
+    var tempChart = c3.generate({
+        bindto: '#line-chart',
+        data: {
+            x: 'x',
+            columns: [
+                ['x', '00:00', '04:00', '08:00', '12:00', '16:00:00', '20:00'],
+                ['Temperature/Hour', 25, 20, 17, 25, 25, 20, 23, 20, 19, 14, 15, 10]
+            ]
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 6
+                }
+            }
+        }
+    });
+    /*]]>*/
 })

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="/fragments/head">
+</head>
+
+<body>
+    <nav th:replace="/fragments/nav"></nav>
+    <div class="uk-container">
+        <h1>Incidents</h1>
+        <ul uk-accordion>
+            <li>
+                <a class="uk-accordion-title" href="#">Sensors</a>
+                <div class="uk-accordion-content">
+                    <table class="uk-table uk-table-striped">
+                        <thead>
+                            <tr>
+                                <th>Incidence ID</th>
+                                <th>Properties</th>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="${i:sensors}">
+                                <td th:text = "i.inciName"></td>
+                                <td th:text = "i.properties"></td>
+                                <td th:text = "i.tags"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+            <li>
+                <a class="uk-accordion-title" href="#">Personal Incidences</a>
+                <div class="uk-accordion-content">
+                    <table class="uk-table uk-table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Incidence ID</th>
+                                <th>Agent Name</th>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="${i:people}">
+                                <td th:text = "i.inciName"></td>
+                                <td th:text = "i.agent.name.username"></td>
+                                <td th:text = "i.tags"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+            <li>
+                <a class="uk-accordion-title" href="#">Entities Incidences</a>
+                <div class="uk-accordion-content">
+                    <table class="uk-table uk-table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Incidence ID</th>
+                                <th>Entity Name</th>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="${i:entities}"> 
+                                    <td th:text = "i.inciName"></td>
+                                    <td th:text = "i.agent.name.username"></td>
+                                    <td th:text = "i.tags"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</body>
+
+</html>
