@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uniovi.entities.Incident;
 import com.uniovi.services.AgentsService;
 import com.uniovi.services.IncidentsService;
+import com.uniovi.services.OperatorsService;
 
 /**
  * This class is responsible of obtaining the incidents sent through the 
@@ -28,6 +29,9 @@ public class IncidentListener {
 	
 	@Autowired
 	private AgentsService agentsService;
+	
+	@Autowired
+	private OperatorsService operatorsService;
 
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
@@ -41,6 +45,7 @@ public class IncidentListener {
 			Incident incident = obj.readValue(data.getBytes(), Incident.class);
 			agentsService.addAgent(incident.getAgent());
 			inciService.addIncident(incident);	
+			operatorsService.increaseNotificationCount(incident);
 		}
 	}
 }

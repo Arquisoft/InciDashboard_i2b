@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Incident;
 import com.uniovi.entities.Operator;
 import com.uniovi.repositories.OperatorRepository;
 
@@ -35,6 +36,29 @@ public class OperatorsService {
 
 	public void deleteAll() {
 		repo.deleteAll();
+	}
+
+	/**
+	 * Increases the notification count of the operator
+	 * which the current incident belongs to.
+	 * @param incident
+	 */
+	public void increaseNotificationCount(Incident incident) {
+		String opEmail = incident.getOperator();
+		if (opEmail == null) {
+			return;
+		}
+		
+		Operator operator = repo.findByEmail(opEmail);
+		if (operator != null) {
+			operator.setNumNotifications(operator.getNumNotifications() + 1);
+			repo.save(operator);
+		}
+	}
+	
+	public void resetNotificationCount(Operator operator) {
+		operator.setNumNotifications(0);
+		repo.save(operator);
 	}
 	
 	
