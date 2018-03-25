@@ -5,6 +5,7 @@
 <link href="/css/c3.css" rel="stylesheet">
 
 <body>
+
     <nav th:replace="/fragments/nav"></nav>
     <div class="uk-container">
         <h2>Charts</h2>
@@ -15,7 +16,7 @@
             </div>
         </div>
         <div class="row">
-            
+
             <div id="line-chart"></div>
         </div>
     </div>
@@ -23,5 +24,12 @@
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/script/c3.min.js"></script>
     <script src="/script/chart.js"></script>
+
+    <!-- sockets -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/script/chart_sockets.js"></script>
+    
 </body>
 </html>

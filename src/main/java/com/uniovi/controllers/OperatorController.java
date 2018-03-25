@@ -38,18 +38,19 @@ public class OperatorController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getName();
 		Operator operator = operatorsService.getOperatorByEmail(email);
+		operatorsService.resetNotificationCount(operator);
 		
 		List<Incident> incidents = incidentsService.getIncidentsOf(operator);
 		model.addAttribute("incidents", incidents);
 		model.addAttribute("opEmail", email);
+		// notifications are erased when looking at incidents
+		model.addAttribute("numNotifications", 0);
 		
 		return "incidentsView";
 	}
 	
 	@RequestMapping("/incident/{inciName}/details")
 	public String getIncidentDetails(Model model, @PathVariable String inciName) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String email = authentication.getName();
 		List<String> states =  incidentsService.getAvailableStates();
 		Incident incident = incidentsService.getIncidentByName(inciName);
 		

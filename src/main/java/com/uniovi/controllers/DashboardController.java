@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.uniovi.entities.Incident;
+import com.uniovi.entities.Operator;
 import com.uniovi.entities.location.LatLng;
 import com.uniovi.services.IncidentsService;
 import com.uniovi.services.InsertTestDataService;
+import com.uniovi.services.OperatorsService;
 
 @Controller
 public class DashboardController {
@@ -24,6 +28,9 @@ public class DashboardController {
 	
 	@Autowired
 	private IncidentsService inciService;
+	
+	@Autowired
+	private OperatorsService operatorsService;
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String getDashboard() {
@@ -38,6 +45,9 @@ public class DashboardController {
 		incidents.add(new Incident("GEO1", new LatLng(43.3395170,-5.4949041)));
 		//
 		model.addAttribute("incidents", incidents);
+
+		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		return "maps";
 	}
 
@@ -49,6 +59,10 @@ public class DashboardController {
 //		incidents.add(new Incident("GEO1", new LatLng(43.3395170,-5.4949041)));
 //		//
 //		model.addAttribute("incidents", incidents);
+
+
+		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		return "charts";
 	}
 
@@ -60,12 +74,23 @@ public class DashboardController {
 		model.addAttribute("sensors", incidentsSensors);
 		model.addAttribute("people", incidentsPeople);
 		model.addAttribute("entities", incidentsEntities);
+		
+
+		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		return "incidentsView";
 	}
 
 	@SubscribeMapping("/test-data")
 	public String getTestData(Model model) throws JsonProcessingException {
 		return testDataService.getTestDataAsJSON();
+	}
+	
+	private int getNotificationsOfCurrentOp() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+		Operator operator = operatorsService.getOperatorByEmail(email);
+		return operator.getNumNotifications();
 	}
 
 }

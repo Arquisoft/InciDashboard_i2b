@@ -31,10 +31,7 @@ public class InsertTestDataService {
 	@Autowired
 	private OperatorsService operatorsService;
 	
-	private List<AgentInfo> agents;
-	private List<Incident> incidents;
-	
-	private final static int NUM_INCIDENTS = 1000;
+	public final static int NUM_INCIDENTS = 100;
 	
 	private String incidentsJson;
 	
@@ -52,8 +49,9 @@ public class InsertTestDataService {
 		operatorsService.addOperator(op2);
 		operatorsService.addOperator(op3);
 		
-		agents = new ArrayList<AgentInfo>();
-		incidents = new ArrayList<Incident>();
+
+		List<AgentInfo> agents = new ArrayList<AgentInfo>();
+		List<Incident> incidents = new ArrayList<Incident>();
 		
 		agents.add(new AgentInfo("agent1", "pruebas123", "Person"));
 		agents.add(new AgentInfo("agent2", "pruebas456", "Entity"));
@@ -64,7 +62,7 @@ public class InsertTestDataService {
 			agentsService.addAgent(agent);
 		}
 		
-		incidentGenerator.setPossibleAgents(this.agents);
+		incidentGenerator.setPossibleAgents(agents);
 		
 		for (int i = 0; i < NUM_INCIDENTS; i++) {
 			Incident incident = incidentGenerator.generateRandomIncident();
@@ -87,6 +85,10 @@ public class InsertTestDataService {
 	
 	@PreDestroy
 	public void finalize() {
+		this.deleteAll();
+	}
+	
+	public void deleteAll() {
 		incidentsService.deleteAll();
 		agentsService.deleteAll();
 		operatorsService.deleteAll();

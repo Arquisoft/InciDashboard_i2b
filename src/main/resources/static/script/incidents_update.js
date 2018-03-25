@@ -71,5 +71,6 @@ function connect() {
 }
 
 $(document).ready(function () {
+    resetNavCount(); // reset notification count
     connect();
 });
