@@ -62,7 +62,7 @@
                         <textarea class="uk-textarea" id="commentArea"></textarea>
                         <a href="#"
                            class="uk-button uk-button-default uk-align-center"
-                           th:id="${'addComment' + incident.getInciName()}">Send</a>
+                           th:id="${'addComment' + incident.getInciName()}">Send Comment</a>
                            <script th:inline="javascript">
                                    /*<![CDATA[*/
                                    var inciName = [[${incident.getInciName()}]];
@@ -81,7 +81,6 @@
                                                name: inciName,
                                                comment: commentData
                                            }, success: function(data) {
-                                               console.log("hi");
                                                $("#commentArea").val("");
                                                $("#commentList").append("<article class='uk-comment uk-comment-primary uk-margin-small-bottom'>"
                                                                         + "<div class='uk-comment uk-comment-primary'>"
@@ -95,7 +94,37 @@
 
                     <div class="state">
                         <h4 class="uk-heading-bullet">State</h4>
-                        <p th:text="${incident.getState()}"></p>
+                        <p id="currentState" th:text="${incident.getState()}"></p>
+                        <h5 class="uk-heading">Change state: </h5>
+
+                        <div class="uk-button uk-form-select uk-align-center">
+                            <select class="uk-button" id="stateSelect" name="kind" placeholder="State">
+                                 <th:block th:each="state : ${states}">
+                                     <option th:value="${state}" th:text="${state}"></option>
+                                 </th:block>
+                             </select>
+                        </div>
+
+                        <a href="#"
+                           class="uk-button uk-button-default uk-align-center"
+                           th:id="${'changeState' + incident.getInciName()}">Change state</a>
+                           <script th:inline="javascript">
+                                   /*<![CDATA[*/
+                                   $("#changeState" + inciName).click(function() {
+                                       var state = $("#stateSelect option:selected").val();
+                                       $.ajax({
+                                           type: "POST",
+                                           url: "/incident/changeState",
+                                           data: {
+                                               name: inciName,
+                                               state: state
+                                           }, success: function(data) {
+                                               $("#currentState").text(state);
+                                            }
+                                        });
+                                   });
+                                   /*]]>*/
+                           </script>
                     </div>
                 </div>
             </div>

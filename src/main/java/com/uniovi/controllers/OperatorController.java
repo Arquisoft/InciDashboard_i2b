@@ -50,9 +50,10 @@ public class OperatorController {
 	public String getIncidentDetails(Model model, @PathVariable String inciName) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getName();
-		Operator operator = operatorsService.getOperatorByEmail(email);
+		List<String> states =  incidentsService.getAvailableStates();
 		Incident incident = incidentsService.getIncidentByName(inciName);
 		
+		model.addAttribute("states", states);
 		model.addAttribute("incident", incident);
 		return "incidentDetails";
 	}
@@ -68,6 +69,13 @@ public class OperatorController {
 		incident.addComment(comment);
 		incidentsService.addIncident(incident);
 		return "Comment added";
+	}
+	
+	@RequestMapping(value="/incident/changeState", method=RequestMethod.POST)
+	@ResponseBody
+	public String changeState(@RequestParam("name") String name, @RequestParam("state") String state) {
+		incidentsService.changeState(name, state);
+		return "State changed";
 	}
 
 }
