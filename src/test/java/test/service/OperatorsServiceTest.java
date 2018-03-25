@@ -1,7 +1,6 @@
 package test.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -55,10 +54,6 @@ public class OperatorsServiceTest {
 		assertEquals(operatorService.getOperatorByEmail("pacoo@dashboard.com"), testOp1);
 		assertEquals(operatorService.getOperatorByEmail("david_son@dashboard.com"), testOp2);
 		assertEquals(operatorService.getOperatorByEmail("miEmail@dashboard.com"), testOp3);
-		
-		// isUser
-		assertEquals(operatorService.isUser("pacoo@dashboard.com", "123456"), testOp1);
-		assertNotEquals(operatorService.isUser("pacoo@dashboard.com", "otherPass"), testOp1);
 
 		// create
 		Operator testOp4 = new Operator("new@dashboard.com", "Lucia", "123456", false);

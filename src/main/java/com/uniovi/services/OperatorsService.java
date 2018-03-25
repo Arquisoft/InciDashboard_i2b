@@ -29,10 +29,6 @@ public class OperatorsService {
 		return repo.findByEmail(email);
 	}
 
-	public Operator isUser(String email, String password) {
-		return repo.isInDb(email, password);
-	}
-
 	public void deleteOperator(Operator operator) {
 		repo.delete(operator);
 	}
