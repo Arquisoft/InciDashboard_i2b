@@ -15,45 +15,47 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Operator {
-	//properties
-	//has to have permissions
-	//tostring with the available permissions 
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
-	
+	private String password;
 	private String operatorname;
-	private int isAdmin;
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name="operator_id")
+	private boolean isAdmin;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "operator_id")
 	private Set<Notification> notifications = new HashSet<>();
-	
+
 	/**
 	 * Default constructor for the operator class
 	 */
-	public Operator() {}
-	
-	/**
-	 * Constructor with all the parameters for the operator class
-	 * @param id
-	 * @param email
-	 * @param operatorname
-	 * @param isAdmin
-	 */
-	public Operator(Long id, String email, String operatorname, int isAdmin) {
+	public Operator() {
 		super();
-		this.id = id;
+	}
+
+	public Operator(String email, String operatorname, boolean isAdmin) {
+		this();
 		this.email = email;
 		this.operatorname = operatorname;
 		this.isAdmin = isAdmin;
 	}
 
+	/**
+	 * Constructor with all the parameters for the operator class
+	 * 
+	 * @param id
+	 * @param email
+	 * @param operatorname
+	 * @param isAdmin
+	 */
+	public Operator(Long id, String email, String operatorname, boolean isAdmin) {
+		this(email, operatorname, isAdmin);
+		this.id = id;
 
+	}
 
 	@Override
 	public int hashCode() {
@@ -63,8 +65,6 @@ public class Operator {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -88,14 +88,10 @@ public class Operator {
 		return true;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Operator [email=" + email + ", operatorname=" + operatorname + ", isAdmin=" + isAdmin + "]";
 	}
-
-
 
 	public String getEmail() {
 		return email;
@@ -113,11 +109,11 @@ public class Operator {
 		this.operatorname = operatorname;
 	}
 
-	public int getIsAdmin() {
+	public boolean getIsAdmin() {
 		return isAdmin;
 	}
 
-	public void setIsAdmin(int isAdmin) {
+	public void setIsAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 
@@ -129,7 +125,24 @@ public class Operator {
 		this.notifications = notifications;
 	}
 
+	public String getPassword() {
+		return password;
+	}
 
-	
-	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }
