@@ -2,12 +2,6 @@ package es.uniovi.asw.steps;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.uniovi.entities.Incident;
@@ -16,7 +10,6 @@ import com.uniovi.entities.Operator;
 import com.uniovi.services.IncidentsService;
 import com.uniovi.services.OperatorsService;
 
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;

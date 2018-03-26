@@ -31,19 +31,12 @@ public class InsertTestDataService {
 	@Autowired
 	private OperatorsService operatorsService;
 
-	private List<AgentInfo> agents;
-	private List<Incident> incidents;
-
-	public final static int NUM_INCIDENTS = 100;
+	public final static int NUM_INCIDENTS = 10;
 
 	private String incidentsJson;
 
 	@PostConstruct
 	public void init() throws JsonProcessingException {
-		incidentsService.deleteAll();
-		agentsService.deleteAll();
-		operatorsService.deleteAll();
-
 		Operator op1 = new Operator("operator1@dashboard.com", "op1", "123456", false);
 		Operator op2 = new Operator("operator2@dashboard.com", "op2", "123456", false);
 		Operator op3 = new Operator("operator3@dashboard.com", "op3", "123456", false);

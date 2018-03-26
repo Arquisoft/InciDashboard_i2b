@@ -56,6 +56,7 @@ public class OperatorController {
 		
 		model.addAttribute("states", states);
 		model.addAttribute("incident", incident);
+		model.addAttribute("numNotifications", 0);
 		return "incidentDetails";
 	}
 	
