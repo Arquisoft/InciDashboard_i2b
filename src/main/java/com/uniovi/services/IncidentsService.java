@@ -75,10 +75,12 @@ public class IncidentsService {
 			return;
 		}
 		
-		IncidentState state = IncidentState.valueOf(stateStr);
-		if (state != null) {
+		try {
+			IncidentState state = IncidentState.valueOf(stateStr);
 			incident.setState(state);
 			incidentsRepository.save(incident);
+		} catch (Exception e) {
+			return;
 		}
 	}
 

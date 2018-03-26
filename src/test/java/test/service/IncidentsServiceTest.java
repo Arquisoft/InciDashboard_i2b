@@ -2,7 +2,10 @@ package test.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,6 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.uniovi.entities.AgentInfo;
 import com.uniovi.entities.Incident;
+import com.uniovi.entities.IncidentState;
+import com.uniovi.entities.Operator;
 import com.uniovi.entities.location.LatLng;
 import com.uniovi.main.InciDashboardI2bApplication;
 import com.uniovi.services.AgentsService;
@@ -74,8 +79,8 @@ public class IncidentsServiceTest {
 			agentsService.deleteAgent(testInfo3);
 		
 		incidentsService.deleteIncidentByName("inciTest1");
-		incidentsService.deleteIncidentByName("inciTest2");
-		incidentsService.deleteIncidentByName("inciTest3");
+		incidentsService.deleteIncidentById(inciTest2.getId());
+		incidentsService.deleteIncidentById(inciTest3.getId());
 	}
 
 	@Test
@@ -127,6 +132,46 @@ public class IncidentsServiceTest {
 		assertFalse(incidentsService.getKindIncidents("Entity").contains(inciTest1));
 		assertTrue(incidentsService.getKindIncidents("Entity").contains(inciTest2));
 		assertFalse(incidentsService.getKindIncidents("Entity").contains(inciTest3));
+	}
+	
+	@Test
+	public void testAvailableStates() {
+		List<String> statesReceived = incidentsService.getAvailableStates();
+		IncidentState[] realStates = IncidentState.values();
+		for (int i = 0; i < realStates.length; i++) {
+			assertTrue(statesReceived.contains(realStates[i].toString()));
+		}
+		assertEquals(realStates.length, statesReceived.size());
+	}
+	
+	@Test
+	public void testGetIncidentsOfOperator() {
+		Operator op = new Operator("paco", "123456", false);
+		List<Incident> incidents = incidentsService.getIncidentsOf(op);
+		assertEquals(0, incidents.size());
+		
+		inciTest1.assignOperator(op);
+		inciTest3.assignOperator(op);
+		incidentsService.addIncident(inciTest1);
+		incidentsService.addIncident(inciTest3);
+		
+		incidents = incidentsService.getIncidentsOf(op);
+		assertEquals(2, incidents.size());
+		assertTrue(incidents.contains(inciTest1));
+		assertTrue(incidents.contains(inciTest3));
+	}
+	
+	@Test
+	public void testChangeState() {
+		incidentsService.changeState(inciTest1.getInciName(), IncidentState.OPEN.toString());
+		assertEquals(IncidentState.OPEN, incidentsService.getIncidentByName("inciTest1").getState());
+		
+		incidentsService.changeState("notAnIncident", IncidentState.CLOSED.toString());
+		assertNotEquals(IncidentState.CLOSED, incidentsService.getIncidentByName("inciTest1").getState());
+		
+
+		incidentsService.changeState(inciTest1.getInciName(), "notAState");
+		assertEquals(IncidentState.OPEN, incidentsService.getIncidentByName("inciTest1").getState());
 	}
 
 }

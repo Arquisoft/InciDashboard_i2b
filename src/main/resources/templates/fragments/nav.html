@@ -1,3 +1,25 @@
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var notifications = [[${numNotifications}]];
+    var currentOperator = [[${opEmail}]];
+
+    function increaseNavCount() {
+        notifications++;
+        $("#numNotifications").text(notifications + " new!");
+        $("#numNotifications").addClass("uk-badge");
+        console.log("Increased nav count");
+    }
+
+    function resetNavCount() {
+        $("#numNotifications").text("");
+        $("#numNotifications").removeClass("uk-badge");
+        notifications = 0;
+        console.log("Reseted nav count");
+    }
+
+    /*]]>*/
+</script>
+
 <nav class="uk-navbar-container" uk-navbar>
     <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
@@ -8,13 +30,11 @@
                 <a href="/dashboard/charts">Chart</a>
             </li>
             <li class="uk-active">
-                <a href="/dashboard/notifications">
-                    [[${'Notifications'}]]
-                    <span class='uk-badge' th:text="${numNotifications + '-test'}"></span>
+                <a href="/incidents">
+                    Your incidents
+                    <span id="numNotifications" th:class="${numNotifications == 0 ? '' : 'uk-badge'}"
+                            th:text="${numNotifications == 0 ? '' : numNotifications + ' new!'}"></span>
                 </a>
-            </li>
-            <li class="uk-active">
-                <a href="/dashboard/realTime">Real Time Incidences</a>
             </li>
         </ul>
     </div>
