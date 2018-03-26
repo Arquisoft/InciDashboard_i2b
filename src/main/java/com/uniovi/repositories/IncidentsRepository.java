@@ -21,6 +21,9 @@ public interface IncidentsRepository extends MongoRepository<Incident, ObjectId>
 
 	@Query("{ 'properties.temperature': { $exists: true } }")
 	public List<Incident> findWithTemperature();
+	
+	@Query("{ 'tags': { $exists : true } }'")
+	public List<Incident> findWithTags();
 
 	@Query("{ 'agent.kind': ?0 }")
 	public List<Incident> findByKind(String kind);

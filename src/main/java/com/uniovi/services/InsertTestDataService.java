@@ -34,7 +34,7 @@ public class InsertTestDataService {
 	private List<AgentInfo> agents;
 	private List<Incident> incidents;
 	
-	private final static int NUM_INCIDENTS = 1000;
+	private final static int NUM_INCIDENTS = 2;
 	
 	private String incidentsJson;
 	
