@@ -22,11 +22,12 @@
 
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/script/c3.min.js"></script>
-     <!-- sockets -->
--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
--    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
--    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
--    <script src="/script/chart_sockets.js"></script>
+    <!-- sockets -->
+    -
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script> -
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> -
+    <script src="/script/chart_sockets.js"></script>
     <script>
         /*<![CDATA[*/
         // dictionary containing the number of incidences of each type
@@ -56,21 +57,22 @@
 
         // 5 or 6 most used tags
         // dictionary of tagname, repetitions
+        var Fire = 'Fire';
+        var Pollution = 'Pollution';
+        var Important = 'Important';
+        var Test = 'Test';
+        var Earthquake = 'Earthquake';
 
-        var keysData = [[${ keys }]];
-        var valuesData = [[${ values }]];
-        //var tags = [[${tags}]]
-
-        keys.push(keysData);
-        values.push(valuesData);
+        var a = [[${ keys }]];
+        var b = [[${ values }]];
 
         var barChart = c3.generate({
             bindto: '#stacked-bar-chart',
             data: {
                 x: 'x',
                 columns: [
-                    ['x',keysData],
-                    ['Used Tags',valuesData]
+                    ['x', a[0], a[1], a[2], a[3], a[4]],
+                    ['Most Used Tags', b[0], b[1], b[2], b[3], b[4]]
                 ],
                 type: 'bar'
             },

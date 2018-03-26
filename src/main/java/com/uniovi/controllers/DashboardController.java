@@ -55,9 +55,10 @@ public class DashboardController {
 		List<Incident> incidentsPeople = inciService.getKindIncidents("Person");
 		List<Incident> incidentsEntities = inciService.getKindIncidents("Entity");
 		Map<String,Integer> mostUsedTags = inciService.getMostUsedTags();
+		//podria eliminarse pero mirar despues de la entrega que ahora funciona
 		Set<String> strings = new HashSet<>();
 		for (String string : mostUsedTags.keySet()) {
-			strings.add("'"+string+"'");
+			strings.add(string);
 		}
 		model.addAttribute("sensors", incidentsSensors.size());
 		model.addAttribute("people", incidentsPeople.size());
@@ -65,7 +66,6 @@ public class DashboardController {
 		model.addAttribute("temperatures", temperatureIncidents);
 		model.addAttribute("keys", strings);
 		model.addAttribute("values", mostUsedTags.values());
-		model.addAttribute("tags", mostUsedTags);
 		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		return "charts";
