@@ -1,9 +1,8 @@
 package com.uniovi.controllers;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
@@ -55,17 +54,19 @@ public class DashboardController {
 		List<Incident> incidentsPeople = inciService.getKindIncidents("Person");
 		List<Incident> incidentsEntities = inciService.getKindIncidents("Entity");
 		Map<String,Integer> mostUsedTags = inciService.getMostUsedTags();
-		Set<String> strings = new HashSet<>();
+		
+		//podria eliminarse pero mirar despues de la entrega que ahora funciona
+		List<String> strings = new ArrayList<String>();
 		for (String string : mostUsedTags.keySet()) {
-			strings.add("'"+string+"'");
+			strings.add(string);
 		}
+		
 		model.addAttribute("sensors", incidentsSensors.size());
 		model.addAttribute("people", incidentsPeople.size());
 		model.addAttribute("entities", incidentsEntities.size());
 		model.addAttribute("temperatures", temperatureIncidents);
 		model.addAttribute("keys", strings);
 		model.addAttribute("values", mostUsedTags.values());
-		model.addAttribute("tags", mostUsedTags);
 		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		return "charts";

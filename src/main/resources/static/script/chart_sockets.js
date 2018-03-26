@@ -13,6 +13,7 @@ function connect() {
             }
 
             updatePieChart(incident);
+            updateBarChart(incident);
         });
 
     });

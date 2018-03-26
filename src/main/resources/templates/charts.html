@@ -28,7 +28,7 @@
 -    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 -    <script src="/script/chart_sockets.js"></script>
 
-    <script>
+    <script th:inline="javascript">
         /*<![CDATA[*/
         // dictionary containing the number of incidences of each type
         var sensorsSize = [[${ sensors }]];
@@ -74,26 +74,25 @@
         }
         /*]]>*/
     </script>
-    <script>
+    <script th:inline="javascript">
         /*<![CDATA[*/
 
         // 5 or 6 most used tags
         // dictionary of tagname, repetitions
+        var keys = [[${ keys }]];
+        var values = [[${ values }]];
 
-        var keysData = [[${ keys }]];
-        var valuesData = [[${ values }]];
-        //var tags = [[${tags}]]
-
-        keys.push(keysData);
-        values.push(valuesData);
+        // to allow updating the chart later on
+        var columnX = ['x', keys[0], keys[1], keys[2], keys[3], keys[4]];
+        var columnY = ['Most Used Tags', values[0], values[1], values[2], values[3], values[4]];
 
         var barChart = c3.generate({
             bindto: '#stacked-bar-chart',
             data: {
                 x: 'x',
                 columns: [
-                    ['x',keysData],
-                    ['Used Tags',valuesData]
+                    columnX,
+                    columnY
                 ],
                 type: 'bar'
             },
@@ -111,6 +110,26 @@
                 }
             },
         });
+
+        function updateBarChart(incident) {
+            var tags = incident.tags;
+            for (var ik = 1; ik < columnX.length; ik++) {
+                var key = columnX[ik];
+                for (var it in tags) {
+                    var tag = tags[it];
+                    if (key === tag) {
+                        columnY[ik] += 1
+                    }
+                }
+            }
+
+            barChart.load({
+                columns: [
+                    columnX,
+                    columnY
+                ]
+            });
+        }
 
 /*
         var temperatures = [[${temperatures}]]
