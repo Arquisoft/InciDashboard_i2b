@@ -12,8 +12,10 @@
         <!--<div id="regions_div" style="width: 900px; height: 500px;"></div>-->
         <script th:inline="javascript">
             /*<![CDATA[*/
+            var map;
+            var markers = [];
             function initMap() {
-                var map = new google.maps.Map(document.getElementById("map_div"), {
+                map = new google.maps.Map(document.getElementById("map_div"), {
                     zoom: 5,
                     center: {
                         lat: 40.416944,
@@ -21,18 +23,44 @@
                     }
                 });
                 var collection = [[${ incidents }]];
-                var markers = [];
                 collection.forEach(element => {
                     console.log(element);
-                    markers.push(new google.maps.Marker({
+                    var marker = new google.maps.Marker({
                         position: {
                             lat: parseFloat(element.location.lat),
                             lng: parseFloat(element.location.lon)
                         },
                         title: element.inciName,
                         map: map
-                    }));
+                    });
+
+                    addInfoWindowTo(marker);
+
+                    markers.push(marker);
                 });
+            }
+
+            function addInfoWindowTo(marker) {
+                var infowindow = new google.maps.InfoWindow({});
+
+                google.maps.event.addListener(marker, "click", function(evt) {
+                    infowindow.setContent('Name: ' + this.get('title'));
+                    infowindow.open(map,this);
+                });
+            }
+
+            function onNewIncident(incident) {
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: parseFloat(incident.location.lat),
+                        lng: parseFloat(incident.location.lon)
+                    },
+                    title: incident.inciName,
+                    map: map
+                });
+
+                addInfoWindowTo(marker);
+                markers.push(marker);
             }
             /*]]>*/
         </script>

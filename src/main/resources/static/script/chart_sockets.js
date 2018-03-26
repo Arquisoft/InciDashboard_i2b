@@ -11,6 +11,8 @@ function connect() {
             if (operator !== null && operator === currentOperator) {
                 increaseNavCount();
             }
+
+            updatePieChart(incident);
         });
 
     });
