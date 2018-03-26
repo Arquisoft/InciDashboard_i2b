@@ -90,16 +90,24 @@
                 }
             },
         });
-
-/*
-        var temperatures = [[${temperatures}]]
+        /*]]>*/
+    </script>
+    <script th:inline = "javascript">
+        var incidences = [[${temperatures}]]
+        var temperatures = incidences.map(function(i){
+            return i.properties.temperature;
+        })
+        var modulo = [];
+        for (let index = 0; index < temperatures.length; index++) {
+            modulo.push(index%24);
+        }
         var tempChart = c3.generate({
             bindto: '#line-chart',
             data: {
                 x: 'x',
                 columns: [
-                    ['x', '00:00', '04:00', '08:00', '12:00', '16:00:00', '20:00'],
-                    ['Temperature/Hour', 25, 20, 17, 25, 25, 20, 23, 20, 19, 14, 15, 10]
+                    ['x'].concat(modulo),
+                    ['Temperature'].concat(temperatures)
                 ]
             },
             axis: {
@@ -111,8 +119,9 @@
                 }
             }
         });
-*/
     /*]]>*/
+
+    //revisar gauge chart para mas adelante
     </script>
 </body>
 
