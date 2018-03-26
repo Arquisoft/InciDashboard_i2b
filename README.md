@@ -13,6 +13,9 @@ The Incident Dashboard is a module of the Incident System used by the incident m
 * Sergio Faya Fernández (@SergioFaya)
 * Alejandro González Hevia (@alejgh)
 
+## 2018 Contributors
+* Alejandro González Hevia (@alejgh)
+
 ## Running the application 
 There are two different possibilities in order to run the Incident Manager.
 
