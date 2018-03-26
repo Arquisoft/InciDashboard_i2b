@@ -91,7 +91,7 @@ public class IncidentsService {
 		for (Incident incident : incidents) {
 			for (String t : incident.getTags()) {
 				if((tagcount = usedTags.get(t))!=null) {
-					usedTags.put(t, tagcount++);
+					usedTags.put(t, ++tagcount);
 				}else {
 					usedTags.put(t, 1);
 				}
