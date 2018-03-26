@@ -37,8 +37,6 @@ public class InsertTestDataService {
 
 	@PostConstruct
 	public void init() throws JsonProcessingException {
-		this.deleteAll();
-
 		Operator op1 = new Operator("operator1@dashboard.com", "op1", "123456", false);
 		Operator op2 = new Operator("operator2@dashboard.com", "op2", "123456", false);
 		Operator op3 = new Operator("operator3@dashboard.com", "op3", "123456", false);

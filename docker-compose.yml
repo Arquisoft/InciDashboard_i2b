@@ -28,7 +28,7 @@ services:
       network: host
     image: incidashboard_i2b
     ports:
-      - "8002:8082"
+      - "8082:8082"
     depends_on:
       - kafka
       - mongo_incidents
