@@ -1,7 +1,9 @@
 package com.uniovi.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +82,22 @@ public class IncidentsService {
 		} catch (Exception e) {
 			return;
 		}
+	}
+
+	public Map<String, Integer> getMostUsedTags() {
+		List<Incident> incidents  = incidentsRepository.findWithTags();
+		Map<String,Integer> usedTags = new HashMap<>();
+		Integer tagcount = null;
+		for (Incident incident : incidents) {
+			for (String t : incident.getTags()) {
+				if((tagcount = usedTags.get(t))!=null) {
+					usedTags.put(t, tagcount++);
+				}else {
+					usedTags.put(t, 1);
+				}
+			}
+		}
+		return usedTags;
 	}
 
 }

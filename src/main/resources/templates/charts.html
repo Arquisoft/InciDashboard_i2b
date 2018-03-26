@@ -5,7 +5,6 @@
 <link href="/css/c3.css" rel="stylesheet">
 
 <body>
-
     <nav th:replace="/fragments/nav"></nav>
     <div class="uk-container">
         <h2>Charts</h2>
@@ -23,13 +22,96 @@
 
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/script/c3.min.js"></script>
-    <script src="/script/chart.js"></script>
+     <!-- sockets -->
+-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+-    <script src="/script/chart_sockets.js"></script>
+    <script>
+        /*<![CDATA[*/
+        // dictionary containing the number of incidences of each type
+        var sensorsSize = [[${ sensors }]];
+        var peopleSize = [[${ people }]];
+        var entitiesSize = [[${ entities }]];
 
-    <!-- sockets -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="/script/chart_sockets.js"></script>
-    
+
+        var donutChart = c3.generate({
+            bindto: '#donut-chart',
+            data: {
+                columns: [
+                    ['Sensor', sensorsSize],
+                    ['Entity', peopleSize],
+                    ['Person', entitiesSize]
+                ],
+                type: 'donut',
+            },
+            donut: {
+                title: 'Incidence ratio'
+            }
+        });
+        /*]]>*/
+    </script>
+    <script>
+        /*<![CDATA[*/
+
+        // 5 or 6 most used tags
+        // dictionary of tagname, repetitions
+
+        var keysData = [[${ keys }]];
+        var valuesData = [[${ values }]];
+        //var tags = [[${tags}]]
+
+        keys.push(keysData);
+        values.push(valuesData);
+
+        var barChart = c3.generate({
+            bindto: '#stacked-bar-chart',
+            data: {
+                x: 'x',
+                columns: [
+                    ['x',keysData],
+                    ['Used Tags',valuesData]
+                ],
+                type: 'bar'
+            },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        multiline: true
+                    },
+                }
+            },
+            bar: {
+                width: {
+                    ratio: 0.5
+                }
+            },
+        });
+
+/*
+        var temperatures = [[${temperatures}]]
+        var tempChart = c3.generate({
+            bindto: '#line-chart',
+            data: {
+                x: 'x',
+                columns: [
+                    ['x', '00:00', '04:00', '08:00', '12:00', '16:00:00', '20:00'],
+                    ['Temperature/Hour', 25, 20, 17, 25, 25, 20, 23, 20, 19, 14, 15, 10]
+                ]
+            },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        count: 6
+                    }
+                }
+            }
+        });
+*/
+    /*]]>*/
+    </script>
 </body>
+
 </html>
