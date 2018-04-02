@@ -50,6 +50,17 @@ Now, you can start the Kafka server.
 
 `>> bin\windows\kafka-server-start.bat config/server.properties`
 
+To test that kafka is working you can create a producer and a cosumer to send and receive information. First of all, create a producer to send messages. This is located in port 9092 with the topic name test.
+
+`>> bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic test`
+
+Then create  the consumer, you need the zookeper port, in this case 2181, and the name of the topic you are listening to.
+
+`>> kafka-console-consumer.bat --zookeeper localhost:2181 --topic test`
+
+![Sending messages with Producer](img/producer.png)
+![Receiving messages with Consumer](img/consumer.png)
+
 #### Mongo DB
 This is the database of the system. You can download Mongo from [here](https://www.mongodb.com/download-center). After following the installation proccess you have to go to the folder where you downloaded it and then run it using:
 

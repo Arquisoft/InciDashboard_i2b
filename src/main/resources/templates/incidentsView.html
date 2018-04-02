@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="/fragments/head"></head>
+<head th:replace="fragments/head"></head>
 
 <body>
 
@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="/script/incidents_update.js"></script>
 
-    <nav th:replace="/fragments/nav"></nav>
+    <nav th:replace="fragments/nav"></nav>
     <div class="uk-container">
         <h1 class="uk-heading-primary uk-text-center uk-margin-bottom uk-margin-top">Your incidents</h1>
         <div id="inciList" th:each="incident : ${incidents}">

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="/fragments/head"></head>
+<head th:replace="fragments/head"></head>
 <link href="/css/c3.css" rel="stylesheet">
 
 <body>
-    <nav th:replace="/fragments/nav"></nav>
+    <nav th:replace="fragments/nav"></nav>
     <div class="uk-container">
         <h2>Charts</h2>
         <div class="uk-column-1-2">
@@ -22,27 +22,31 @@
 
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/script/c3.min.js"></script>
-    <!-- sockets -->
-    -
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script> -
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script> -
-    <script src="/script/chart_sockets.js"></script>
-    <script>
+     <!-- sockets -->
+-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+-    <script src="/script/chart_sockets.js"></script>
+
+    <script th:inline="javascript">
         /*<![CDATA[*/
         // dictionary containing the number of incidences of each type
         var sensorsSize = [[${ sensors }]];
         var peopleSize = [[${ people }]];
         var entitiesSize = [[${ entities }]];
 
+        var sensorColumn = ['Sensor', sensorsSize];
+        var peopleColumn = ['Person', peopleSize];
+        var entitiesColumn = ['Entity', entitiesSize];
+
 
         var donutChart = c3.generate({
             bindto: '#donut-chart',
             data: {
                 columns: [
-                    ['Sensor', sensorsSize],
-                    ['Entity', peopleSize],
-                    ['Person', entitiesSize]
+                    sensorColumn,
+                    entitiesColumn,
+                    peopleColumn
                 ],
                 type: 'donut',
             },
@@ -50,29 +54,45 @@
                 title: 'Incidence ratio'
             }
         });
+
+        function updatePieChart(incident) {
+            if (incident.agent.kind === "Person") {
+                peopleColumn[1] += 1;
+            } else if (incident.agent.kind === "Sensor") {
+                sensorColumn[1] += 1;
+            } else if (incident.agent.kind === "Entity") {
+                entitiesColumn[1] += 1;
+            }
+
+            donutChart.load({
+                columns: [
+                    sensorColumn,
+                    entitiesColumn,
+                    peopleColumn
+                ]
+            });
+        }
         /*]]>*/
     </script>
-    <script>
+    <script th:inline="javascript">
         /*<![CDATA[*/
 
         // 5 or 6 most used tags
         // dictionary of tagname, repetitions
-        var Fire = 'Fire';
-        var Pollution = 'Pollution';
-        var Important = 'Important';
-        var Test = 'Test';
-        var Earthquake = 'Earthquake';
+        var keys = [[${ keys }]];
+        var values = [[${ values }]];
 
-        var a = [[${ keys }]];
-        var b = [[${ values }]];
+        // to allow updating the chart later on
+        var columnX = ['x', keys[0], keys[1], keys[2], keys[3], keys[4]];
+        var columnY = ['Most Used Tags', values[0], values[1], values[2], values[3], values[4]];
 
         var barChart = c3.generate({
             bindto: '#stacked-bar-chart',
             data: {
                 x: 'x',
                 columns: [
-                    ['x', a[0], a[1], a[2], a[3], a[4]],
-                    ['Most Used Tags', b[0], b[1], b[2], b[3], b[4]]
+                    columnX,
+                    columnY
                 ],
                 type: 'bar'
             },
@@ -90,6 +110,26 @@
                 }
             },
         });
+        
+        function updateBarChart(incident) {
+            var tags = incident.tags;
+            for (var ik = 1; ik < columnX.length; ik++) {
+                var key = columnX[ik];
+                for (var it in tags) {
+                    var tag = tags[it];
+                    if (key === tag) {
+                        columnY[ik] += 1
+                    }
+                }
+            }
+
+            barChart.load({
+                columns: [
+                    columnX,
+                    columnY
+                ]
+            });
+        }
         /*]]>*/
     </script>
     <script th:inline = "javascript">
