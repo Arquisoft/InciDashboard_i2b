@@ -45,7 +45,7 @@ public class OperatorController {
 		model.addAttribute("opEmail", email);
 		// notifications are erased when looking at incidents
 		model.addAttribute("numNotifications", 0);
-		
+		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
 		return "incidentsView";
 	}
 	
@@ -67,7 +67,6 @@ public class OperatorController {
 		if (incident == null) {
 			return "Error adding comment!";
 		}
-		
 		incident.addComment(comment);
 		incidentsService.addIncident(incident);
 		return "Comment added";
@@ -78,6 +77,13 @@ public class OperatorController {
 	public String changeState(@RequestParam("name") String name, @RequestParam("state") String state) {
 		incidentsService.changeState(name, state);
 		return "State changed";
+	}
+	
+	private int getIncidencesOfCurrentOp() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+		Operator operator = operatorsService.getOperatorByEmail(email);
+		return incidentsService.getIncidentsOf(operator).size();
 	}
 
 }

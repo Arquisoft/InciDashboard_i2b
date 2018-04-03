@@ -1,6 +1,5 @@
 package com.uniovi.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,10 +24,10 @@ public class DashboardController {
 
 	@Autowired
 	private InsertTestDataService testDataService;
-	
+
 	@Autowired
 	private IncidentsService inciService;
-	
+
 	@Autowired
 	private OperatorsService operatorsService;
 
@@ -39,49 +38,22 @@ public class DashboardController {
 
 	@RequestMapping(value = "/dashboard/maps", method = RequestMethod.GET)
 	public String getDashboardMaps(Model model) {
-		List<Incident> incidents = inciService.getGeolocatedIncidents();
-		model.addAttribute("incidents", incidents);
-
-		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
-		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
+		addCommonAttributes(model);
+		addMapAttributes(model);
 		return "maps";
 	}
 
 	@RequestMapping(value = "/dashboard/charts", method = RequestMethod.GET)
 	public String getDashboardCharts(Model model) {
-		List<Incident> temperatureIncidents = inciService.getTemperatureSensorIncidents();		
-		List<Incident> incidentsSensors = inciService.getKindIncidents("Sensor");
-		List<Incident> incidentsPeople = inciService.getKindIncidents("Person");
-		List<Incident> incidentsEntities = inciService.getKindIncidents("Entity");
-		Map<String,Integer> mostUsedTags = inciService.getMostUsedTags();
-		
-		//podria eliminarse pero mirar despues de la entrega que ahora funciona
-		List<String> strings = new ArrayList<String>();
-		for (String string : mostUsedTags.keySet()) {
-			strings.add(string);
-		}
-		
-		model.addAttribute("sensors", incidentsSensors.size());
-		model.addAttribute("people", incidentsPeople.size());
-		model.addAttribute("entities", incidentsEntities.size());
-		model.addAttribute("temperatures", temperatureIncidents);
-		model.addAttribute("keys", strings);
-		model.addAttribute("values", mostUsedTags.values());
-		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
-		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
+		addCommonAttributes(model);
+		addChartsAttributes(model);
 		return "charts";
 	}
 
 	@RequestMapping(value = "/dashboard/realTime", method = RequestMethod.GET)
 	public String getDashboardChart(Model model) {
-		List<Incident> incidentsSensors = inciService.getKindIncidents("Sensor");
-		List<Incident> incidentsPeople = inciService.getKindIncidents("Person");
-		List<Incident> incidentsEntities = inciService.getKindIncidents("Entity");
-		model.addAttribute("sensors", incidentsSensors);
-		model.addAttribute("people", incidentsPeople);
-		model.addAttribute("entities", incidentsEntities);
-		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
-		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
+		addCommonAttributes(model);
+		addRealTimeAttributes(model);
 		return "incidentsView";
 	}
 
@@ -89,12 +61,53 @@ public class DashboardController {
 	public String getTestData(Model model) throws JsonProcessingException {
 		return testDataService.getTestDataAsJSON();
 	}
-	
+
 	private int getNotificationsOfCurrentOp() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getName();
 		Operator operator = operatorsService.getOperatorByEmail(email);
 		return operator.getNumNotifications();
+	}
+
+	private int getIncidencesOfCurrentOp() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+		Operator operator = operatorsService.getOperatorByEmail(email);
+		return inciService.getIncidentsOf(operator).size();
+	}
+
+	private void addCommonAttributes(Model model) {
+		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
+		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
+	}
+
+	private void addChartsAttributes(Model model) {
+		List<Incident> temperatureIncidents = inciService.getTemperatureSensorIncidents();
+		Map<String, Integer> usedTags = inciService.getMostUsedTags();
+		List<Incident> incidentsSensors = inciService.getKindIncidents("Sensor");
+		List<Incident> incidentsPeople = inciService.getKindIncidents("Person");
+		List<Incident> incidentsEntities = inciService.getKindIncidents("Entity");
+		model.addAttribute("sensors", incidentsSensors.size());
+		model.addAttribute("people", incidentsPeople.size());
+		model.addAttribute("entities", incidentsEntities.size());
+		model.addAttribute("temperatures", temperatureIncidents);
+		model.addAttribute("keys", usedTags.keySet());
+		model.addAttribute("values", usedTags.values());
+	}
+
+	private void addRealTimeAttributes(Model model) {
+		List<Incident> incidentsSensors = inciService.getKindIncidents("Sensor");
+		List<Incident> incidentsPeople = inciService.getKindIncidents("Person");
+		List<Incident> incidentsEntities = inciService.getKindIncidents("Entity");
+		model.addAttribute("sensors", incidentsSensors);
+		model.addAttribute("people", incidentsPeople);
+		model.addAttribute("entities", incidentsEntities);
+	}
+
+	private void addMapAttributes(Model model) {
+		List<Incident> incidents = inciService.getGeolocatedIncidents();
+		model.addAttribute("incidents", incidents);
 	}
 
 }

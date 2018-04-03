@@ -11,6 +11,7 @@ The Incident Dashboard is a module of the Incident System used by the incident m
 
 * Pablo González Balbuena (@pbalbuena)
 * Sergio Faya Fernández (@SergioFaya)
+* Alejandro González Hevia (@alejgh)
 
 ## 2018 Contributors
 * Alejandro González Hevia (@alejgh)

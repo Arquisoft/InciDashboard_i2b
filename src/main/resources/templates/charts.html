@@ -8,25 +8,31 @@
     <nav th:replace="fragments/nav"></nav>
     <div class="uk-container">
         <h2>Charts</h2>
-        <div class="uk-column-1-2">
-            <div class="col-6" id="stacked-bar-chart">
+
+        <div class="uk-grid-medium uk-child-width-expand@s uk-text-center" uk-grid>
+            <div class="uk-card uk-card-body uk-card-default">
+                <div class="col-6" id="stacked-bar-chart"></div>
             </div>
-            <div class="col-6" id="donut-chart">
+            <div class="uk-card uk-card-body uk-card-default">
+                <div class="col-6" id="donut-chart"></div>
+            </div>
+            <div class="uk-card uk-card-body uk-card-default">
+                <div id="gauge-chart"></div>
             </div>
         </div>
-        <div class="row">
-
-            <div id="line-chart"></div>
+        <div class="uk-grid-medium uk-child-width-expand@s uk-text-center" uk-grid>
+            <div class="uk-card uk-card-body uk-card-default uk-margin-bottom uk-margin-top">
+                <div id="line-chart"></div>
+            </div>
         </div>
     </div>
-
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/script/c3.min.js"></script>
-     <!-- sockets -->
--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
--    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
--    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
--    <script src="/script/chart_sockets.js"></script>
+    <!-- sockets -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/script/chart_sockets.js"></script>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -76,23 +82,16 @@
     </script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-
-        // 5 or 6 most used tags
-        // dictionary of tagname, repetitions
         var keys = [[${ keys }]];
         var values = [[${ values }]];
-
-        // to allow updating the chart later on
-        var columnX = ['x', keys[0], keys[1], keys[2], keys[3], keys[4]];
-        var columnY = ['Most Used Tags', values[0], values[1], values[2], values[3], values[4]];
 
         var barChart = c3.generate({
             bindto: '#stacked-bar-chart',
             data: {
                 x: 'x',
                 columns: [
-                    columnX,
-                    columnY
+                    ['x'].concat(keys),
+                    ['Tags Usage'].concat(values)
                 ],
                 type: 'bar'
             },
@@ -110,7 +109,7 @@
                 }
             },
         });
-        
+
         function updateBarChart(incident) {
             var tags = incident.tags;
             for (var ik = 1; ik < columnX.length; ik++) {
@@ -132,14 +131,15 @@
         }
         /*]]>*/
     </script>
-    <script th:inline = "javascript">
-        var incidences = [[${temperatures}]]
-        var temperatures = incidences.map(function(i){
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var incidences = [[${ temperatures }]]
+        var temperatures = incidences.map(function (i) {
             return i.properties.temperature;
         })
         var modulo = [];
         for (let index = 0; index < temperatures.length; index++) {
-            modulo.push(index%24);
+            modulo.push(index % 24);
         }
         var tempChart = c3.generate({
             bindto: '#line-chart',
@@ -160,8 +160,34 @@
             }
         });
     /*]]>*/
-
-    //revisar gauge chart para mas adelante
+    </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var incidences = [];
+        var chart = c3.generate({
+            bindto: "#gauge-chart",
+            data: {
+                columns: [
+                    ['data', 91.4]
+                ],
+                type: 'gauge',
+                onclick: function (d, i) { console.log("onclick", d, i); },
+                onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+                onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+            },
+            gauge: {
+            },
+            color: {
+                pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+                threshold: {
+                    values: [30, 60, 90, 100]
+                }
+            },
+            size: {
+                height: 180
+            }
+        });
+        /*]]>*/
     </script>
 </body>
 
