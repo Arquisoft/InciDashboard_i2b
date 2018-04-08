@@ -50,7 +50,7 @@ Now, you can start the Kafka server.
 
 `>> bin\windows\kafka-server-start.bat config/server.properties`
 
-To test that kafka is working you can create a producer and a cosumer to send and receive information. First of all, create a producer to send messages. This is located in port 9092 with the topic name test.
+To test that kafka is working you can create a producer and a consumer to send and receive information. First of all, create a producer to send messages. This is located in port 9092 with the topic name test.
 
 `>> bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic test`
 
