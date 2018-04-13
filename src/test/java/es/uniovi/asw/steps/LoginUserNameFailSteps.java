@@ -11,7 +11,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class LoginSteps {
+public class LoginUserNameFailSteps {
 
 	static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
 	static String gecko = "D:\\Descargas";
@@ -49,22 +49,22 @@ public class LoginSteps {
 	}
 
 
-	@Given("^I am a correct operator")
+	@Given("^I am not a correct operator")
 	public void logged() {
 		driver.get("http://localhost:8082/login");
-		driver.findElement(By.id("email")).sendKeys("operator1@dashboard.com");
+		driver.findElement(By.id("email")).sendKeys("oper@dashboard.com");
 	}
 
-	@When("^I login with a user")
+	@When("^I try to login")
 	public void incidentsAssigned() {
 		driver.findElement(By.id("pass")).sendKeys("123456");
 		driver.findElement(By.id("login")).click();
 	}
 
 
-	@Then("^I should see the dashboard page")
+	@Then("^I should see the error page")
 	public void checkFail() {
-		if (driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8082/dashboard")) {
+		if (driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8082/login")) {
 			System.out.println("Test Pass");
 		} else {
 			System.out.println("Test1 Failed");

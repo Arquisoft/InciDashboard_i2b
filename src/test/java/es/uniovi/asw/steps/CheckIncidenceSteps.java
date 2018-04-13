@@ -11,7 +11,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class LoginSteps {
+public class CheckIncidenceSteps {
 
 	static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
 	static String gecko = "D:\\Descargas";
@@ -62,9 +62,9 @@ public class LoginSteps {
 	}
 
 
-	@Then("^I should see the dashboard page")
-	public void checkFail() {
-		if (driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8082/dashboard")) {
+	@Then("^I can see my incidences")
+	public void i_can_See_my_incidences() {
+		if (driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8082/incidences")) {
 			System.out.println("Test Pass");
 		} else {
 			System.out.println("Test1 Failed");
