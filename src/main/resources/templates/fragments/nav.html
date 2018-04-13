@@ -3,25 +3,22 @@
     var notifications = [[${ numNotifications }]];
     var currentOperator = [[${ opEmail }]];
     var incidentsCount = [[${ numIncidents }]];
-    function increaseNavCount() {
+    
+    function increaseNavCount(incident) {
         notifications++;
         $("#numNotifications").text(notifications + " new!");
         $("#numNotifications").addClass("uk-badge");
         console.log("Increased nav count");
+        //pop up notification
+        var path = "/incident/"+incident.inciName+"/details";
+        UIkit.notification({message: 'New Incidence:<a href = '+path+'>See Details</a>', status: 'primary'})
     }
 
-    function increaseIncidents() {
-        incidentsCount++;
-        $("#numIncidents").text(incidentsCount);
-        console.log("Increased numIncidents");
+    function increaseIncidents(){
+    	incidentsCount++;
+    	$("#numIncidents").text(incidentsCount);
     }
-
-    function decreaseIncidents() {
-        incidentsCount--;
-        $("#numIncidents").text(incidentsCount);
-        console.log("Decreased numIncidents");
-    }
-
+    
     function resetNavCount() {
         $("#numNotifications").text("");
         $("#numNotifications").removeClass("uk-badge");

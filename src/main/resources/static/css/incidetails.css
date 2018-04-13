@@ -11,3 +11,9 @@ textarea[id="commentArea"] + a[id^=addComment] {
     margin-top: 0;
     padding-top: 0;
 }
+
+#footer{
+	bottom:inherit; 
+	width:inherit; 
+	position:inherit;
+}

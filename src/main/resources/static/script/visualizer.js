@@ -19,17 +19,10 @@ function connect(graphics) {
 
             var operator = incident.properties.operator;
             if (operator !== null && operator === currentOperator) {
-                increaseNavCount();
+                increaseNavCount(incident);
+                increaseIncidents();
             }
         });
 
     });
 }
-
-$(document).ready(function () {
-    graphics = {
-        map: new Map("map_div"),
-        geochart: new GeoChart("regions_div")
-    }
-    connect(graphics);
-});
