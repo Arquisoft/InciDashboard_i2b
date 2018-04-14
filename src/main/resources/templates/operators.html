@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head"></head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <nav th:replace="fragments/nav"></nav>
+    <div class="uk-container">
+        <h2>All operators</h2>
+        <table class="uk-table uk-table-striped">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Permissions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="operator : ${operators} ">
+                    <td th:text="${operator.email}"></td>
+                    <td th:text="${operator.operatorname}"></td>
+                    <td>
+                        <label th:id="${'label-map' + '__${operator.email}__'}">Map</label>
+                        <label th:id="${'label-chart' + '__${operator.email}__'}">Chart</label>
+                        <label th:id="${'label-incidents' + '__${operator.email}__'}">Incidents</label>
+                        <script th:inline="javascript" type="text/javascript">
+                            /*<![CDATA[*/
+                            var permissions = [[${ permissions }]];
+                            console.log("en script");
+                            if (permissions.includes('maps')) {
+                                console.log("en if");
+                                var id = [[${'#label-map' + '__${operator.email}__'}]];
+                                $("*[id='"+id+"']").after("<input type='checkbox 'th:id='${'map' + '__${operator.email}__'}' name='Map' onchange='' checked>");
+                            }
+                            if (permissions.includes('charts')) {
+                                console.log("en if");
+                                var id = [[${'#label-chart' + '__${operator.email}__'}]];
+                                $("*[id='"+id+"']").after("<input type='checkbox 'th:id='${'chart' + '__${operator.email}__'}' name='Chart' onchange='' checked>");
+                            }
+                            if (permissions.includes('incidents')) {
+                                console.log("en if");
+                                var id = [[${'#label-incidents' + '__${operator.email}__'}]];
+                                $("*[id='"+id+"']").after("<input type='checkbox 'th:id='${'incident' + '__${operator.email}__'}' name='Incidents' onchange='' checked>");
+                            }
+                            /*]]>*/
+                        </script>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<footer th:replace="fragments/footer"></footer>
+
+</html>

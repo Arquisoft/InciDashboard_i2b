@@ -134,7 +134,7 @@ public class IncidentTest {
 		Incident inci = new Incident("Panic At The Disco", new LatLng(55, 42), carmen);
 		assertNull(inci.getOperator());
 		
-		inci.assignOperator(new Operator("juana@laloca.com", "juana", false));
+		inci.assignOperator(new Operator("juana@laloca.com", "juana", "ROLE_OPERATOR"));
 		assertNotNull(inci.getOperator());
 		assertEquals("juana@laloca.com", inci.getOperator());
 	}

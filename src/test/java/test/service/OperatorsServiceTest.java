@@ -32,9 +32,9 @@ public class OperatorsServiceTest {
 
 	@Before
 	public void setUp() {
-		testOp1 = new Operator("pacoo@dashboard.com", "Paco", "123456", false);
-		testOp2 = new Operator("david_son@dashboard.com", "Sonny", "pass123", true);
-		testOp3 = new Operator("miEmail@dashboard.com", "Antonio", "caballoBorrado", false);
+		testOp1 = new Operator("pacoo@dashboard.com", "Paco", "123456", "ROLE_OPERATOR");
+		testOp2 = new Operator("david_son@dashboard.com", "Sonny", "pass123", "ROLE_ADMIN");
+		testOp3 = new Operator("miEmail@dashboard.com", "Antonio", "caballoBorrado", "ROLE_OPERATOR");
 
 		operatorService.addOperator(testOp1);
 		operatorService.addOperator(testOp2);
@@ -56,7 +56,7 @@ public class OperatorsServiceTest {
 		assertEquals(operatorService.getOperatorByEmail("miEmail@dashboard.com"), testOp3);
 
 		// create
-		Operator testOp4 = new Operator("new@dashboard.com", "Lucia", "123456", false);
+		Operator testOp4 = new Operator("new@dashboard.com", "Lucia", "123456", "ROLE_OPERATOR");
 		assertEquals(operatorService.getOperatorByEmail("new@dashboard.com"), null);
 		operatorService.addOperator(testOp4);
 		assertEquals(operatorService.getOperatorByEmail("new@dashboard.com"), testOp4);

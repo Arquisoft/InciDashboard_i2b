@@ -80,16 +80,16 @@
     </script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var keys = [[${ keys }]];
-        var values = [[${ values }]];
+        var columnX = [[${ keys }]];
+        var columnY = [[${ values }]];
 
         var barChart = c3.generate({
             bindto: '#stacked-bar-chart',
             data: {
                 x: 'x',
                 columns: [
-                    ['x'].concat(keys),
-                    ['Tags Usage'].concat(values)
+                    ['x'].concat(columnX),
+                    ['Tags Usage'].concat(columnY)
                 ],
                 type: 'bar'
             },

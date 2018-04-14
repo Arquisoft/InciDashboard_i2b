@@ -19,7 +19,7 @@ import com.uniovi.main.InciDashboardI2bApplication;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class OperatorTest {
 	
-	private Operator op1 = new Operator("eleven@dashboard.com", "eleven", false);
+	private Operator op1 = new Operator("eleven@dashboard.com", "eleven", "ROLE_OPERATOR");
 	
 	@Test
 	public void testInstantiation() {
@@ -30,9 +30,9 @@ public class OperatorTest {
 
 	@Test
 	public void testEquals() {
-		Operator op2 = new Operator("eleven@dashboard.com", "twelve", true);
-		Operator op3 = new Operator(new ObjectId(), "twelve@dashboard.com", "eleven", false);
-		Operator op4 = new Operator("thirteen@dashboard.com", "thirteen", false);
+		Operator op2 = new Operator("eleven@dashboard.com", "twelve", "ROLE_ADMIN");
+		Operator op3 = new Operator(new ObjectId(), "twelve@dashboard.com", "eleven", "ROLE_OPERATOR");
+		Operator op4 = new Operator("thirteen@dashboard.com", "thirteen", "ROLE_OPERATOR");
 		Operator op5 = new Operator();
 		
 		assertEquals(op1, op2);
@@ -61,7 +61,7 @@ public class OperatorTest {
 		String toStringOp = "Operator [email=eleven@dashboard.com, operatorname=eleven, isAdmin=false]";
 		assertEquals(toStringOp, op1.toString());
 		
-		Operator op2 = new Operator("cleopatra@gob.eg", "cleo", true);
+		Operator op2 = new Operator("cleopatra@gob.eg", "cleo", "ROLE_ADMIN");
 		toStringOp = "Operator [email=cleopatra@gob.eg, operatorname=cleo, isAdmin=true]";
 		assertEquals(toStringOp, op2.toString());
 		
@@ -77,7 +77,7 @@ public class OperatorTest {
 	
 	@Test
 	public void testNumNotifications() {
-		Operator op2 = new Operator("eleven@dashboard.com", "twelve", true);
+		Operator op2 = new Operator("eleven@dashboard.com", "twelve", "ROLE_ADMIN");
 		op2.setNumNotifications(2);
 		assertEquals(2, op2.getNumNotifications());
 		op2.setNumNotifications(5);

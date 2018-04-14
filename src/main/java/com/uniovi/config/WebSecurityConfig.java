@@ -2,6 +2,8 @@ package com.uniovi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,13 +21,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-		.antMatchers("/css/*", "/img/", "/script/*", "/").permitAll()
+		.antMatchers("/css/*", "/img/", "/script/*", "/","/admin/login").permitAll()
+		.antMatchers("users/**").hasAnyAuthority("ROLE_OPERATOR")
+		.antMatchers("admin/**").hasAnyAuthority("ROLE_ADMIN")
 		.anyRequest().authenticated()
 		.and()
 			.formLogin().loginPage("/login").permitAll()
-			.defaultSuccessUrl("/incidents")
+			.defaultSuccessUrl("/incidents").
+			failureUrl("/login?error")
 		.and()
 			.logout().permitAll();
 	}
-		
+	
+	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 }

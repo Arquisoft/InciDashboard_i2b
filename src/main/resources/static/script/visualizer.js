@@ -1,10 +1,9 @@
 var stompClient = null;
-var graphics;
 var sensorIncidentsCount = 0;
 var personIncidentsCount = 0;
 var EntityIncidentsCount = 0;
 
-function connect(graphics) {
+function connect() {
     var socket = new SockJS('/dashboard');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -26,3 +25,7 @@ function connect(graphics) {
 
     });
 }
+
+$(document).ready(function () {
+    connect();
+});

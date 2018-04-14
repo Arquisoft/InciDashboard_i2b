@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.uniovi.entities.Incident;
 import com.uniovi.entities.Operator;
 import com.uniovi.services.IncidentsService;
 import com.uniovi.services.OperatorsService;
+import com.uniovi.services.SecurityService;
 
 
 @Controller
@@ -28,13 +30,16 @@ public class OperatorController {
 	@Autowired
 	private OperatorsService operatorsService;
 	
+	@Autowired
+	private SecurityService securityService;
+	
 	@RequestMapping("/login")
 	public String getLogin() {
 		return "/login";
 	}
 	
 	@RequestMapping("/incidents")
-	public String getOperatorIncidents(Model model) {
+	public String getOperatorIncidents(Model model, Principal principal) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getName();
 		Operator operator = operatorsService.getOperatorByEmail(email);
@@ -46,17 +51,20 @@ public class OperatorController {
 		// notifications are erased when looking at incidents
 		model.addAttribute("numNotifications", 0);
 		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
+		model.addAttribute("role",operatorsService.getOperatorByEmail(principal.getName()).getRole());
+		
 		return "incidentsView";
 	}
 	
 	@RequestMapping("/incident/{inciName}/details")
-	public String getIncidentDetails(Model model, @PathVariable String inciName) {
+	public String getIncidentDetails(Model model, @PathVariable String inciName, Principal principal) {
 		List<String> states =  incidentsService.getAvailableStates();
 		Incident incident = incidentsService.getIncidentByName(inciName);
 		
 		model.addAttribute("states", states);
 		model.addAttribute("incident", incident);
 		model.addAttribute("numNotifications", 0);
+		model.addAttribute("role",operatorsService.getOperatorByEmail(principal.getName()).getRole());
 		return "incidentDetails";
 	}
 	
@@ -85,5 +93,47 @@ public class OperatorController {
 		Operator operator = operatorsService.getOperatorByEmail(email);
 		return incidentsService.getIncidentsOf(operator).size();
 	}
+	
+	//Admin
+	@RequestMapping("/admin/login")
+	public String getAdminLogin() {
+		return "/admin-login";
+	}
+	
+	@RequestMapping(value = "/admin/login", method = RequestMethod.POST)
+	public String adminLogin(Model model,  @RequestParam String email, @RequestParam String password) {
+		Operator operator = operatorsService.getOperatorByEmail(email);
 
+		if (operator != null && operatorsService.checkPassword(operator) 
+				&& operator.getRole().equals("ROLE_ADMIN")) {
+			securityService.autoLogin(email, password);
+			return "redirect:/admin/operators";
+		} else {
+			model.addAttribute("error", true);
+			return "redirect:/admin/login?error";
+		}
+	}
+	
+	@RequestMapping(value= "/admin/operators", method = RequestMethod.GET)
+	public String getOperators(Model model, Principal principal) {
+		model.addAttribute("operators", operatorsService.getAllOperatorsBut(principal.getName()));
+		model.addAttribute("permissions", operatorsService.getOperatorByEmail(principal.getName()).getSectionsAllowed());
+		addCommonAttributes(model, principal);
+		return "operators";
+	}
+
+	
+	private void addCommonAttributes(Model model, Principal principal) {
+		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
+		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
+		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
+		model.addAttribute("role",operatorsService.getOperatorByEmail(principal.getName()).getRole());
+	}
+
+	private int getNotificationsOfCurrentOp() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+		Operator operator = operatorsService.getOperatorByEmail(email);
+		return operator.getNumNotifications();
+	}
 }

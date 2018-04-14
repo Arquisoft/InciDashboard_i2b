@@ -1,8 +1,13 @@
 package com.uniovi.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.uniovi.util.Checker;
 
 @Document(collection="operators")
 public class Operator {
@@ -13,25 +18,30 @@ public class Operator {
 	private String email;
 	private String password;
 	private String operatorname;
-	private boolean isAdmin;
+	private String role;
 	private int numNotifications;
-
+	private Set<String> sectionsAllowed;
+	
 	/**
 	 * Default constructor for the operator class
 	 */
 	public Operator() {
 		super();
+		this.sectionsAllowed = new HashSet<>();
+		sectionsAllowed.add("maps");
+		sectionsAllowed.add("charts");
+		sectionsAllowed.add("incidents");
 	}
 
-	public Operator(String email, String operatorname, boolean isAdmin) {
+	public Operator(String email, String operatorname, String role) {
 		this();
 		this.email = email;
 		this.operatorname = operatorname;
-		this.isAdmin = isAdmin;
+		this.role = role;
 	}
 
-	public Operator(String email, String operatorname, String password, boolean isAdmin) {
-		this(email, operatorname, isAdmin);
+	public Operator(String email, String operatorname, String password, String role) {
+		this(email, operatorname, role);
 		this.password = password;
 	}
 
@@ -43,8 +53,8 @@ public class Operator {
 	 * @param operatorname
 	 * @param isAdmin
 	 */
-	public Operator(ObjectId id, String email, String operatorname, boolean isAdmin) {
-		this(email, operatorname, isAdmin);
+	public Operator(ObjectId id, String email, String operatorname, String role) {
+		this(email, operatorname, role);
 		this.id = id;
 
 	}
@@ -82,7 +92,16 @@ public class Operator {
 
 	@Override
 	public String toString() {
-		return "Operator [email=" + email + ", operatorname=" + operatorname + ", isAdmin=" + isAdmin + "]";
+		return "Operator [id=" + id + ", email=" + email + ", password=" + password + ", operatorname=" + operatorname
+				+ ", role=" + role + ", numNotifications=" + numNotifications + "]";
+	}
+	
+	public Set<String> getSectionsAllowed() {
+		return sectionsAllowed;
+	}
+
+	public void setSectionsAllowed(Set<String> sectionsAllowed) {
+		this.sectionsAllowed = sectionsAllowed;
 	}
 
 	public String getEmail() {
@@ -101,14 +120,6 @@ public class Operator {
 		this.operatorname = operatorname;
 	}
 
-	public boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -117,8 +128,12 @@ public class Operator {
 		this.password = password;
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public ObjectId getId() {
@@ -137,4 +152,22 @@ public class Operator {
 		this.numNotifications = numNotifications;
 	}
 
+	public boolean getIsAdmin() {
+		return role.equals("ROLE_ADMIN");
+	}
+
+	public void setIsAdmin(boolean b) {
+		if(b) {
+			this.role = "ROLE_ADMIN";
+		}else {
+			this.role = "ROLE_OPERATOR";
+		}
+		
+	}
+
+	private void addToSectionsAllowed(String section){
+		Checker.isEmpty(section);
+		Checker.isNull(section);
+		this.sectionsAllowed.add(section);
+	}
 }

@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -37,22 +38,22 @@ public class DashboardController {
 	}
 
 	@RequestMapping(value = "/dashboard/maps", method = RequestMethod.GET)
-	public String getDashboardMaps(Model model) {
-		addCommonAttributes(model);
+	public String getDashboardMaps(Model model, Principal principal) {
+		addCommonAttributes(model,principal);
 		addMapAttributes(model);
 		return "maps";
 	}
 
 	@RequestMapping(value = "/dashboard/charts", method = RequestMethod.GET)
-	public String getDashboardCharts(Model model) {
-		addCommonAttributes(model);
+	public String getDashboardCharts(Model model, Principal principal) {
+		addCommonAttributes(model,principal);
 		addChartsAttributes(model);
 		return "charts";
 	}
 
 	@RequestMapping(value = "/dashboard/realTime", method = RequestMethod.GET)
-	public String getDashboardChart(Model model) {
-		addCommonAttributes(model);
+	public String getDashboardChart(Model model, Principal principal) {
+		addCommonAttributes(model, principal);
 		addRealTimeAttributes(model);
 		return "incidentsView";
 	}
@@ -76,10 +77,11 @@ public class DashboardController {
 		return inciService.getIncidentsOf(operator).size();
 	}
 
-	private void addCommonAttributes(Model model) {
+	private void addCommonAttributes(Model model, Principal principal) {
 		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
+		model.addAttribute("role",operatorsService.getOperatorByEmail(principal.getName()).getRole());
 	}
 
 	private void addChartsAttributes(Model model) {
