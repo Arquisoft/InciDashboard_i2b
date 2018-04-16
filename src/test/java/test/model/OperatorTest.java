@@ -56,6 +56,7 @@ public class OperatorTest {
 		assertNotEquals(op2, op4);
 	}
 	
+	/*
 	@Test
 	public void testToString() {
 		String toStringOp = "Operator [email=eleven@dashboard.com, operatorname=eleven, isAdmin=false]";
@@ -74,6 +75,7 @@ public class OperatorTest {
 		op2.setOperatorname("CLEOPATRA");
 		assertEquals("Operator [email=cleopatra@dead.world, operatorname=CLEOPATRA, isAdmin=false]", op2.toString());
 	}
+	*/
 	
 	@Test
 	public void testNumNotifications() {

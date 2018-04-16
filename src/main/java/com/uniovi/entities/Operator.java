@@ -90,7 +90,8 @@ public class Operator {
 	@Override
 	public String toString() {
 		return "Operator [id=" + id + ", email=" + email + ", password=" + password + ", operatorname=" + operatorname
-				+ ", role=" + role + ", numNotifications=" + numNotifications + "]";
+				+ ", role=" + role + ", numNotifications=" + numNotifications + ", mapAccess=" + mapAccess
+				+ ", chartAccess=" + chartAccess + ", incidentModify=" + incidentModify + ", admin=" + admin + "]";
 	}
 	
 
