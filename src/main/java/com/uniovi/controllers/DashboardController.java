@@ -76,12 +76,18 @@ public class DashboardController {
 		Operator operator = operatorsService.getOperatorByEmail(email);
 		return inciService.getIncidentsOf(operator).size();
 	}
-
+	/*
+	 * Duplicated in the other controller. Not pretty but working, should create an super controller or something
+	 */
 	private void addCommonAttributes(Model model, Principal principal) {
+		Operator o = operatorsService.getOperatorByEmail(principal.getName());
 		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
-		model.addAttribute("role",operatorsService.getOperatorByEmail(principal.getName()).getRole());
+		model.addAttribute("role", o.getRole());
+		model.addAttribute("incidentAccess", o.isIncidentAccess());
+		model.addAttribute("chartAccess", o.isChartAccess());
+		model.addAttribute("mapAccess", o.isMapAccess());
 	}
 
 	private void addChartsAttributes(Model model) {

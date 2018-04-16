@@ -17,6 +17,7 @@ public class Operator {
 	private boolean mapAccess;
 	private boolean chartAccess;
 	private boolean incidentAccess;
+	private boolean admin;
 	
 
 	/**
@@ -176,6 +177,14 @@ public class Operator {
 
 	public void setIncidentAccess(boolean incidentAccess) {
 		this.incidentAccess = incidentAccess;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	

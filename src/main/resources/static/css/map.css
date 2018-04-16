@@ -1,4 +1,11 @@
 
+footer{
+	bottom:0; 
+	width:100%; 
+	position:absolute;
+}
+
+
 .map-marker {
     /* adjusting for the marker dimensions
     so that it is centered on coordinates */

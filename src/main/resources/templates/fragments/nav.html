@@ -3,7 +3,6 @@
     var notifications = [[${ numNotifications }]];
     var currentOperator = [[${ opEmail }]];
     var incidentsCount = [[${ numIncidents }]];
-
     function increaseNavCount(incident) {
         notifications++;
         $("#numNotifications").text(notifications + " new!");
@@ -11,27 +10,24 @@
         console.log("Increased nav count");
         //pop up notification
         var path = "/incident/" + incident.inciName + "/details";
-        UIkit.notification({ message: 'New Incidence:<a href = ' + path + '>See Details</a>', status: 'primary' })
+        UIkit.notification({ message: 'New Incidence:<a href = ' + path + '> See detailed view</a>', status: 'primary' })
     }
-
     function increaseIncidents() {
         incidentsCount++;
         $("#numIncidents").text(incidentsCount);
     }
-
     function resetNavCount() {
         $("#numNotifications").text("");
         $("#numNotifications").removeClass("uk-badge");
         notifications = 0;
         console.log("Reseted nav count");
     }
-
     /*]]>*/
 </script>
 <nav class="uk-navbar-container" uk-navbar uk-sticky>
     <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
-            <li class="uk-active">
+            <li class="uk-active" th:if = "${mapAccess == true}">
                 <a href="/dashboard/maps">Map</a>
             </li>
             <li class="uk-active">

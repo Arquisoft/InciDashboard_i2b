@@ -68,6 +68,33 @@ public class OperatorsService {
 		ops.removeIf(op -> op.getEmail().equals(name));
 		return ops;
 	}
+
+	public void changePermissions(String id) {
+		String[] idsplitted = id.split("-");
+		String option = idsplitted[0];
+		String operatorId = idsplitted[1];
+		Operator operator = getOperatorByEmail(operatorId);
+		switch (option) {
+		case "map":
+			operator.setMapAccess(!operator.isMapAccess());
+			repo.save(operator);
+			break;
+		case "chart":
+			operator.setChartAccess(!operator.isChartAccess());
+			repo.save(operator);
+			break;
+		case "incidents":
+			operator.setIncidentAccess(!operator.isIncidentAccess());
+			repo.save(operator);
+			break;
+		case "admin":
+			operator.setAdmin(!operator.isAdmin());
+			repo.save(operator);
+			break;
+		default:
+			break;
+		}		
+	}
 	
 	
 }
