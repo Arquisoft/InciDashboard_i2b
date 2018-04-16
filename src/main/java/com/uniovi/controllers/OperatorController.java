@@ -117,7 +117,6 @@ public class OperatorController {
 	@RequestMapping(value= "/admin/operators", method = RequestMethod.GET)
 	public String getOperators(Model model, Principal principal) {
 		model.addAttribute("operators", operatorsService.getAllOperatorsBut(principal.getName()));
-		model.addAttribute("permissions", operatorsService.getOperatorByEmail(principal.getName()).getSectionsAllowed());
 		addCommonAttributes(model, principal);
 		return "operators";
 	}

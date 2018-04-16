@@ -1,40 +1,36 @@
 package com.uniovi.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.uniovi.util.Checker;
 
 @Document(collection="operators")
 public class Operator {
 
 	@Id
 	private ObjectId id;
-	
 	private String email;
 	private String password;
 	private String operatorname;
 	private String role;
 	private int numNotifications;
-	private Set<String> sectionsAllowed;
+	private boolean mapAccess;
+	private boolean chartAccess;
+	private boolean incidentAccess;
 	
+
 	/**
 	 * Default constructor for the operator class
 	 */
 	public Operator() {
 		super();
-		this.sectionsAllowed = new HashSet<>();
-		sectionsAllowed.add("maps");
-		sectionsAllowed.add("charts");
-		sectionsAllowed.add("incidents");
 	}
 
 	public Operator(String email, String operatorname, String role) {
 		this();
+		this.mapAccess =  true;
+		this.chartAccess =  true;
+		this.incidentAccess =  true;
 		this.email = email;
 		this.operatorname = operatorname;
 		this.role = role;
@@ -96,13 +92,6 @@ public class Operator {
 				+ ", role=" + role + ", numNotifications=" + numNotifications + "]";
 	}
 	
-	public Set<String> getSectionsAllowed() {
-		return sectionsAllowed;
-	}
-
-	public void setSectionsAllowed(Set<String> sectionsAllowed) {
-		this.sectionsAllowed = sectionsAllowed;
-	}
 
 	public String getEmail() {
 		return email;
@@ -165,9 +154,29 @@ public class Operator {
 		
 	}
 
-	private void addToSectionsAllowed(String section){
-		Checker.isEmpty(section);
-		Checker.isNull(section);
-		this.sectionsAllowed.add(section);
+	public boolean isMapAccess() {
+		return mapAccess;
 	}
+
+	public void setMapAccess(boolean mapAccess) {
+		this.mapAccess = mapAccess;
+	}
+
+	public boolean isChartAccess() {
+		return chartAccess;
+	}
+
+	public void setChartAccess(boolean chartAccess) {
+		this.chartAccess = chartAccess;
+	}
+
+	public boolean isIncidentAccess() {
+		return incidentAccess;
+	}
+
+	public void setIncidentAccess(boolean incidentAccess) {
+		this.incidentAccess = incidentAccess;
+	}
+
+	
 }
