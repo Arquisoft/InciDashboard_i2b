@@ -16,7 +16,7 @@ public class Operator {
 	private int numNotifications;
 	private boolean mapAccess;
 	private boolean chartAccess;
-	private boolean incidentAccess;
+	private boolean incidentModify;
 	private boolean admin;
 	
 
@@ -31,7 +31,7 @@ public class Operator {
 		this();
 		this.mapAccess =  true;
 		this.chartAccess =  true;
-		this.incidentAccess =  true;
+		this.incidentModify =  true;
 		this.email = email;
 		this.operatorname = operatorname;
 		this.role = role;
@@ -171,12 +171,13 @@ public class Operator {
 		this.chartAccess = chartAccess;
 	}
 
-	public boolean isIncidentAccess() {
-		return incidentAccess;
+
+	public boolean isIncidentModify() {
+		return incidentModify;
 	}
 
-	public void setIncidentAccess(boolean incidentAccess) {
-		this.incidentAccess = incidentAccess;
+	public void setIncidentModify(boolean incidentModify) {
+		this.incidentModify = incidentModify;
 	}
 
 	public boolean isAdmin() {

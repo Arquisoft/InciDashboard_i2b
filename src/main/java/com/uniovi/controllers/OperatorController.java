@@ -40,19 +40,16 @@ public class OperatorController {
 
 	@RequestMapping("/incidents")
 	public String getOperatorIncidents(Model model, Principal principal) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String email = authentication.getName();
-		Operator operator = operatorsService.getOperatorByEmail(email);
+		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
 		operatorsService.resetNotificationCount(operator);
-
 		List<Incident> incidents = incidentsService.getIncidentsOf(operator);
 		model.addAttribute("incidents", incidents);
-		model.addAttribute("opEmail", email);
+		model.addAttribute("opEmail", principal.getName());
 		// notifications are erased when looking at incidents
 		model.addAttribute("numNotifications", 0);
 		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
-		model.addAttribute("role", operatorsService.getOperatorByEmail(principal.getName()).getRole());
-
+		model.addAttribute("role",operator.getRole());
+		operatorPermissions(model,operator);
 		return "incidentsView";
 	}
 
@@ -66,14 +63,14 @@ public class OperatorController {
 		if (a == null) {
 			return "redirect:/dashboard/maps?error";
 		}
-
+		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
 		List<String> states = incidentsService.getAvailableStates();
 		Incident incident = incidentsService.getIncidentByName(inciName);
-
 		model.addAttribute("states", states);
 		model.addAttribute("incident", incident);
 		model.addAttribute("numNotifications", 0);
-		model.addAttribute("role", operatorsService.getOperatorByEmail(principal.getName()).getRole());
+		model.addAttribute("role", operator.getRole());
+		operatorPermissions(model,operator);
 		return "incidentDetails";
 	}
 
@@ -144,7 +141,11 @@ public class OperatorController {
 		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
 		model.addAttribute("role", o.getRole());
-		model.addAttribute("incidentAccess", o.isIncidentAccess());
+		operatorPermissions(model,o);
+	}
+	
+	private void operatorPermissions(Model model , Operator o) {
+		model.addAttribute("incidentModify", o.isIncidentModify());
 		model.addAttribute("chartAccess", o.isChartAccess());
 		model.addAttribute("mapAccess", o.isMapAccess());
 	}

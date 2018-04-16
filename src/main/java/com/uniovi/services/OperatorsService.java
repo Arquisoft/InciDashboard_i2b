@@ -84,7 +84,7 @@ public class OperatorsService {
 			repo.save(operator);
 			break;
 		case "incidents":
-			operator.setIncidentAccess(!operator.isIncidentAccess());
+			operator.setIncidentModify(!operator.isIncidentModify());
 			repo.save(operator);
 			break;
 		case "admin":

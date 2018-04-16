@@ -85,7 +85,7 @@ public class DashboardController {
 		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
 		model.addAttribute("role", o.getRole());
-		model.addAttribute("incidentAccess", o.isIncidentAccess());
+		model.addAttribute("incidentModify", o.isIncidentModify());
 		model.addAttribute("chartAccess", o.isChartAccess());
 		model.addAttribute("mapAccess", o.isMapAccess());
 	}

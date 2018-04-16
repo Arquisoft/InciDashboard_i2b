@@ -49,7 +49,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="uk-card-footer">
+                <div th:if = "${incidentModify == true}" class="uk-card-footer">
                     <a th:href="${'/incident/' + incident.getInciName() + '/details'}"
                        class="uk-button uk-button-text uk-align-center">Modify</a>
                 </div>

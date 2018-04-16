@@ -14,7 +14,7 @@
 						$.post("/operator/admin", {
 							id : $('#' + cleanedId).attr('id')
 						}, function(data, status) {
-							alert("Data: " + data + "\nStatus: " + status
+							console.log("Data: " + data + "\nStatus: " + status
 									+ "\n" + $('#' + cleanedId).attr('id'));
 						});
 					});
@@ -61,13 +61,13 @@
 							<input th:id="${'chart-' + '__${operator.email}__'}"
 								type='checkbox' name='Chart' onclick="checkboxClicked(this.id)">
 						</div>
-						<div th:if="${operator.incidentAccess == true}">
+						<div th:if="${operator.incidentModify == true}">
 							<label th:for="${'incidents-' + '__${operator.email}__'}">Incidents</label>
 							<input th:id="${'incidents-' + '__${operator.email}__'}"
 								type='checkbox' name='Map' checked
 								onclick="checkboxClicked(this.id)">
 						</div>
-						<div th:if="${operator.incidentAccess == false}">
+						<div th:if="${operator.incidentModify == false}">
 							<label th:for="${'incidents-' + '__${operator.email}__'}">Incidents</label>
 							<input th:id="${'incidents-' + '__${operator.email}__'}"
 								type='checkbox' name='Map' onclick="checkboxClicked(this.id)">
