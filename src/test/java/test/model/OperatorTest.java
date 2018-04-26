@@ -56,26 +56,26 @@ public class OperatorTest {
 		assertNotEquals(op2, op4);
 	}
 	
-	/*
+	
 	@Test
 	public void testToString() {
-		String toStringOp = "Operator [email=eleven@dashboard.com, operatorname=eleven, isAdmin=false]";
+		String toStringOp = "Operator [id=null, email=eleven@dashboard.com, password=null, operatorname=eleven, role=ROLE_OPERATOR, numNotifications=0, mapAccess=true, chartAccess=true, incidentModify=true, admin=false]";
 		assertEquals(toStringOp, op1.toString());
 		
 		Operator op2 = new Operator("cleopatra@gob.eg", "cleo", "ROLE_ADMIN");
-		toStringOp = "Operator [email=cleopatra@gob.eg, operatorname=cleo, isAdmin=true]";
+		toStringOp = "Operator [id=null, email=cleopatra@gob.eg, password=null, operatorname=cleo, role=ROLE_ADMIN, numNotifications=0, mapAccess=true, chartAccess=true, incidentModify=true, admin=false]";
 		assertEquals(toStringOp, op2.toString());
 		
 		op2.setEmail("cleopatra@dead.world");
-		assertEquals("Operator [email=cleopatra@dead.world, operatorname=cleo, isAdmin=true]", op2.toString());
+		assertEquals("Operator [id=null, email=cleopatra@dead.world, password=null, operatorname=cleo, role=ROLE_ADMIN, numNotifications=0, mapAccess=true, chartAccess=true, incidentModify=true, admin=false]", op2.toString());
 		
 		op2.setIsAdmin(false);
-		assertEquals("Operator [email=cleopatra@dead.world, operatorname=cleo, isAdmin=false]", op2.toString());
+		assertEquals("Operator [id=null, email=cleopatra@dead.world, password=null, operatorname=cleo, role=ROLE_OPERATOR, numNotifications=0, mapAccess=true, chartAccess=true, incidentModify=true, admin=false]", op2.toString());
 		
 		op2.setOperatorname("CLEOPATRA");
-		assertEquals("Operator [email=cleopatra@dead.world, operatorname=CLEOPATRA, isAdmin=false]", op2.toString());
+		assertEquals("Operator [id=null, email=cleopatra@dead.world, password=null, operatorname=CLEOPATRA, role=ROLE_OPERATOR, numNotifications=0, mapAccess=true, chartAccess=true, incidentModify=true, admin=false]", op2.toString());
 	}
-	*/
+	
 	
 	@Test
 	public void testNumNotifications() {
