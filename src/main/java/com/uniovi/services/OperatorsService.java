@@ -88,7 +88,7 @@ public class OperatorsService {
 			repo.save(operator);
 			break;
 		case "admin":
-			operator.setAdmin(!operator.isAdmin());
+			operator.setIsAdmin(!operator.getIsAdmin());
 			repo.save(operator);
 			break;
 		default:
