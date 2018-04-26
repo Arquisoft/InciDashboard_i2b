@@ -144,7 +144,7 @@ public class Operator {
 	}
 
 	public boolean getIsAdmin() {
-		return role.equals("ROLE_ADMIN");
+		return "ROLE_ADMIN".equals(role);
 	}
 
 	public void setIsAdmin(boolean b) {
