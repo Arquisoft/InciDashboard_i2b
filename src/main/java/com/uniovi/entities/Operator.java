@@ -9,12 +9,16 @@ public class Operator {
 
 	@Id
 	private ObjectId id;
-	
 	private String email;
 	private String password;
 	private String operatorname;
-	private boolean isAdmin;
+	private String role;
 	private int numNotifications;
+	private boolean mapAccess;
+	private boolean chartAccess;
+	private boolean incidentModify;
+	private boolean admin;
+	
 
 	/**
 	 * Default constructor for the operator class
@@ -23,15 +27,18 @@ public class Operator {
 		super();
 	}
 
-	public Operator(String email, String operatorname, boolean isAdmin) {
+	public Operator(String email, String operatorname, String role) {
 		this();
+		this.mapAccess =  true;
+		this.chartAccess =  true;
+		this.incidentModify =  true;
 		this.email = email;
 		this.operatorname = operatorname;
-		this.isAdmin = isAdmin;
+		this.role = role;
 	}
 
-	public Operator(String email, String operatorname, String password, boolean isAdmin) {
-		this(email, operatorname, isAdmin);
+	public Operator(String email, String operatorname, String password, String role) {
+		this(email, operatorname, role);
 		this.password = password;
 	}
 
@@ -43,8 +50,8 @@ public class Operator {
 	 * @param operatorname
 	 * @param isAdmin
 	 */
-	public Operator(ObjectId id, String email, String operatorname, boolean isAdmin) {
-		this(email, operatorname, isAdmin);
+	public Operator(ObjectId id, String email, String operatorname, String role) {
+		this(email, operatorname, role);
 		this.id = id;
 
 	}
@@ -82,8 +89,11 @@ public class Operator {
 
 	@Override
 	public String toString() {
-		return "Operator [email=" + email + ", operatorname=" + operatorname + ", isAdmin=" + isAdmin + "]";
+		return "Operator [id=" + id + ", email=" + email + ", password=" + password + ", operatorname=" + operatorname
+				+ ", role=" + role + ", numNotifications=" + numNotifications + ", mapAccess=" + mapAccess
+				+ ", chartAccess=" + chartAccess + ", incidentModify=" + incidentModify + ", admin=" + admin + "]";
 	}
+	
 
 	public String getEmail() {
 		return email;
@@ -101,14 +111,6 @@ public class Operator {
 		this.operatorname = operatorname;
 	}
 
-	public boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -117,8 +119,12 @@ public class Operator {
 		this.password = password;
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public ObjectId getId() {
@@ -137,4 +143,44 @@ public class Operator {
 		this.numNotifications = numNotifications;
 	}
 
+	public boolean getIsAdmin() {
+		return "ROLE_ADMIN".equals(role);
+	}
+
+	public void setIsAdmin(boolean b) {
+		if(b) {
+			this.role = "ROLE_ADMIN";
+		}else {
+			this.role = "ROLE_OPERATOR";
+		}
+		
+	}
+
+	public boolean isMapAccess() {
+		return mapAccess;
+	}
+
+	public void setMapAccess(boolean mapAccess) {
+		this.mapAccess = mapAccess;
+	}
+
+	public boolean isChartAccess() {
+		return chartAccess;
+	}
+
+	public void setChartAccess(boolean chartAccess) {
+		this.chartAccess = chartAccess;
+	}
+
+
+	public boolean isIncidentModify() {
+		return incidentModify;
+	}
+
+	public void setIncidentModify(boolean incidentModify) {
+		this.incidentModify = incidentModify;
+	}
+
+
+	
 }

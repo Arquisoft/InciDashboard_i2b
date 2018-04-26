@@ -1,5 +1,7 @@
 package com.uniovi.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -55,6 +57,43 @@ public class OperatorsService {
 	public void resetNotificationCount(Operator operator) {
 		operator.setNumNotifications(0);
 		repo.save(operator);
+	}
+
+	public boolean checkPassword(Operator operator) {
+		return repo.isInDb(operator.getEmail(), operator.getPassword()) != null ;
+	}
+
+	public List<Operator> getAllOperatorsBut(String name) {
+		List<Operator> ops = repo.findAll();
+		ops.removeIf(op -> op.getEmail().equals(name));
+		return ops;
+	}
+
+	public void changePermissions(String id) {
+		String[] idsplitted = id.split("-");
+		String option = idsplitted[0];
+		String operatorId = idsplitted[1];
+		Operator operator = getOperatorByEmail(operatorId);
+		switch (option) {
+		case "map":
+			operator.setMapAccess(!operator.isMapAccess());
+			repo.save(operator);
+			break;
+		case "chart":
+			operator.setChartAccess(!operator.isChartAccess());
+			repo.save(operator);
+			break;
+		case "incidents":
+			operator.setIncidentModify(!operator.isIncidentModify());
+			repo.save(operator);
+			break;
+		case "admin":
+			operator.setIsAdmin(!operator.getIsAdmin());
+			repo.save(operator);
+			break;
+		default:
+			break;
+		}		
 	}
 	
 	

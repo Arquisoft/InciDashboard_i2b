@@ -146,7 +146,7 @@ public class IncidentsServiceTest {
 	
 	@Test
 	public void testGetIncidentsOfOperator() {
-		Operator op = new Operator("paco", "123456", false);
+		Operator op = new Operator("paco", "123456", "ROLE_OPERATOR");
 		List<Incident> incidents = incidentsService.getIncidentsOf(op);
 		assertEquals(0, incidents.size());
 		

@@ -9,7 +9,8 @@ function connect() {
 
             var operator = incident.properties.operator;
             if (operator !== null && operator === currentOperator) {
-                increaseNavCount();
+                increaseNavCount(incident);
+                increaseIncidents();
             }
 
             updatePieChart(incident);

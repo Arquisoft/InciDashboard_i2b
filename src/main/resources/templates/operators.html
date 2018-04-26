@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head"></head>
+
+<body>
+	<link rel="stylesheet" type="text/css" href="/css/custom.css">
+	<script type="text/javascript">
+		function checkboxClicked(id) {
+			var cleanedId = id.replace('@', '\\@');
+			cleanedId = cleanedId.replace('.', '\\.');
+			$('#' + cleanedId).change(
+					function() {
+						$.post("/operator/admin", {
+							id : $('#' + cleanedId).attr('id')
+						}, function(data, status) {
+							console.log("Data: " + data + "\nStatus: " + status
+									+ "\n" + $('#' + cleanedId).attr('id'));
+						});
+					});
+		}
+	</script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<nav th:replace="fragments/nav"></nav>
+	<div class="uk-container">
+		<h2>All operators</h2>
+		<table class="uk-table uk-table-striped">
+			<thead>
+				<tr>
+					<th>Email</th>
+					<th>Name</th>
+					<th>Permissions</th>
+					<th>Admim</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="operator : ${operators} ">
+					<td th:text="${operator.email}"></td>
+					<td th:text="${operator.operatorname}"></td>
+					<td>
+						<div th:if="${operator.mapAccess == true}">
+							<label th:for="${'map-' + '__${operator.email}__'}">Map</label> <input
+								th:id="${'map-' + '__${operator.email}__'}" type='checkbox'
+								name='Incidents' checked onclick="checkboxClicked(this.id)">
+						</div>
+						<div th:if="${operator.mapAccess == false}">
+							<label th:for="${'map-' + '__${operator.email}__'}">Map</label> <input
+								th:id="${'map-' + '__${operator.email}__'}" type='checkbox'
+								name='Incidents' onclick="checkboxClicked(this.id)">
+						</div>
+						<div th:if="${operator.chartAccess == true}">
+							<label th:for="${'chart-' + '__${operator.email}__'}">Chart</label>
+							<input th:id="${'chart-' + '__${operator.email}__'}"
+								type='checkbox' name='Chart' checked
+								onclick="checkboxClicked(this.id)">
+						</div>
+						<div th:if="${operator.chartAccess == false}">
+							<label th:for="${'chart-' + '__${operator.email}__'}">Chart</label>
+							<input th:id="${'chart-' + '__${operator.email}__'}"
+								type='checkbox' name='Chart' onclick="checkboxClicked(this.id)">
+						</div>
+						<div th:if="${operator.incidentModify == true}">
+							<label th:for="${'incidents-' + '__${operator.email}__'}">Incidents</label>
+							<input th:id="${'incidents-' + '__${operator.email}__'}"
+								type='checkbox' name='Map' checked
+								onclick="checkboxClicked(this.id)">
+						</div>
+						<div th:if="${operator.incidentModify == false}">
+							<label th:for="${'incidents-' + '__${operator.email}__'}">Incidents</label>
+							<input th:id="${'incidents-' + '__${operator.email}__'}"
+								type='checkbox' name='Map' onclick="checkboxClicked(this.id)">
+						</div>
+					</td>
+					<td>
+						<div th:if="${operator.role == 'ROLE_ADMIN'}">
+							<input type='checkbox' name='Admin'
+								th:id="${'admin-' + '__${operator.email}__'}" checked
+								onclick="checkboxClicked(this.id)">
+						</div>
+						<div th:if="${operator.role != 'ROLE_ADMIN'}">
+							<input type='checkbox' name='Admin'
+								th:id="${'admin-' + '__${operator.email}__'}"
+								onclick="checkboxClicked(this.id)">
+						</div>
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+</body>
+<footer th:replace="fragments/footer"></footer>
+
+</html>

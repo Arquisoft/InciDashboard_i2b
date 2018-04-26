@@ -37,13 +37,18 @@ public class InsertTestDataService {
 
 	@PostConstruct
 	public void init() throws JsonProcessingException {
-		Operator op1 = new Operator("operator1@dashboard.com", "op1", "123456", false);
-		Operator op2 = new Operator("operator2@dashboard.com", "op2", "123456", false);
-		Operator op3 = new Operator("operator3@dashboard.com", "op3", "123456", false);
+		Operator op1 = new Operator("operator1@dashboard.com", "op1", "123456", "ROLE_OPERATOR");
+		Operator op2 = new Operator("operator2@dashboard.com", "op2", "123456", "ROLE_OPERATOR");
+		Operator op3 = new Operator("operator3@dashboard.com", "op3", "123456", "ROLE_OPERATOR");
+		//Changed, check that InciCommon is up to date CHANGED BOOLEAN ADMIN BY ROLES
+		Operator op4 = new Operator("admin1@dashboard.com", "admin1", "123456", "ROLE_ADMIN");
+		Operator op5 = new Operator("admin2@dashboard.com", "admin2", "123456", "ROLE_ADMIN");
 
 		operatorsService.addOperator(op1);
 		operatorsService.addOperator(op2);
 		operatorsService.addOperator(op3);
+		operatorsService.addOperator(op4);
+		operatorsService.addOperator(op5);
 
 		List<AgentInfo> agents = new ArrayList<AgentInfo>();
 		List<Incident> incidents = new ArrayList<Incident>();

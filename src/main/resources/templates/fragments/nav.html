@@ -3,39 +3,34 @@
     var notifications = [[${ numNotifications }]];
     var currentOperator = [[${ opEmail }]];
     var incidentsCount = [[${ numIncidents }]];
-    
     function increaseNavCount(incident) {
         notifications++;
         $("#numNotifications").text(notifications + " new!");
         $("#numNotifications").addClass("uk-badge");
         console.log("Increased nav count");
         //pop up notification
-        var path = "/incident/"+incident.inciName+"/details";
-        UIkit.notification({message: 'New Incidence:<a href = '+path+'>See Details</a>', status: 'primary'})
+        var path = "/incident/" + incident.inciName + "/details";
+        UIkit.notification({ message: 'New Incidence:<a href = ' + path + '> See detailed view</a>', status: 'primary' })
     }
-
-    function increaseIncidents(){
-    	incidentsCount++;
-    	$("#numIncidents").text(incidentsCount);
+    function increaseIncidents() {
+        incidentsCount++;
+        $("#numIncidents").text(incidentsCount);
     }
-    
     function resetNavCount() {
         $("#numNotifications").text("");
         $("#numNotifications").removeClass("uk-badge");
         notifications = 0;
         console.log("Reseted nav count");
     }
-
     /*]]>*/
 </script>
-
 <nav class="uk-navbar-container" uk-navbar uk-sticky>
     <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
-            <li class="uk-active">
+            <li class="uk-active" th:if = "${mapAccess == true}">
                 <a href="/dashboard/maps">Map</a>
             </li>
-            <li class="uk-active">
+            <li class="uk-active" th:if = "${chartAccess == true}">
                 <a href="/dashboard/charts">Chart</a>
             </li>
             <li class="uk-active">
@@ -44,15 +39,21 @@
                     <span id="numNotifications" th:class="${numNotifications == 0 ? '' : 'uk-badge'}" th:text="${numNotifications == 0 ? '' : numNotifications + ' new!'}"></span>
                 </a>
             </li>
+            <li class="uk-active" th:if="${role == 'ROLE_ADMIN'}">
+                <a href="/admin/operators">See operators</a>
+            </li>
         </ul>
     </div>
     <div class="uk-navbar-center">
         <ul class="uk-navbar-nav">
             <li class="uk-active ">
                 <div class="uk-heading-line">
-                    <p> Total Incidents:
-                        <span id="numIncidents" th:text="${numIncidents}"></span>
-                    </p>
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active">
+                            Total Incidents:
+                            <span id="numIncidents" th:text="${numIncidents}"></span>
+                        </li>
+                    </ul>
                 </div>
             </li>
         </ul>

@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -37,22 +38,22 @@ public class DashboardController {
 	}
 
 	@RequestMapping(value = "/dashboard/maps", method = RequestMethod.GET)
-	public String getDashboardMaps(Model model) {
-		addCommonAttributes(model);
+	public String getDashboardMaps(Model model, Principal principal) {
+		addCommonAttributes(model,principal);
 		addMapAttributes(model);
 		return "maps";
 	}
 
 	@RequestMapping(value = "/dashboard/charts", method = RequestMethod.GET)
-	public String getDashboardCharts(Model model) {
-		addCommonAttributes(model);
+	public String getDashboardCharts(Model model, Principal principal) {
+		addCommonAttributes(model,principal);
 		addChartsAttributes(model);
 		return "charts";
 	}
 
 	@RequestMapping(value = "/dashboard/realTime", method = RequestMethod.GET)
-	public String getDashboardChart(Model model) {
-		addCommonAttributes(model);
+	public String getDashboardChart(Model model, Principal principal) {
+		addCommonAttributes(model, principal);
 		addRealTimeAttributes(model);
 		return "incidentsView";
 	}
@@ -75,11 +76,18 @@ public class DashboardController {
 		Operator operator = operatorsService.getOperatorByEmail(email);
 		return inciService.getIncidentsOf(operator).size();
 	}
-
-	private void addCommonAttributes(Model model) {
+	/*
+	 * Duplicated in the other controller. Not pretty but working, should create an super controller or something
+	 */
+	private void addCommonAttributes(Model model, Principal principal) {
+		Operator o = operatorsService.getOperatorByEmail(principal.getName());
 		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
+		model.addAttribute("role", o.getRole());
+		model.addAttribute("incidentModify", o.isIncidentModify());
+		model.addAttribute("chartAccess", o.isChartAccess());
+		model.addAttribute("mapAccess", o.isMapAccess());
 	}
 
 	private void addChartsAttributes(Model model) {
