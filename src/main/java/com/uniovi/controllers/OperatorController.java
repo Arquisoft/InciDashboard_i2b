@@ -4,8 +4,6 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,23 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uniovi.entities.Incident;
 import com.uniovi.entities.Operator;
-import com.uniovi.services.IncidentsService;
-import com.uniovi.services.OperatorsService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.util.Checker;
 
 @Controller
-public class OperatorController {
-
-	@Autowired
-	private IncidentsService incidentsService;
-
-	@Autowired
-	private OperatorsService operatorsService;
+public class OperatorController extends AppController{
 
 	@Autowired
 	private SecurityService securityService;
-
+	
 	@RequestMapping("/login")
 	public String getLogin() {
 		return "/login";
@@ -93,13 +83,6 @@ public class OperatorController {
 		return "State changed";
 	}
 
-	private int getIncidencesOfCurrentOp() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String email = authentication.getName();
-		Operator operator = operatorsService.getOperatorByEmail(email);
-		return incidentsService.getIncidentsOf(operator).size();
-	}
-
 	// Admin
 	@RequestMapping("/admin/login")
 	public String getAdminLogin() {
@@ -134,26 +117,7 @@ public class OperatorController {
 		operatorsService.changePermissions(id);
 		return "Permissions changed";
 	}
-
-	private void addCommonAttributes(Model model, Principal principal) {
-		Operator o = operatorsService.getOperatorByEmail(principal.getName());
-		model.addAttribute("opEmail", SecurityContextHolder.getContext().getAuthentication().getName());
-		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
-		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
-		model.addAttribute("role", o.getRole());
-		operatorPermissions(model,o);
-	}
 	
-	private void operatorPermissions(Model model , Operator o) {
-		model.addAttribute("incidentModify", o.isIncidentModify());
-		model.addAttribute("chartAccess", o.isChartAccess());
-		model.addAttribute("mapAccess", o.isMapAccess());
-	}
 
-	private int getNotificationsOfCurrentOp() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String email = authentication.getName();
-		Operator operator = operatorsService.getOperatorByEmail(email);
-		return operator.getNumNotifications();
-	}
+	
 }
