@@ -25,7 +25,7 @@ public class OperatorController extends AppController{
 	
 	@RequestMapping("/login")
 	public String getLogin() {
-		return "/login";
+		return "login";
 	}
 
 	@RequestMapping("/incidents")
