@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class InsertTestDataService {
 	@Autowired
 	private OperatorsService operatorsService;
 
-	public final static int NUM_INCIDENTS = 10;
+	public final static int NUM_INCIDENTS = 150;
 
 	private String incidentsJson;
 
@@ -40,7 +41,7 @@ public class InsertTestDataService {
 		Operator op1 = new Operator("operator1@dashboard.com", "op1", "123456", "ROLE_OPERATOR");
 		Operator op2 = new Operator("operator2@dashboard.com", "op2", "123456", "ROLE_OPERATOR");
 		Operator op3 = new Operator("operator3@dashboard.com", "op3", "123456", "ROLE_OPERATOR");
-		//Changed, check that InciCommon is up to date CHANGED BOOLEAN ADMIN BY ROLES
+		// Changed, check that InciCommon is up to date CHANGED BOOLEAN ADMIN BY ROLES
 		Operator op4 = new Operator("admin1@dashboard.com", "admin1", "123456", "ROLE_ADMIN");
 		Operator op5 = new Operator("admin2@dashboard.com", "admin2", "123456", "ROLE_ADMIN");
 
@@ -67,7 +68,6 @@ public class InsertTestDataService {
 		for (int i = 0; i < NUM_INCIDENTS; i++) {
 			Incident incident = incidentGenerator.generateRandomIncident();
 			incidents.add(incident);
-
 			if (i <= 3) {
 				incidents.get(i).assignOperator(op1);
 			} else if (i <= 6) {
@@ -78,9 +78,33 @@ public class InsertTestDataService {
 
 			incidentsService.addIncident(incident);
 		}
-
+		fakeUnixTimes(incidents,600);
 		ObjectMapper mapper = new ObjectMapper();
 		this.incidentsJson = mapper.writeValueAsString(incidents);
+	}
+
+	/**
+	 * This method alters the first 4 bytes of a MongoId. Those bytes are a
+	 * timestamp representing the insertion time in the database.
+	 * 
+	 * @param incidents
+	 * @param step seconds to "fake" between each incident measurement
+	 */
+	private void fakeUnixTimes(List<Incident> incidents,int step) {
+		int unixTime = (int) (System.currentTimeMillis() / 1000);
+		for (Incident incident : incidents) {
+			ObjectId id = incident.getId();
+			incidentsService.deleteIncidentById(id);
+			byte[] bytes = id.toHexString().getBytes();
+			bytes[0] = (byte) (unixTime >> 24);
+			bytes[1] = (byte) (unixTime >> 16);
+			bytes[2] = (byte) (unixTime >> 8);
+			bytes[3] = (byte) (unixTime);
+			ObjectId neu = new ObjectId(bytes);
+			incident.setId(neu);
+			incidentsService.addIncident(incident);
+			unixTime += step;
+		}
 	}
 
 	@PreDestroy

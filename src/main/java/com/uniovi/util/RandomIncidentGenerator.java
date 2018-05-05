@@ -56,6 +56,15 @@ public class RandomIncidentGenerator {
 		incident.setState(IncidentState.OPEN);
 		this.createRandomTagsFor(incident);
 		this.createRandomPropertiesFor(incident);
+//		
+//		//TESTING
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		return incident;
 	}
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.uniovi.entities.Incident;
 import com.uniovi.entities.IncidentState;
 import com.uniovi.entities.Operator;
 import com.uniovi.repositories.IncidentsRepository;
+import com.uniovi.util.TypeFormatter;
 
 @Service
 public class IncidentsService {
@@ -98,6 +100,22 @@ public class IncidentsService {
 			}
 		}
 		return usedTags;
+	}
+
+	public Object getTemperatureSensorIncidentsDates() {
+		List<String> tempTimes = getTemperatureSensorIncidents().stream()
+					.map( i -> i.getId().getTimestamp())
+					.map( l -> TypeFormatter.toDateString(new Long(l)))
+					.collect(Collectors.toList());
+		return tempTimes;
+	}
+
+	public Object getTemperaturesSensor() {
+		List<Object> tempDegrees = getTemperatureSensorIncidents().stream()
+				.map(i -> i.getProperties()
+				.get("temperature"))
+				.collect(Collectors.toList());
+		return tempDegrees; 
 	}
 
 }
