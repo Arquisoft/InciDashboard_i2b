@@ -53,7 +53,6 @@ public class DashboardController extends AppController {
 	}
 	
 	private void addChartsAttributes(Model model) {
-		List<Incident> temperatureIncidents = incidentsService.getTemperatureSensorIncidents();
 		Map<String, Integer> usedTags = incidentsService.getMostUsedTags();
 		List<Incident> incidentsSensors = incidentsService.getKindIncidents("Sensor");
 		List<Incident> incidentsPeople = incidentsService.getKindIncidents("Person");
@@ -61,7 +60,8 @@ public class DashboardController extends AppController {
 		model.addAttribute("sensors", incidentsSensors.size());
 		model.addAttribute("people", incidentsPeople.size());
 		model.addAttribute("entities", incidentsEntities.size());
-		model.addAttribute("temperatures", temperatureIncidents);
+		model.addAttribute("times",incidentsService.getTemperatureSensorIncidentsDates());
+		model.addAttribute("temperatures", incidentsService.getTemperaturesSensor());
 		model.addAttribute("keys", usedTags.keySet());
 		model.addAttribute("values", usedTags.values());
 	}
