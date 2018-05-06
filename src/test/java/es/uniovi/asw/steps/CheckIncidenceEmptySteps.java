@@ -26,7 +26,7 @@ public class CheckIncidenceEmptySteps {
 	static WebDriver driver = getDriver(PathFirefox);
 	
 	@Autowired
-	OperatorsService opService;
+	private OperatorsService opService;
 
 	@Before
 	public static WebDriver getDriver(String PathFirefox) {

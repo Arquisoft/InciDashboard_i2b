@@ -156,28 +156,28 @@ public class Operator {
 		
 	}
 
-	public boolean isMapAccess() {
+	public boolean mapAccess() {
 		return mapAccess;
 	}
 
-	public void setMapAccess(boolean mapAccess) {
+	public void mapAccess(boolean mapAccess) {
 		this.mapAccess = mapAccess;
 	}
 
-	public boolean isChartAccess() {
+	public boolean chartAccess() {
 		return chartAccess;
 	}
 
-	public void setChartAccess(boolean chartAccess) {
+	public void chartAccess(boolean chartAccess) {
 		this.chartAccess = chartAccess;
 	}
 
 
-	public boolean isIncidentModify() {
+	public boolean incidentModify() {
 		return incidentModify;
 	}
 
-	public void setIncidentModify(boolean incidentModify) {
+	public void incidentModify(boolean incidentModify) {
 		this.incidentModify = incidentModify;
 	}
 

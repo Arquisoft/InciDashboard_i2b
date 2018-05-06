@@ -48,8 +48,9 @@ public class OperatorController extends AppController{
 
 		List<Incident> incidents = incidentsService
 				.getIncidentsOf(operatorsService.getOperatorByEmail(principal.getName()));
-		Incident a = incidents.stream().filter(inci -> inci.getInciName().equals(inciName)).findFirst().orElse(null);
-
+		Incident a = incidents.stream()
+				.filter(inci -> inci.getInciName().equals(inciName))
+				.findFirst().orElse(null);
 		if (a == null) {
 			return "redirect:/dashboard/maps?error";
 		}
@@ -93,7 +94,7 @@ public class OperatorController extends AppController{
 	public String adminLogin(Model model, @RequestParam String email, @RequestParam String password) {
 		Operator operator = operatorsService.getOperatorByEmail(email);
 
-		if (operator != null && operatorsService.checkPassword(operator) && operator.getRole().equals("ROLE_ADMIN")) {
+		if (operator != null && operatorsService.isValidOperator(operator) && operator.getRole().equals("ROLE_ADMIN")) {
 			securityService.autoLogin(email, password);
 			return "redirect:/admin/operators";
 		} else {

@@ -61,7 +61,7 @@ public class DashboardController extends AppController {
 		model.addAttribute("people", incidentsPeople.size());
 		model.addAttribute("entities", incidentsEntities.size());
 		model.addAttribute("times",incidentsService.getTemperatureSensorIncidentsDates());
-		model.addAttribute("temperatures", incidentsService.getTemperaturesSensor());
+		model.addAttribute("temperatures", incidentsService.getTemperaturesOfSensors());
 		model.addAttribute("keys", usedTags.keySet());
 		model.addAttribute("values", usedTags.values());
 	}

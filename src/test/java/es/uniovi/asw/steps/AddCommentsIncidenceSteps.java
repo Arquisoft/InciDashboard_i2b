@@ -31,7 +31,7 @@ public class AddCommentsIncidenceSteps {
 	private MockMvc mockMvc;
 	
 	@Autowired
-	OperatorsService opService;
+	private OperatorsService opService;
 
 	@Before
 	public static WebDriver getDriver(String PathFirefox) {

@@ -111,6 +111,9 @@ public class IncidentsServiceTest {
 	public void testTemperatureIncidents() {
 		assertTrue(incidentsService.getTemperatureSensorIncidents().contains(inciTest2));
 		assertFalse(incidentsService.getTemperatureSensorIncidents().contains(inciTest1));
+		//Incidents are generated radomly so we suppose that no one will be exactly 20
+		assertTrue(incidentsService.getTemperaturesOfSensors().contains(20));
+		assertTrue(incidentsService.getTemperatureSensorIncidentsDates() != null);
 	}
 	
 	@Test
@@ -172,6 +175,13 @@ public class IncidentsServiceTest {
 
 		incidentsService.changeState(inciTest1.getInciName(), "notAState");
 		assertEquals(IncidentState.OPEN, incidentsService.getIncidentByName("inciTest1").getState());
+	}
+	
+	@Test
+	public void testCollectionGetters() {
+		incidentsService.getAllIncidents();
+		incidentsService.getGeolocatedIncidents();
+		incidentsService.getMostUsedTags();
 	}
 
 }
