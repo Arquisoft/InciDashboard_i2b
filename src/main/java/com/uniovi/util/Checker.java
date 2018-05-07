@@ -20,7 +20,7 @@ public class Checker {
 		}
 	}
 	
-	public static void isLessThanZero(int i){
+	public static void isGreaterThanOrEqualToZero(int i){
 		if(i < 0){
 			throw new IllegalArgumentException("Value cannot be lower than 0");
 		}

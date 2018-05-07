@@ -30,15 +30,15 @@ public class AppController {
 		model.addAttribute("numNotifications", this.getNotificationsOfCurrentOp());
 		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
 		model.addAttribute("role", o.getRole());
-		model.addAttribute("incidentModify", o.isIncidentModify());
-		model.addAttribute("chartAccess", o.isChartAccess());
-		model.addAttribute("mapAccess", o.isMapAccess());
+		model.addAttribute("incidentModify", o.incidentModify());
+		model.addAttribute("chartAccess", o.chartAccess());
+		model.addAttribute("mapAccess", o.mapAccess());
 	}
 	
 	protected void operatorPermissions(Model model , Operator o) {
-		model.addAttribute("incidentModify", o.isIncidentModify());
-		model.addAttribute("chartAccess", o.isChartAccess());
-		model.addAttribute("mapAccess", o.isMapAccess());
+		model.addAttribute("incidentModify", o.incidentModify());
+		model.addAttribute("chartAccess", o.chartAccess());
+		model.addAttribute("mapAccess", o.mapAccess());
 	}
 	
 	protected int getNotificationsOfCurrentOp() {

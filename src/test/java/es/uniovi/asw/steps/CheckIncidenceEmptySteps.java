@@ -22,7 +22,7 @@ public class CheckIncidenceEmptySteps {
 
 	
 	@Autowired
-	OperatorsService opService;
+	private OperatorsService opService;
 
 	//static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
 	static String gecko = "drivers/geckodriver.exe";

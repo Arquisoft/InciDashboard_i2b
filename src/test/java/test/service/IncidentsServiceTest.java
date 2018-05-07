@@ -42,6 +42,9 @@ public class IncidentsServiceTest {
 	private Incident inciTest1;
 	private Incident inciTest2;
 	private Incident inciTest3;
+	private Incident taged1;
+	private Incident taged2;
+	private Incident taged3;
 	
 	private AgentInfo testInfo1;
 	private AgentInfo testInfo2;
@@ -67,6 +70,7 @@ public class IncidentsServiceTest {
 		incidentsService.addIncident(inciTest1);
 		incidentsService.addIncident(inciTest2);
 		incidentsService.addIncident(inciTest3);
+	
 	}
 	
 	@After
@@ -111,6 +115,9 @@ public class IncidentsServiceTest {
 	public void testTemperatureIncidents() {
 		assertTrue(incidentsService.getTemperatureSensorIncidents().contains(inciTest2));
 		assertFalse(incidentsService.getTemperatureSensorIncidents().contains(inciTest1));
+		//Incidents are generated radomly so we suppose that no one will be exactly 20
+		assertTrue(incidentsService.getTemperaturesOfSensors().contains(20));
+		assertTrue(incidentsService.getTemperatureSensorIncidentsDates() != null);
 	}
 	
 	@Test
@@ -172,6 +179,30 @@ public class IncidentsServiceTest {
 
 		incidentsService.changeState(inciTest1.getInciName(), "notAState");
 		assertEquals(IncidentState.OPEN, incidentsService.getIncidentByName("inciTest1").getState());
+	}
+	
+	@Test
+	public void testCollectionGetters() {
+		assertTrue(incidentsService.getAllIncidents().contains(inciTest1));
+		assertTrue(incidentsService.getAllIncidents().contains(inciTest2));
+		assertTrue(incidentsService.getAllIncidents().contains(inciTest3));
+	}
+	
+	@Test
+	public void testTags() {
+		taged1 = new Incident();
+		taged2 = new Incident();
+		taged3 = new Incident();
+		taged1.addTag("tag1");
+		taged1.addTag("tag2");
+		taged2.addTag("tag2");
+		taged3.addTag("tag3");
+		incidentsService.addIncident(taged1);
+		incidentsService.addIncident(taged2);
+		incidentsService.addIncident(taged3);
+		assertEquals((int)incidentsService.getMostUsedTags().get("tag1"),1);
+		assertEquals((int)incidentsService.getMostUsedTags().get("tag2"),2);
+		assertEquals((int)incidentsService.getMostUsedTags().get("tag3"),1);
 	}
 
 }

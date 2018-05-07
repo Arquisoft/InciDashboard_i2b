@@ -102,15 +102,15 @@ public class IncidentsService {
 		return usedTags;
 	}
 
-	public Object getTemperatureSensorIncidentsDates() {
+	public List<String> getTemperatureSensorIncidentsDates() {
 		List<String> tempTimes = getTemperatureSensorIncidents().stream()
 					.map( i -> i.getId().getTimestamp())
-					.map( l -> TypeFormatter.toDateString(new Long(l)))
+					.map( l -> TypeFormatter.timestampToDateString(new Long(l)))
 					.collect(Collectors.toList());
 		return tempTimes;
 	}
 
-	public Object getTemperaturesSensor() {
+	public List<Object> getTemperaturesOfSensors() {
 		List<Object> tempDegrees = getTemperatureSensorIncidents().stream()
 				.map(i -> i.getProperties()
 				.get("temperature"))
