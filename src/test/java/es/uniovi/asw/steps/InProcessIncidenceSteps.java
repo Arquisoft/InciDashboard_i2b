@@ -26,22 +26,22 @@ public class InProcessIncidenceSteps {
 	private Operator operator;
 	
 	@Given("^operator with email \"([^\"]*)\"$")
-	public void el_operario_con_identificador(String operatorIdentifier) throws Throwable {
+	public void identificador(String operatorIdentifier) throws Throwable {
 		this.operator = opService.getOperatorByEmail(operatorIdentifier);
 	}
 
 	@Given("^the first of his assigned incidences$")
-	public void the_first_of_his_assigned_incidences() throws Throwable {
+	public void incidences() throws Throwable {
 		incidence = inciService.getIncidentsOf(operator).get(0);
 	}
 
 	@When("^he in process the incidence$")
-	public void he_in_process_the_incidence() throws Throwable {
+	public void incidence() throws Throwable {
 		inciService.changeState(incidence.getInciName(), IncidentState.IN_PROCESS.toString());
 	}
 
 	@Then("^the incidence is in processed$")
-	public void the_incidence_is_in_processed() throws Throwable {
+	public void processed() throws Throwable {
 		assertTrue(incidence.getState().equals(IncidentState.IN_PROCESS));
 	}
 }

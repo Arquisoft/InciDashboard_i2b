@@ -14,9 +14,9 @@ import cucumber.api.java.en.When;
 public class LoginUserNameFailSteps {
 
 	//static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
-	static String gecko = "drivers/geckodriver.exe";
-	static String URL = "http://localhost:8082";
-	static WebDriver driver = getDriver();
+	private static String gecko = "drivers/geckodriver.exe";
+	private static String URL = "http://localhost:8082";
+	private static WebDriver driver = getDriver();
 
 	@Before
 	public static WebDriver getDriver() {
@@ -36,10 +36,7 @@ public class LoginUserNameFailSteps {
 		driver.manage().deleteAllCookies();
 	}
 
-	// Antes de la primera prueba
-	@BeforeClass
-	static public void begin() {
-	}
+	
 
 	// Al finalizar la última prueba
 	@After

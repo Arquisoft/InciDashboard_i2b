@@ -37,22 +37,22 @@ public class ClosedIncidenceSteps {
 	 * @throws Throwable
 	 */
 	@Given("^operator with email \"([^\"]*)\"$")
-	public void el_operario_con_identificador(String operatorIdentifier) throws Throwable {
+	public void identificador(String operatorIdentifier) throws Throwable {
 		this.operator = opService.getOperatorByEmail(operatorIdentifier);
 	}
 
 	@Given("^the first of his assigned incidences$")
-	public void the_first_of_his_assigned_incidences() throws Throwable {
+	public void incidences() throws Throwable {
 		incidence = inciService.getIncidentsOf(operator).get(0);
 	}
 
 	@When("^he closes the incidence$")
-	public void he_closes_the_incidence() throws Throwable {
+	public void incidence() throws Throwable {
 		inciService.changeState(incidence.getInciName(), IncidentState.CLOSED.toString());
 	}
 
 	@Then("^the incidence is closed$")
-	public void the_incidence_is_closed() throws Throwable {
+	public void closed() throws Throwable {
 		assertTrue(incidence.getState().equals(IncidentState.CLOSED));
 	}
 
