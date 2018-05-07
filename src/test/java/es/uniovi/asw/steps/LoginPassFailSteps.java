@@ -1,4 +1,4 @@
-package es.uniovi.asw.steps;
+	package es.uniovi.asw.steps;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,15 +13,15 @@ import cucumber.api.java.en.When;
 
 public class LoginPassFailSteps {
 
-	static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
-	static String gecko = "D:\\Descargas";
-	static String URL = "http://localhost:8082/login";
-	static WebDriver driver = getDriver(PathFirefox);
+	//static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
+	static String gecko = "drivers/geckodriver.exe";
+	static String URL = "http://localhost:8082";
+	static WebDriver driver = getDriver();
 
 	@Before
-	public static WebDriver getDriver(String PathFirefox) {
+	public static WebDriver getDriver() {
 		// Firefox (Versión 46.0) sin geckodriver para Selenium 2.x.
-		System.setProperty("webdriver.gecko.driver", PathFirefox);
+		//System.setProperty("webdriver.gecko.driver", PathFirefox);
 		WebDriver driver = new FirefoxDriver();
 		return driver;
 	}
@@ -51,7 +51,7 @@ public class LoginPassFailSteps {
 
 	@Given("^I am not a correct operator")
 	public void logged() {
-		driver.get("http://localhost:8082/login");
+		driver.get("http://localhost:8082");
 		driver.findElement(By.id("email")).sendKeys("operator1@dashboard.com");
 	}
 
@@ -64,7 +64,7 @@ public class LoginPassFailSteps {
 
 	@Then("^I should see the error page")
 	public void checkFail() {
-		if (driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8082/login")) {
+		if (driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8082/login?error")) {
 			System.out.println("Test Pass");
 		} else {
 			System.out.println("Test1 Failed");

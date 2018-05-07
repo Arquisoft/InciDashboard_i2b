@@ -13,15 +13,15 @@ import cucumber.api.java.en.When;
 
 public class CheckIncidenceSteps {
 
-	static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
-	static String gecko = "D:\\Descargas";
-	static String URL = "http://localhost:8082/login";
-	static WebDriver driver = getDriver(PathFirefox);
+	//static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
+	static String gecko = "drivers/geckodriver.exe";
+	static String URL = "http://localhost:8082";
+	static WebDriver driver = getDriver();
 
 	@Before
-	public static WebDriver getDriver(String PathFirefox) {
+	public static WebDriver getDriver() {
 		// Firefox (Versión 46.0) sin geckodriver para Selenium 2.x.
-		System.setProperty("webdriver.gecko.driver", PathFirefox);
+		//System.setProperty("webdriver.gecko.driver", PathFirefox);
 		WebDriver driver = new FirefoxDriver();
 		return driver;
 	}
@@ -64,7 +64,7 @@ public class CheckIncidenceSteps {
 
 	@Then("^I can see my incidences")
 	public void i_can_See_my_incidences() {
-		if (driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8082/incidences")) {
+		if (driver.getCurrentUrl().equalsIgnoreCase("http://localhost:8082/incidents")) {
 			System.out.println("Test Pass");
 		} else {
 			System.out.println("Test1 Failed");

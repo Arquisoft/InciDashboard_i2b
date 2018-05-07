@@ -23,20 +23,20 @@ import cucumber.api.java.en.When;
 
 public class AddCommentsIncidenceSteps {
 
-	static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
-	static String gecko = "D:\\Descargas";
-	static String URL = "http://localhost:8082/login";
-	static WebDriver driver = getDriver(PathFirefox);
-
 	private MockMvc mockMvc;
 	
 	@Autowired
 	private OperatorsService opService;
 
+	//static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
+	static String gecko = "drivers/geckodriver.exe";
+	static String URL = "http://localhost:8082";
+	static WebDriver driver = getDriver();
+
 	@Before
-	public static WebDriver getDriver(String PathFirefox) {
+	public static WebDriver getDriver() {
 		// Firefox (Versión 46.0) sin geckodriver para Selenium 2.x.
-		System.setProperty("webdriver.gecko.driver", PathFirefox);
+		//System.setProperty("webdriver.gecko.driver", PathFirefox);
 		WebDriver driver = new FirefoxDriver();
 		return driver;
 	}
@@ -65,7 +65,7 @@ public class AddCommentsIncidenceSteps {
 
 	@Given("^I am a correct operator")
 	public void logged() {
-		driver.get("http://localhost:8082/login");
+		driver.get("http://localhost:8082");
 		driver.findElement(By.id("email")).sendKeys("operator1@dashboard.com");
 	}
 
@@ -83,6 +83,12 @@ public class AddCommentsIncidenceSteps {
 
 	@Then("^I add a comment and it is saved")
 	public void i_can_See_my_incidences() throws Exception {
+		/*
+		//add id to modify, click modify
+		driver.findElement(By.id("commentArea")).sendKeys("This is a comment");
+		driver.findElement(By.id("addCommentEm7VzPPcFI")).click();
+		*/
+		
 		MockHttpServletRequestBuilder request = post("/incident/addComment")
 				.param("name", "good").param("comment", "test");
 
