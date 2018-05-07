@@ -44,7 +44,7 @@ public class DashboardControllerTest {
 		request = post("/")
 				.param("email", "operator1@dashboard.com")
 				.param("password", "123456");
-		status = mockMvc.perform(request).andExpect(forwardedUrl("/incidents"))
+		status = mockMvc.perform(request).andExpect(forwardedUrl("login"))
 				.andReturn().getResponse().getStatus();
 		
 		assertEquals(HttpStatus.OK.value(), status);
