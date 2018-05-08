@@ -1,4 +1,4 @@
-package com.uniovi.controllers;
+package dashboard;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
