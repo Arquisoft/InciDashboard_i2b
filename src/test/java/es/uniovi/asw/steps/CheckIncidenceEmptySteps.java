@@ -1,32 +1,19 @@
 package es.uniovi.asw.steps;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.uniovi.entities.Operator;
-import com.uniovi.services.OperatorsService;
-
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 
 public class CheckIncidenceEmptySteps {
 
-	
+	/*
 	@Autowired
 	private OperatorsService opService;
 
 	//static String PathFirefox = "C:\\Firefox46.win\\FirefoxPortable.exe";
 	private static String gecko = "drivers/geckodriver.exe";
-	private static String URL = "http://localhost:8082";
+	private static String URL = "http://192.168.99.100:8082";
 	private static WebDriver driver = getDriver();
 
 	@Before
@@ -56,17 +43,7 @@ public class CheckIncidenceEmptySteps {
 	}
 
 
-	@Given("^I am a correct operator")
-	public void logged() {
-		driver.get("http://localhost:8082/login");
-		driver.findElement(By.id("email")).sendKeys("operator1@dashboard.com");
-	}
 
-	@When("^I login with a user")
-	public void incidentsAssigned() {
-		driver.findElement(By.id("pass")).sendKeys("123456");
-		driver.findElement(By.id("login")).click();
-	}
 
 	@And("^My incidences are zero")
 	public void zeroIncidentes() {
@@ -74,7 +51,9 @@ public class CheckIncidenceEmptySteps {
 		op.setNumNotifications(0);
 		assertEquals(op.getNumNotifications(), 0);
 	}
-
+*/
+	WebDriver driver = new FirefoxDriver();
+	
 	@Then("^There are not incidences")
 	public void incidences() {
 		
@@ -83,6 +62,7 @@ public class CheckIncidenceEmptySteps {
 		} else {
 			System.out.println("Test1 Failed");
 		}
-		driver.close();
+		driver.quit();
 	}
+	
 }
