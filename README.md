@@ -72,10 +72,10 @@ Finally, you can start the application from the command line using [maven](https
 
 `>> mvn spring-boot:run`
 
-### Logging in the system
+## Logging in the system
 Once you start the application and go to http://localhost:8082 you will be redirected to the operators logging form. We have several operator accounts available for testing purposes. 
 
-## Login as an operator
+### Login as an operator
 
 ```
 email: operator1@dashboard.com
@@ -83,7 +83,7 @@ password: 123456
 ```
 Once you are logged in you can see real time graphics of all the incidents received in the system. You can also see your assigned incidents going to http://localhost:8082/incidents (or clicking on the correponding link in the nav bar). Inside this list you have the possibility of changing the state of any incident or adding comments to it.
 
-## Login as an administrator
+### Login as an administrator
 
 To log into this area it is scrictly necessary to type in the url http://localhost:8082/admin/login as this is not meant to be seen initially by the usual operators. Then you can log into the system using this credentials.
 
