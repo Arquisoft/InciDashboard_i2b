@@ -12,7 +12,11 @@ public class AddCommentsIncidenceSteps {
 
 	@And("^I have incidences")
 	public void ihaveincidences(){
-		
+		if (driver.getCurrentUrl().equalsIgnoreCase("http://192.168.99.100:8082/incidents")) {
+			System.out.println("Test Pass");
+		} else {
+			System.out.println("Test1 Failed");
+		}
 	}
 	
 	@Then("^I add a comment and it is saved")

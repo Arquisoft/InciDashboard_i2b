@@ -1,4 +1,3 @@
-# language: en
 Feature: Adding comments to incidences
 
   Scenario: Incidences are edited with comments
