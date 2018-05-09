@@ -18,7 +18,7 @@ public class CheckerTests {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testIsNull() {
-		Checker.isNull(new String());
+		Checker.isNull("");
 		Checker.isNull(null);
 		//If the exception is not thrown fail
 		fail();
