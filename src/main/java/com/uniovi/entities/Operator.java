@@ -153,6 +153,7 @@ public class Operator {
 		}else {
 			this.role = "ROLE_OPERATOR";
 		}
+		this.admin = b;
 		
 	}
 
@@ -206,14 +207,8 @@ public class Operator {
 	}
 
 	public boolean isAdmin() {
-		return admin;
+		return "ROLE_ADMIN".equals(role);
 	}
-
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
-
-	
 
 	
 }
