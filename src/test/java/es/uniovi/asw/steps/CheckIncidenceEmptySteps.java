@@ -8,6 +8,7 @@ import cucumber.api.java.en.Then;
 
 public class CheckIncidenceEmptySteps {
 
+	private WebDriver driver = new FirefoxDriver();
 
 	@And("^My incidences are zero")
 	public void zeroIncidentes() {
@@ -18,7 +19,7 @@ public class CheckIncidenceEmptySteps {
 		}
 	}
 
-	WebDriver driver = new FirefoxDriver();
+
 	
 	@Then("^There are not incidences")
 	public void incidences() {

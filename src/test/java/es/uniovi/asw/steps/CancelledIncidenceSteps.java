@@ -16,7 +16,7 @@ public class CancelledIncidenceSteps {
 	private static String URL = "http://192.168.99.100:8082";
 	
 	@Given("^operator with email \"([^\"]*)\"$")
-	public void operator_with_email(String arg1) throws Throwable {
+	public void operatorwithemail(String arg1) throws Throwable {
 		driver.navigate().to(URL);
 		driver.get("http://192.168.99.100:8082");
 		driver.findElement(By.id("email")).sendKeys("operator1@dashboard.com");
@@ -25,7 +25,7 @@ public class CancelledIncidenceSteps {
 	}
 	
 	@Given("^the first of his assigned incidences$")
-	public void the_first_of_his_assigned_incidences() throws Throwable {
+	public void thefirstofhisassignedincidences() throws Throwable {
 	    System.out.println("First incidence");
 	}
 	

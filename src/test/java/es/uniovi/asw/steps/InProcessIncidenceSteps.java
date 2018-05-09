@@ -8,10 +8,10 @@ import cucumber.api.java.en.When;
 
 public class InProcessIncidenceSteps {
 
-	WebDriver driver = new FirefoxDriver();
+	private WebDriver driver = new FirefoxDriver();
 	
 	@When("^he in process the incidence$")
-	public void he_in_process_the_incidence() throws Throwable {
+	public void heinprocesstheincidence() throws Throwable {
 		if (driver.getCurrentUrl().equalsIgnoreCase("http://192.168.99.100:8082/incidents")) {
 			System.out.println("Test Pass");
 		} else {

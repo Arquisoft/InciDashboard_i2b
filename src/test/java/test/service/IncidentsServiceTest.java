@@ -42,9 +42,9 @@ public class IncidentsServiceTest {
 	private Incident inciTest1;
 	private Incident inciTest2;
 	private Incident inciTest3;
-	private Incident taged1;
-	private Incident taged2;
-	private Incident taged3;
+	//private Incident taged1;
+	//private Incident taged2;
+	//private Incident taged3;
 	
 	private AgentInfo testInfo1;
 	private AgentInfo testInfo2;
@@ -190,9 +190,9 @@ public class IncidentsServiceTest {
 	
 	@Test
 	public void testTags() {
-		taged1 = new Incident();
-		taged2 = new Incident();
-		taged3 = new Incident();
+		Incident taged1 = new Incident();
+		Incident taged2 = new Incident();
+		Incident taged3 = new Incident();
 		taged1.addTag("tag1");
 		taged1.addTag("tag2");
 		taged2.addTag("tag2");
