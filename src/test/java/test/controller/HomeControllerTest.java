@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import dashboard.HomeController;
+import com.uniovi.dashboard.HomeController;
 
 public class HomeControllerTest {
 	

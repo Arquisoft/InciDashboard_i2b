@@ -181,6 +181,39 @@ public class Operator {
 		this.incidentModify = incidentModify;
 	}
 
+	public boolean isMapAccess() {
+		return mapAccess;
+	}
+
+	public void setMapAccess(boolean mapAccess) {
+		this.mapAccess = mapAccess;
+	}
+
+	public boolean isChartAccess() {
+		return chartAccess;
+	}
+
+	public void setChartAccess(boolean chartAccess) {
+		this.chartAccess = chartAccess;
+	}
+
+	public boolean isIncidentModify() {
+		return incidentModify;
+	}
+
+	public void setIncidentModify(boolean incidentModify) {
+		this.incidentModify = incidentModify;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	
 
 	
 }

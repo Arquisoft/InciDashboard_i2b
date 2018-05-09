@@ -1,4 +1,4 @@
-package dashboard;
+package com.uniovi.dashboard;
 
 import java.security.Principal;
 
@@ -18,11 +18,6 @@ public class AppController {
 
 	@Autowired
 	protected IncidentsService incidentsService;
-
-	/*
-	public AppController() {
-		super();
-	}*/
 
 	protected void addCommonAttributes(Model model, Principal principal) {
 		Operator o = operatorsService.getOperatorByEmail(principal.getName());

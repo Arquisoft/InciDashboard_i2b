@@ -16,12 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.uniovi.dashboard.OperatorController;
 import com.uniovi.entities.Incident;
 import com.uniovi.main.InciDashboardI2bApplication;
 import com.uniovi.services.IncidentsService;
 import com.uniovi.services.OperatorsService;
-
-import dashboard.OperatorController;
 
 @SpringBootTest(classes = { InciDashboardI2bApplication.class })
 @RunWith(SpringJUnit4ClassRunner.class)

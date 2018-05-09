@@ -32,7 +32,7 @@ public class InsertTestDataService {
 	@Autowired
 	private OperatorsService operatorsService;
 
-	public final static int NUM_INCIDENTS = 150;
+	public final static int NUM_INCIDENTS = 25;
 
 	private String incidentsJson;
 

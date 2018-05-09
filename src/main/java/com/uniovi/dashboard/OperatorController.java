@@ -1,4 +1,4 @@
-package dashboard;
+package com.uniovi.dashboard;
 
 import java.security.Principal;
 import java.util.List;
