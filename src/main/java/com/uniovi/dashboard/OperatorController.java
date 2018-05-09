@@ -87,7 +87,7 @@ public class OperatorController extends AppController{
 	// Admin
 	@RequestMapping("/admin/login")
 	public String getAdminLogin() {
-		return "/admin-login";
+		return "admin-login";
 	}
 
 	@RequestMapping(value = "/admin/login", method = RequestMethod.POST)
