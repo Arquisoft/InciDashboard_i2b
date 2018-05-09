@@ -1,4 +1,4 @@
-package com.uniovi.controllers;
+package com.uniovi.dashboard;
 
 import java.security.Principal;
 import java.util.List;

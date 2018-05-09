@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @ComponentScan({
 	"com.uniovi.repositories",
-	"com.uniovi.controllers",
+	"com.uniovi.dashboard",
 	"com.uniovi.entities",
 	"com.uniovi.config",
 	"com.uniovi.kafka",

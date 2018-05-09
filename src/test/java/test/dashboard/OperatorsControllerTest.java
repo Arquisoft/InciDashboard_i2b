@@ -1,4 +1,4 @@
-package test.controller;
+package test.dashboard;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.uniovi.controllers.OperatorController;
+import com.uniovi.dashboard.OperatorController;
 import com.uniovi.entities.Incident;
 import com.uniovi.main.InciDashboardI2bApplication;
 import com.uniovi.services.IncidentsService;
@@ -77,27 +77,4 @@ public class OperatorsControllerTest {
 		assertEquals("State changed", response);
 	}
 
-/*
-	@Test
-	public void testGetDetails() throws Exception {
-		MockHttpServletRequestBuilder request = post("/incident/addComment")
-				.param("name", "detailed")
-				.param("comment","detailed comment");
-
-		String response = mockMvc.perform(request)
-				.andReturn()
-				.getResponse()
-				.getContentAsString();
-		assertEquals("Comment added", response);
-		MockHttpServletRequestBuilder request2= get("/incident/detailed/details");
-
-		int status = mockMvc.perform(request2)
-				.andExpect(forwardedUrl("incidentDetails"))
-				.andReturn()
-				.getResponse()
-				.getStatus();
-
-		assertEquals(HttpStatus.OK.value(), status);
-	}
-*/
 }

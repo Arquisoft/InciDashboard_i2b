@@ -1,4 +1,4 @@
-package test.controller;
+package test.dashboard;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.uniovi.controllers.HomeController;
+import com.uniovi.dashboard.HomeController;
 
 public class HomeControllerTest {
 	

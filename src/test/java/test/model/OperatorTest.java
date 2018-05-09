@@ -1,7 +1,9 @@
 package test.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.bson.types.ObjectId;
 import org.junit.Test;
@@ -26,6 +28,7 @@ public class OperatorTest {
 		assertEquals("eleven@dashboard.com", op1.getEmail());
 		assertEquals("eleven", op1.getOperatorname());
 		assertEquals(false, op1.getIsAdmin());
+		assertEquals("ROLE_OPERATOR", op1.getRole());
 	}
 
 	@Test
@@ -84,5 +87,22 @@ public class OperatorTest {
 		assertEquals(2, op2.getNumNotifications());
 		op2.setNumNotifications(5);
 		assertEquals(5, op2.getNumNotifications());
+	}
+	
+	@Test
+	public void testOperatorPermissions() {
+		Operator op2 = new Operator("eleven@dashboard.com", "twelve", "ROLE_ADMIN");
+		assertTrue(op2.isAdmin());
+		assertTrue(op2.isChartAccess());
+		assertTrue(op2.isIncidentModify());
+		assertTrue(op2.isMapAccess());
+		op2.setIsAdmin(false);
+		op2.setMapAccess(false);
+		op2.setChartAccess(false);
+		op2.setIncidentModify(false);
+		assertFalse(op2.isAdmin());
+		assertFalse(op2.isChartAccess());
+		assertFalse(op2.isIncidentModify());
+		assertFalse(op2.isMapAccess());
 	}
 }

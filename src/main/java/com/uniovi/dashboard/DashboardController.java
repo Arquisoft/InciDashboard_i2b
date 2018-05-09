@@ -1,4 +1,4 @@
-package com.uniovi.controllers;
+package com.uniovi.dashboard;
 
 import java.security.Principal;
 import java.util.List;
@@ -41,7 +41,7 @@ public class DashboardController extends AppController {
 	}
 
 	@RequestMapping(value = "/dashboard/realTime", method = RequestMethod.GET)
-	public String getDashboardChart(Model model, Principal principal) {
+	public String getIncidentsView(Model model, Principal principal) {
 		addCommonAttributes(model, principal);
 		addRealTimeAttributes(model);
 		return "incidentsView";
