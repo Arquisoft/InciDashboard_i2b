@@ -6,7 +6,8 @@ function connect() {
 
         stompClient.subscribe('/incident/standard', function (data) {
             var incident = JSON.parse(data.body);
-
+            console.log(data);
+            console.log(incident);
             var operator = incident.properties.operator;
             if (operator !== null && operator === currentOperator) {
                 increaseNavCount(incident);

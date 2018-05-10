@@ -9,6 +9,6 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String getHome(Model model) {
-		return "redirect:/dashboard/realTime";
+		return "redirect:/incidents";
 	}
 }

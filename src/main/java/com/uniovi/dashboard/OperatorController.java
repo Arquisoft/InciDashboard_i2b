@@ -27,14 +27,18 @@ public class OperatorController extends AppController{
 	public String getLogin() {
 		return "login";
 	}
-
+	
 	@RequestMapping("/incidents")
 	public String getOperatorIncidents(Model model, Principal principal) {
 		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
 		if(operator != null) {
 			operatorsService.resetNotificationCount(operator);
-			List<Incident> incidents = incidentsService.getIncidentsOf(operator);
-			model.addAttribute("incidents", incidents);
+			if(operator.getIsAdmin()) {
+				model.addAttribute("incidents", incidentsService.getAllIncidents());
+			}else {
+				List<Incident> incidents = incidentsService.getIncidentsOf(operator);
+				model.addAttribute("incidents", incidents);
+			}
 			model.addAttribute("opEmail", principal.getName());
 			// notifications are erased when looking at incidents
 			model.addAttribute("numNotifications", 0);
