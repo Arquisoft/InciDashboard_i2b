@@ -109,16 +109,21 @@
         });
 
         function updateBarChart(incident) {
-            var tags = incident.tags;
-            for (var ik = 1; ik < columnX.length; ik++) {
-                var key = columnX[ik];
-                for (var it in tags) {
-                    var tag = tags[it];
-                    if (key === tag) {
-                        columnY[ik] += 1
+            var found = false;
+            incident.tags.forEach(tag => {
+                for (let i = 0; i < columnX.length; i++) {
+                    if (tag == columnX[i]) {
+                        found = true;
+                        columnY[i] += 1;
                     }
                 }
-            }
+
+                if (!found) {
+                    columnX.push(tag);
+                    columnY.push(1);
+                }
+            });
+
 
             barChart.load({
                 columns: [

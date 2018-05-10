@@ -11,7 +11,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uniovi.entities.Incident;
 import com.uniovi.services.AgentsService;
-import com.uniovi.services.IncidentsService;
 import com.uniovi.services.OperatorsService;
 
 /**
@@ -23,9 +22,6 @@ import com.uniovi.services.OperatorsService;
 public class IncidentListener {
 
 	private static final Logger logger = LoggerFactory.getLogger(IncidentListener.class);
-
-	@Autowired
-	private IncidentsService inciService;
 	
 	@Autowired
 	private AgentsService agentsService;
@@ -44,7 +40,6 @@ public class IncidentListener {
 			ObjectMapper obj = new ObjectMapper();
 			Incident incident = obj.readValue(data.getBytes(), Incident.class);
 			agentsService.addAgent(incident.getAgent());
-			inciService.addIncident(incident);	
 			operatorsService.increaseNotificationCount(incident);
 		}
 	}

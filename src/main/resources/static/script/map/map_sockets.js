@@ -13,6 +13,8 @@ function connect() {
                 increaseNavCount(incident);
                 increaseIncidents();
             }
+
+            onNewIncident(incident);
         });
 
     });
