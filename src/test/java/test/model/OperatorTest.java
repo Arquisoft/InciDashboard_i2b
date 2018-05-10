@@ -92,7 +92,7 @@ public class OperatorTest {
 	@Test
 	public void testOperatorPermissions() {
 		Operator op2 = new Operator("eleven@dashboard.com", "twelve", "ROLE_ADMIN");
-		assertTrue(op2.isAdmin());
+		assertTrue(op2.getIsAdmin());
 		assertTrue(op2.isChartAccess());
 		assertTrue(op2.isIncidentModify());
 		assertTrue(op2.isMapAccess());
@@ -100,7 +100,7 @@ public class OperatorTest {
 		op2.setMapAccess(false);
 		op2.setChartAccess(false);
 		op2.setIncidentModify(false);
-		assertFalse(op2.isAdmin());
+		assertFalse(op2.getIsAdmin());
 		assertFalse(op2.isChartAccess());
 		assertFalse(op2.isIncidentModify());
 		assertFalse(op2.isMapAccess());

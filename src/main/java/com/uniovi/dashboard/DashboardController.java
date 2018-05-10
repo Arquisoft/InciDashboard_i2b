@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.uniovi.entities.Incident;
+import com.uniovi.entities.Operator;
 import com.uniovi.services.InsertTestDataService;
 
 @Controller
@@ -23,27 +24,39 @@ public class DashboardController extends AppController {
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String getDashboard() {
-		return "redirect:/dashboard/maps";
+		return "redirect:/dashboard/realTime";
 	}
 
 	@RequestMapping(value = "/dashboard/maps", method = RequestMethod.GET)
 	public String getDashboardMaps(Model model, Principal principal) {
-		addCommonAttributes(model,principal);
-		addMapAttributes(model);
-		return "maps";
+		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
+		if(operator.isMapAccess()) {
+			addCommonAttributes(model,principal);
+			addMapAttributes(model);
+			return "maps";
+		}
+		return "redirect:/login";
 	}
 
 	@RequestMapping(value = "/dashboard/charts", method = RequestMethod.GET)
 	public String getDashboardCharts(Model model, Principal principal) {
-		addCommonAttributes(model,principal);
-		addChartsAttributes(model);
-		return "charts";
+		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
+		if(operator.isChartAccess()) {
+			addCommonAttributes(model,principal);
+			addChartsAttributes(model);
+			return "charts";
+		}
+		return "redirect:/login";
 	}
 
 	@RequestMapping(value = "/dashboard/realTime", method = RequestMethod.GET)
 	public String getIncidentsView(Model model, Principal principal) {
+		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
 		addCommonAttributes(model, principal);
 		addRealTimeAttributes(model);
+		if(operator.getIsAdmin()) {
+			model.addAttribute("incidents",incidentsService.getAllIncidents());
+		}
 		return "incidentsView";
 	}
 

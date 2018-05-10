@@ -205,10 +205,5 @@ public class Operator {
 	public void setIncidentModify(boolean incidentModify) {
 		this.incidentModify = incidentModify;
 	}
-
-	public boolean isAdmin() {
-		return "ROLE_ADMIN".equals(role);
-	}
-
 	
 }

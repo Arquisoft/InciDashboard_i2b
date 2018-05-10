@@ -31,16 +31,19 @@ public class OperatorController extends AppController{
 	@RequestMapping("/incidents")
 	public String getOperatorIncidents(Model model, Principal principal) {
 		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
-		operatorsService.resetNotificationCount(operator);
-		List<Incident> incidents = incidentsService.getIncidentsOf(operator);
-		model.addAttribute("incidents", incidents);
-		model.addAttribute("opEmail", principal.getName());
-		// notifications are erased when looking at incidents
-		model.addAttribute("numNotifications", 0);
-		model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
-		model.addAttribute("role",operator.getRole());
-		operatorPermissions(model,operator);
-		return "incidentsView";
+		if(operator != null) {
+			operatorsService.resetNotificationCount(operator);
+			List<Incident> incidents = incidentsService.getIncidentsOf(operator);
+			model.addAttribute("incidents", incidents);
+			model.addAttribute("opEmail", principal.getName());
+			// notifications are erased when looking at incidents
+			model.addAttribute("numNotifications", 0);
+			model.addAttribute("numIncidents", this.getIncidencesOfCurrentOp());
+			model.addAttribute("role",operator.getRole());
+			operatorPermissions(model,operator);
+			return "incidentsView";
+		}
+		return "redirect:/login";
 	}
 
 	@RequestMapping("/incident/{inciName}/details")
@@ -105,9 +108,15 @@ public class OperatorController extends AppController{
 
 	@RequestMapping(value = "/admin/operators", method = RequestMethod.GET)
 	public String getOperators(Model model, Principal principal) {
-		model.addAttribute("operators", operatorsService.getAllOperatorsBut(principal.getName()));
-		addCommonAttributes(model, principal);
-		return "operators";
+		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
+		if(operator.getIsAdmin()) {
+			model.addAttribute("operators", operatorsService.getAllOperatorsBut(principal.getName()));
+			addCommonAttributes(model, principal);
+			return "operators";
+		}else {
+			return "redirect:/login";
+		}
+	
 	}
 
 	@RequestMapping(value = "/operator/admin", method = RequestMethod.POST)
@@ -118,7 +127,4 @@ public class OperatorController extends AppController{
 		operatorsService.changePermissions(id);
 		return "Permissions changed";
 	}
-	
-
-	
 }
