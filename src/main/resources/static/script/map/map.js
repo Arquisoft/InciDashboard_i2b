@@ -22,6 +22,9 @@ function onNewIncident(incident) {
 		"latitude": parseFloat(incident.location.lat),
 		"longitude": parseFloat(incident.location.lon)
 	});
+
+	var previousHeight = $("#chartdiv").height();
+	$("#chartdiv").height(previousHeight + 1);
 }
 
 var map = AmCharts.makeChart("chartdiv", {
