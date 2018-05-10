@@ -24,7 +24,7 @@ public class DashboardController extends AppController {
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String getDashboard() {
-		return "redirect:/dashboard/realTime";
+		return "redirect:/incidents";
 	}
 
 	@RequestMapping(value = "/dashboard/maps", method = RequestMethod.GET)
@@ -49,17 +49,6 @@ public class DashboardController extends AppController {
 		return "redirect:/login";
 	}
 
-	@RequestMapping(value = "/dashboard/realTime", method = RequestMethod.GET)
-	public String getIncidentsView(Model model, Principal principal) {
-		Operator operator = operatorsService.getOperatorByEmail(principal.getName());
-		addCommonAttributes(model, principal);
-		addRealTimeAttributes(model);
-		if(operator.getIsAdmin()) {
-			model.addAttribute("incidents",incidentsService.getAllIncidents());
-		}
-		return "incidentsView";
-	}
-
 	@SubscribeMapping("/test-data")
 	public String getTestData(Model model) throws JsonProcessingException {
 		return testDataService.getTestDataAsJSON();
@@ -77,15 +66,6 @@ public class DashboardController extends AppController {
 		model.addAttribute("temperatures", incidentsService.getTemperaturesOfSensors());
 		model.addAttribute("keys", usedTags.keySet());
 		model.addAttribute("values", usedTags.values());
-	}
-
-	private void addRealTimeAttributes(Model model) {
-		List<Incident> incidentsSensors = incidentsService.getKindIncidents("Sensor");
-		List<Incident> incidentsPeople = incidentsService.getKindIncidents("Person");
-		List<Incident> incidentsEntities = incidentsService.getKindIncidents("Entity");
-		model.addAttribute("sensors", incidentsSensors);
-		model.addAttribute("people", incidentsPeople);
-		model.addAttribute("entities", incidentsEntities);
 	}
 
 	private void addMapAttributes(Model model) {
