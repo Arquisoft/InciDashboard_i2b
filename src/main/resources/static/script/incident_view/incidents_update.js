@@ -1,4 +1,3 @@
-
 /*
  * Adds a new incident to the current view.
  */
