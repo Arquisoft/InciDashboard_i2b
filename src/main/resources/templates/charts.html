@@ -127,8 +127,8 @@
 
             barChart.load({
                 columns: [
-                    columnX,
-                    columnY
+                    ['x'].concat(columnX),
+                    ['Tags Usage'].concat(columnY)
                 ]
             });
         }
